@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>احجز نسختك من مِداد</title>
+<meta name="description" content="احجز نسختك من مِداد | الشاب المسلم — الدفعة الأولى، ١٠٠ جنيه.">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #0D0B08;
+    font-family: 'Amiri', serif;
+    color: #EDE6D6;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+  .back-link{
+    position:fixed; top:20px; right:20px;
+    font-size:14px; color:#A69B7E;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(160deg, #16130F, #1E1812);
+    border: 0.5px solid #3A311F;
+    border-radius: 14px;
+    padding: 32px 26px;
+    margin-top:20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    color: #C9A24B;
+    margin: 0 0 4px;
+  }
+  .tagline {
+    text-align: center;
+    font-size: 13px;
+    color: #A69B7E;
+    letter-spacing: 2px;
+    margin: 0 0 22px;
+  }
+  .counter {
+    text-align: center;
+    background: rgba(201,162,75,0.08);
+    border: 0.5px solid rgba(201,162,75,0.3);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    color: #EDE6D6;
+  }
+  .counter b { color: #C9A24B; font-size: 16px; }
+  label {
+    display: block;
+    font-size: 13px;
+    color: #B9AF98;
+    margin: 14px 0 6px;
+  }
+  input, select, textarea {
+    width: 100%;
+    background: #0D0B08;
+    border: 0.5px solid #3A311F;
+    border-radius: 8px;
+    color: #EDE6D6;
+    font-family: 'Amiri', serif;
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #C9A24B;
+  }
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 6px;
+    font-size: 13px;
+    color: #B9AF98;
+  }
+  .price-row b { color: #C9A24B; font-size: 20px; }
+  .err {
+    color: #E27878;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+  button {
+    width: 100%;
+    margin-top: 22px;
+    background: #C9A24B;
+    color: #0D0B08;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 13px;
+    cursor: pointer;
+  }
+  button:active { opacity: 0.85; }
+  .confirm {
+    display: none;
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    color: #C9A24B;
+    line-height: 2;
+  }
+  .note {
+    text-align: center;
+    font-size: 11px;
+    color: #6B6355;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<a href="index.html" class="back-link">→ الرئيسية</a>
+<div class="card">
+  <h1>مداد</h1>
+  <p class="tagline">الشاب المسلم</p>
+
+  <div class="counter">
+    الدفعة الأولى: <b id="remaining">٥٠</b> نسخة
+  </div>
+
+  <form id="bookingForm">
+    <label>الاسم</label>
+    <input type="text" id="name" placeholder="اسمك بالكامل">
+    <div class="err" id="nameErr">من فضلك اكتب اسمك</div>
+
+    <label>رقم الواتساب</label>
+    <input type="tel" id="phone" placeholder="01xxxxxxxxx">
+    <div class="err" id="phoneErr">من فضلك اكتب رقم صحيح</div>
+
+    <label>عدد النسخ</label>
+    <select id="qty">
+      <option value="1">نسخة واحدة</option>
+      <option value="2">نسختان</option>
+      <option value="3">٣ نسخ</option>
+      <option value="more">أكثر</option>
+    </select>
+    <input type="number" id="qtyCustom" min="4" placeholder="اكتب العدد" style="display:none; margin-top:8px;">
+
+    <label>ملاحظات (اختياري)</label>
+    <textarea id="notes" rows="2" placeholder="مكان التسليم، ميعاد مناسب..."></textarea>
+
+    <div class="price-row">
+      <span>سعر النسخة (إطلاق)</span>
+      <b>١٠٠ ج.م</b>
+    </div>
+
+    <button type="submit">احجز نسختك الآن</button>
+  </form>
+
+  <div class="confirm" id="confirmMsg">
+    تم فتح واتساب لإرسال طلبك ✅<br>
+    لو محدّش فتح تلقائيًا، تواصل معانا مباشرة.
+  </div>
+
+  <p class="note">بياناتك بتتبعت مباشرة على واتساب، ومش بتتخزن في أي مكان تاني.</p>
+</div>
+
+<script>
+// رقم الواتساب الخاص بمداد
+const OWNER_WHATSAPP = "201556518897";
+
+/*
+  ملاحظة مهمة: هذه النسخة من الصفحة مُعدّة للعمل على استضافة خارجية (GitHub Pages)
+  ولذلك لا تعتمد على عدّاد حي متزامن (كان متاحًا فقط داخل بيئة Claude).
+  بدل ذلك، الرقم تحت ثابت وتُحدّثه يدويًا بنفسك كل ما تتراكم حجوزات:
+  غيّر القيمة في REMAINING_COPIES لتعكس العدد المتبقي الفعلي.
+*/
+const REMAINING_COPIES = 50;
+
+document.getElementById('remaining').textContent = REMAINING_COPIES.toLocaleString('ar-EG');
+
+document.getElementById('qty').addEventListener('change', function() {
+  const customInput = document.getElementById('qtyCustom');
+  customInput.style.display = this.value === 'more' ? 'block' : 'none';
+});
+
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  let qty = document.getElementById('qty').value;
+  const notes = document.getElementById('notes').value.trim();
+
+  if (qty === 'more') {
+    qty = document.getElementById('qtyCustom').value.trim() || '4';
+  }
+
+  const nameErr = document.getElementById('nameErr');
+  const phoneErr = document.getElementById('phoneErr');
+  nameErr.style.display = 'none';
+  phoneErr.style.display = 'none';
+
+  let valid = true;
+  if (!name) { nameErr.style.display = 'block'; valid = false; }
+  if (!phone || phone.length < 8) { phoneErr.style.display = 'block'; valid = false; }
+  if (!valid) return;
+
+  const total = parseInt(qty, 10) * 100;
+  let message = "السلام عليكم، عايز أحجز نسخة من مداد | الشاب المسلم\n\n";
+  message += "الاسم: " + name + "\n";
+  message += "رقم التواصل: " + phone + "\n";
+  message += "عدد النسخ: " + qty + "\n";
+  message += "الإجمالي: " + total + " جنيه\n";
+  if (notes) message += "ملاحظات: " + notes + "\n";
+
+  const waLink = "https://wa.me/" + OWNER_WHATSAPP + "?text=" + encodeURIComponent(message);
+  window.open(waLink, '_blank');
+
+  document.getElementById('confirmMsg').style.display = 'block';
+  document.getElementById('bookingForm').reset();
+});
+</script>
+</body>
+</html>
