@@ -189,7 +189,6 @@
     border-bottom: 0.5px solid var(--border);
     position: relative;
   }
-  /* استبدل الـ background أو استخدم tag الـ img الفعلي */
   .gallery-img-box img {
     width: 100%;
     height: 100%;
@@ -276,7 +275,9 @@
   }
   .custom-qty-container { display: none; margin-top: 8px; }
 
+  /* مخفي افتراضياً حتى اختيار الموقع */
   .price-container {
+    display: none;
     margin: 22px 0 10px;
     background: rgba(201,162,75,0.04);
     border: 0.5px dashed rgba(201,162,75,0.25);
@@ -451,16 +452,13 @@
     <p class="section-lead">تصميم هادئ، منظم، ومصمم خصيصاً ليرافق تفاصيل يومك المسلم بكل سلاسة.</p>
 
     <div class="gallery-grid">
-      <!-- الصورة الأولى -->
       <div class="gallery-item">
         <div class="gallery-img-box">
-          <!-- استبدل src برابط صورتك الحقيقية، مثلاً: <img src="assets/page1.jpg" alt="..."> -->
           <span>صورة التخطيط اليومي (مواقيت الصلاة)</span>
         </div>
         <div class="gallery-caption">تخطيط اليوم بمواقيت الصلاة</div>
       </div>
 
-      <!-- الصورة الثانية -->
       <div class="gallery-item">
         <div class="gallery-img-box">
           <span>صورة بنك النيات وعقود العبادة</span>
@@ -468,7 +466,6 @@
         <div class="gallery-caption">بنك النيات اليومية</div>
       </div>
 
-      <!-- الصورة الثالثة -->
       <div class="gallery-item">
         <div class="gallery-img-box">
           <span>صورة المراجعة الأسبوعية</span>
@@ -507,7 +504,6 @@
     <h2 class="section-title" style="margin-bottom:40px;">احجز نسختك الآن</h2>
 
     <div class="booking-card">
-      <!-- بديل عداد النسخ: جملة تحفيزية للحجز -->
       <div class="booking-banner">
         ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
@@ -523,6 +519,17 @@
           <label for="phone">رقم الواتساب للتواصل والتأكيد</label>
           <input type="tel" id="phone" placeholder="01xxxxxxxxx">
           <div class="err" id="phoneErr">من فضلك اكتب رقم هاتف صحيح</div>
+        </div>
+
+        <!-- خيار مكان التوصيل -->
+        <div class="form-group">
+          <label for="location">مكان التوصيل</label>
+          <select id="location">
+            <option value="" disabled selected>اختر مكان التوصيل...</option>
+            <option value="egypt">داخل مصر</option>
+            <option value="outside">خارج مصر</option>
+          </select>
+          <div class="err" id="locationErr">من فضلك اختر مكان التوصيل</div>
         </div>
 
         <div class="form-group">
@@ -542,19 +549,20 @@
 
         <div class="form-group">
           <label for="notes">العنوان أو الملاحظات (اختياري)</label>
-          <textarea id="notes" rows="2" placeholder="المحافظة / العنوان / وقت مناسب للتواصل..."></textarea>
+          <textarea id="notes" rows="2" placeholder="المحافظة / الدولة / العنوان التفصيلي..."></textarea>
         </div>
 
-        <div class="price-container">
+        <!-- قسم السعر (مخفي افتراضياً) -->
+        <div class="price-container" id="priceContainer">
           <span class="launch-badge" id="launchBadge">عرض الإطلاق الحصري 🔥</span>
           <div class="price-row">
             <span>السعر الإجمالي:</span>
-            <b id="totalPrice">١٠٠ ج.م</b>
+            <b id="totalPrice">-</b>
           </div>
           <div class="shipping-note">* السعر لا يشمل مصاريف الشحن</div>
         </div>
 
-        <button type="submit" class="submit-btn" id="submitBtn">احجز نسختك بسعر الإطلاق الآن</button>
+        <button type="submit" class="submit-btn" id="submitBtn">احجز نسختك الآن</button>
       </form>
 
       <div class="confirm-msg" id="confirmMsg">
@@ -592,7 +600,8 @@ const ENTRY_QTY = "entry.1807369720";
 const ENTRY_NOTES = "entry.418540168";
 // ==========================================
 
-const UNIT_PRICE = 100;
+const PRICE_EGYPT = 150; // جنيه مصري
+const PRICE_OUTSIDE = 10; // دولار
 
 function getSelectedQty() {
   const qtySelect = document.getElementById('qty').value;
@@ -604,10 +613,27 @@ function getSelectedQty() {
 }
 
 function updateTotalPrice() {
+  const location = document.getElementById('location').value;
+  const priceContainer = document.getElementById('priceContainer');
+  
+  if (!location) {
+    priceContainer.style.display = 'none';
+    return;
+  }
+  
+  priceContainer.style.display = 'block';
   const qty = getSelectedQty();
-  const total = qty * UNIT_PRICE;
-  document.getElementById('totalPrice').textContent = total + " ج.م";
+  
+  if (location === 'egypt') {
+    const total = qty * PRICE_EGYPT;
+    document.getElementById('totalPrice').textContent = total + " ج.م";
+  } else if (location === 'outside') {
+    const total = qty * PRICE_OUTSIDE;
+    document.getElementById('totalPrice').textContent = total + " $";
+  }
 }
+
+document.getElementById('location').addEventListener('change', updateTotalPrice);
 
 document.getElementById('qty').addEventListener('change', function() {
   const customBox = document.getElementById('customQtyBox');
@@ -626,23 +652,29 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
 
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
+  const location = document.getElementById('location').value;
   const qty = getSelectedQty();
   const notes = document.getElementById('notes').value.trim();
 
   const nameErr = document.getElementById('nameErr');
   const phoneErr = document.getElementById('phoneErr');
+  const locationErr = document.getElementById('locationErr');
+  
   nameErr.style.display = 'none';
   phoneErr.style.display = 'none';
+  locationErr.style.display = 'none';
 
   let valid = true;
   if (!name) { nameErr.style.display = 'block'; valid = false; }
   if (!phone || phone.length < 8) { phoneErr.style.display = 'block'; valid = false; }
+  if (!location) { locationErr.style.display = 'block'; valid = false; }
   if (!valid) return;
 
+  // إرسال البيانات لجوجلฟورم
   const formBody = new URLSearchParams();
   formBody.append(ENTRY_NAME, name);
   formBody.append(ENTRY_PHONE, phone);
-  formBody.append(ENTRY_QTY, qty);
+  formBody.append(ENTRY_QTY, qty + " (" + (location === 'egypt' ? 'داخل مصر' : 'خارج مصر') + ")");
   formBody.append(ENTRY_NOTES, notes);
 
   fetch(GOOGLE_FORM_URL, {
@@ -652,12 +684,16 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     body: formBody
   }).catch(err => console.log(err));
 
-  const total = qty * UNIT_PRICE;
-  let message = "السلام عليكم، أرغب في حجز نسخة بسعر الإطلاق من مشروع (مداد | الشاب المسلم)\n\n";
+  // إعداد نص رسالة الواتساب
+  let locationText = location === 'egypt' ? 'داخل مصر' : 'خارج مصر';
+  let totalPriceText = location === 'egypt' ? (qty * PRICE_EGYPT) + " جنيه مصري" : (qty * PRICE_OUTSIDE) + " دولار أمريكي";
+
+  let message = "السلام عليكم، أرغب في حجز نسخة من مشروع (مداد | الشاب المسلم)\n\n";
   message += "👤 الاسم: " + name + "\n";
   message += "📞 رقم التواصل: " + phone + "\n";
+  message += "📍 مكان التوصيل: " + locationText + "\n";
   message += "📚 عدد النسخ: " + qty + "\n";
-  message += "💰 الإجمالي: " + total + " جنيه مصري (غير شامل الشحن)\n";
+  message += "💰 الإجمالي: " + totalPriceText + " (غير شامل الشحن)\n";
   if (notes) message += "📝 ملاحظات/العنوان: " + notes + "\n";
 
   const waLink = "https://wa.me/" + OWNER_WHATSAPP + "?text=" + encodeURIComponent(message);
@@ -666,7 +702,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
   document.getElementById('confirmMsg').style.display = 'block';
   document.getElementById('bookingForm').reset();
   document.getElementById('customQtyBox').style.display = 'none';
-  updateTotalPrice();
+  document.getElementById('priceContainer').style.display = 'none';
 });
 </script>
 </body>
