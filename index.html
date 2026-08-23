@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مِداد | الشاب المسلم — رفيقك اليومي لمدة ٦٠ يومًا</title>
+<meta name="description" content="مِداد: نوت بوك عربي فاخر يرتّب يومك على مواقيت الصلاة لا الساعة. رحلة ٦٠ يومًا تجمع بين العبادة والعلم والعمل والصحة. الدفعة الأولى الآن متاحة للحجز.">
+<meta name="theme-color" content="#0D0B08">
+
+<!-- Open Graph (لمعاينة أفضل عند مشاركة الرابط على واتساب/فيسبوك) -->
+<meta property="og:title" content="مِداد | الشاب المسلم">
+<meta property="og:description" content="أول نوت بوك عربي بيرتّب يومك على مواقيت الصلاة، مش على الساعة.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_EG">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-dark:#0D0B08;
+    --bg-card-1:#16130F;
+    --bg-card-2:#1E1812;
+    --gold:#C9A24B;
+    --gold-deep:#9C7A2E;
+    --text-light:#EDE6D6;
+    --text-muted:#A69B7E;
+    --border:#3A311F;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg-dark);
+    color:var(--text-light);
+    font-family:'Amiri', serif;
+    line-height:1.9;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 24px; }
+
+  /* ===== Header ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(13,11,8,0.85);
+    backdrop-filter:blur(6px);
+    border-bottom:0.5px solid var(--border);
+  }
+  header .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
+  }
+  .brand{ font-size:24px; font-weight:700; color:var(--gold); }
+  nav{ display:flex; gap:28px; }
+  nav a{ font-size:15px; color:var(--text-muted); transition:color .2s; }
+  nav a:hover{ color:var(--gold); }
+  @media (max-width:640px){ nav{ display:none; } }
+
+  /* ===== Hero ===== */
+  .hero{
+    min-height:92vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:radial-gradient(ellipse at 50% 30%, var(--bg-card-2), var(--bg-dark) 70%);
+    padding:80px 24px 60px;
+  }
+  .hero .wordmark{
+    font-size:clamp(56px, 12vw, 110px);
+    font-weight:700;
+    color:var(--gold);
+    letter-spacing:2px;
+    line-height:1;
+  }
+  .hero .rule{
+    width:70px; height:1px; background:var(--gold); opacity:.6;
+    margin:22px auto;
+  }
+  .hero .tagline{
+    font-size:clamp(14px, 2.4vw, 18px);
+    color:var(--text-light);
+    letter-spacing:4px;
+    margin-bottom:6px;
+  }
+  .hero .subtitle{
+    font-size:15px; color:var(--gold-deep); margin-bottom:34px;
+  }
+  .hero .oneliner{
+    max-width:560px;
+    font-size:clamp(18px, 3vw, 24px);
+    color:var(--text-light);
+    margin-bottom:40px;
+  }
+  .cta-row{
+    display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 32px;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:700;
+    font-family:'Amiri', serif;
+    cursor:pointer;
+    transition:opacity .2s, transform .2s;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--gold); color:var(--bg-dark); }
+  .btn-secondary{ border:1px solid var(--border); color:var(--text-light); }
+
+  /* ===== Section generic ===== */
+  section{ padding:90px 0; }
+  .section-title{
+    text-align:center;
+    font-size:clamp(28px, 4vw, 40px);
+    font-weight:700;
+    color:var(--text-light);
+    margin-bottom:14px;
+  }
+  .section-kicker{
+    text-align:center;
+    font-size:13px; letter-spacing:3px; color:var(--gold-deep);
+    margin-bottom:10px;
+  }
+  .section-lead{
+    text-align:center; max-width:620px; margin:0 auto 50px;
+    color:var(--text-muted); font-size:17px;
+  }
+
+  /* ===== Story ===== */
+  .story{ background:var(--bg-card-1); }
+  .story .wrap{ max-width:760px; }
+  .story p{ font-size:18px; color:var(--text-light); margin-bottom:22px; text-align:center; }
+  .story .quote{
+    margin-top:40px;
+    text-align:center;
+    font-size:22px;
+    color:var(--gold);
+    font-weight:700;
+    line-height:2;
+  }
+
+  /* ===== Features ===== */
+  .features-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:24px;
+  }
+  .feature-card{
+    background:linear-gradient(160deg, var(--bg-card-1), var(--bg-card-2));
+    border:0.5px solid var(--border);
+    border-radius:12px;
+    padding:28px 22px;
+    text-align:center;
+  }
+  .feature-card svg{ width:34px; height:34px; margin:0 auto 16px; stroke:var(--gold); }
+  .feature-card h3{ font-size:18px; margin-bottom:8px; color:var(--text-light); }
+  .feature-card p{ font-size:14px; color:var(--text-muted); line-height:1.8; }
+
+  /* ===== Niyyah highlight ===== */
+  .niyyah{
+    text-align:center;
+    background:radial-gradient(ellipse at 50% 50%, var(--bg-card-2), var(--bg-dark));
+  }
+  .niyyah blockquote{
+    max-width:680px; margin:0 auto;
+    font-size:clamp(22px, 3.6vw, 32px);
+    color:var(--gold);
+    font-weight:700;
+    line-height:2.1;
+  }
+  .niyyah cite{
+    display:block; margin-top:24px; font-style:normal;
+    font-size:14px; color:var(--text-muted);
+  }
+
+  /* ===== Video ===== */
+  .video{ background:var(--bg-card-1); }
+  .video-frame{
+    max-width:820px; margin:0 auto;
+    aspect-ratio:16/9;
+    border-radius:12px;
+    overflow:hidden;
+    border:0.5px solid var(--border);
+    background:var(--bg-dark);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .video-frame iframe{ width:100%; height:100%; border:0; }
+  .video-placeholder{ color:var(--text-muted); font-size:15px; text-align:center; padding:20px; }
+
+  /* ===== Pricing / Booking ===== */
+  .pricing-card{
+    max-width:480px; margin:0 auto;
+    background:linear-gradient(160deg, var(--bg-card-1), var(--bg-card-2));
+    border:1px solid var(--gold-deep);
+    border-radius:16px;
+    padding:44px 34px;
+    text-align:center;
+  }
+  .pricing-card .badge{
+    display:inline-block;
+    background:rgba(201,162,75,0.12);
+    border:0.5px solid var(--gold-deep);
+    color:var(--gold);
+    font-size:12px;
+    padding:5px 14px;
+    border-radius:20px;
+    margin-bottom:18px;
+  }
+  .pricing-card .price{ font-size:52px; font-weight:700; color:var(--gold); }
+  .pricing-card .price span{ font-size:18px; color:var(--text-muted); }
+  .pricing-card ul{ list-style:none; margin:26px 0; text-align:right; }
+  .pricing-card li{ padding:8px 0; color:var(--text-light); font-size:15px; }
+  .pricing-card li::before{ content:"✦ "; color:var(--gold); }
+  .pricing-note{ margin-top:18px; font-size:13px; color:var(--text-muted); }
+
+  /* ===== Footer ===== */
+  footer{
+    border-top:0.5px solid var(--border);
+    padding:50px 0 30px;
+    text-align:center;
+  }
+  footer .brand{ font-size:22px; margin-bottom:8px; }
+  footer .tagline{ font-size:13px; color:var(--text-muted); letter-spacing:2px; margin-bottom:20px; }
+  .social-row{ display:flex; gap:22px; justify-content:center; margin-bottom:26px; }
+  .social-row a{ font-size:14px; color:var(--text-muted); border-bottom:1px solid transparent; transition:.2s; }
+  .social-row a:hover{ color:var(--gold); border-color:var(--gold); }
+  .copyright{ font-size:12px; color:#5A5344; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <!--
+      مكان اللوجو: دلوقتي وردمارك نصي. لو حابب تستخدم اللوجو الـPNG بدل النص،
+      استبدل السطر اللي تحت بـ:
+      <img src="assets/logo.png" alt="مداد" style="height:34px;">
+    -->
+    <div class="brand">مِداد</div>
+    <nav>
+      <a href="#story">القصة</a>
+      <a href="#content">المحتوى</a>
+      <a href="#video">الفيديو</a>
+      <a href="#booking">الحجز</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= Hero ================= -->
+<section class="hero">
+  <div class="wordmark">مِداد</div>
+  <div class="rule"></div>
+  <p class="tagline">وعي … عبادة … إنتاج</p>
+  <p class="subtitle">(الشاب المسلم)</p>
+  <p class="oneliner">أول نوت بوك عربي بيرتّب يومك على مواقيت الصلاة، مش على الساعة.</p>
+  <div class="cta-row">
+    <a href="booking.html" class="btn btn-primary">احجز نسختك الآن</a>
+    <a href="#story" class="btn btn-secondary">اعرف القصة</a>
+  </div>
+</section>
+
+<!-- ================= Story ================= -->
+<section class="story" id="story">
+  <div class="wrap">
+    <p class="section-kicker">لماذا صنعنا مِداد؟</p>
+    <h2 class="section-title" style="margin-bottom:34px;">رفيق يومي، لا مجرد دفتر</h2>
+    <p>
+      نحن نملك اليوم تطبيقات للتخطيط، وتقويمات، وملاحظات، ومئات الأدوات التي تقول لنا كيف ننظم يومنا.
+      ومع ذلك، قد يمر اليوم ونحن مشغولون جدًا، لكننا لا نعرف: هل اقتربنا فعلًا مما نريد؟
+    </p>
+    <p>
+      من هنا بدأت فكرة مِداد: رفيق يومي يساعدك أن تخطط، وتراجع، وتتعلم، وتتابع عاداتك،
+      وتعتني بصلتك بالله، وفي الوقت نفسه تتحرك في حياتك إلى الأمام.
+    </p>
+    <p class="quote">لأن المداد أثر… والكلمات التي نكتبها اليوم قد تصبح أثرًا في حياتنا غدًا.</p>
+  </div>
+</section>
+
+<!-- ================= Features ================= -->
+<section id="content">
+  <div class="wrap">
+    <p class="section-kicker">ماذا يوجد داخل مِداد؟</p>
+    <h2 class="section-title">كل ما تحتاجه، ولا شيء زائد</h2>
+    <p class="section-lead">تعمّدنا ألا نجعل كل شيء مزدحمًا أمامك، لأن الهدف ليس أن تمتلئ الصفحة بالحقول، بل أن تستخدمها فعلًا.</p>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+        <h3>تخطيط بمواقيت الصلاة</h3>
+        <p>يومك مقسّم بعد الفجر والظهر والعصر والمغرب والعشاء، لا بالساعة.</p>
+      </div>
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4 0-7 2-7 2v14s3-2 7-2 7 2 7 2V5s-3-2-7-2z"/></svg>
+        <h3>بنك النيات</h3>
+        <p>أكثر من ٣٠ نية عملية تساعدك تحوّل أعمالك اليومية إلى عبادة.</p>
+      </div>
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <h3>متابعة العادات</h3>
+        <p>تتبّع يومي بسيط لعباداتك وعاداتك، بلا تعقيد أو ازدحام.</p>
+      </div>
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        <h3>مراجعات أسبوعية وشهرية</h3>
+        <p>وقفات دورية تساعدك ترى مسارك كاملًا، لا يومك فقط.</p>
+      </div>
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <h3>ميثاقي مع نفسي</h3>
+        <p>صفحة تعهّد شخصي تبدأ بها رحلتك، بصياغة صادقة لا وعظية.</p>
+      </div>
+
+      <div class="feature-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg>
+        <h3>رسالة لنفسك بعد ٦٠ يومًا</h3>
+        <p>تكتبها اليوم ولا تفتحها إلا في نهاية رحلتك — دائرة نفسية مكتملة.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= Niyyah highlight ================= -->
+<section class="niyyah">
+  <div class="wrap">
+    <blockquote>
+      والنية ليست جملة نكتبها في الصفحة…
+      <br>
+      النية معنى يستحضره القلب.
+      <cite>من صفحة النية في مِداد</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ================= Video ================= -->
+<section class="video" id="video">
+  <div class="wrap">
+    <p class="section-kicker">شاهد القصة كاملة</p>
+    <h2 class="section-title" style="margin-bottom:40px;">مِداد، من الفكرة إلى يدك</h2>
+    <div class="video-frame">
+      <!--
+        لما فيديو اليوتيوب يبقى جاهز، استبدل السطر اللي تحت بـ:
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="فيديو مِداد" allowfullscreen></iframe>
+      -->
+      <p class="video-placeholder">الفيديو قريبًا…</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Pricing / Booking ================= -->
+<section id="booking">
+  <div class="wrap">
+    <p class="section-kicker">الدفعة الأولى</p>
+    <h2 class="section-title" style="margin-bottom:40px;">احجز نسختك الآن</h2>
+
+    <div class="pricing-card">
+      <span class="badge">سعر إطلاق محدود</span>
+      <div class="price">١٠٠<span> ج.م</span></div>
+      <ul>
+        <li>رحلة ٦٠ يومًا كاملة</li>
+        <li>تخطيط بمواقيت الصلاة</li>
+        <li>بنك نيات + متابعة عادات</li>
+        <li>الدفعة الأولى: ٥٠ نسخة فقط</li>
+      </ul>
+      <a href="booking.html" class="btn btn-primary" style="width:100%;">احجز نسختك</a>
+      <p class="pricing-note">السعر يرتفع إلى ١٥٠ ج.م بعد نفاد الدفعة الأولى</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Footer ================= -->
+<footer>
+  <div class="wrap">
+    <div class="brand">مِداد</div>
+    <p class="tagline">وعي … عبادة … إنتاج</p>
+    <div class="social-row">
+      <!-- عدّل الروابط دي بروابطك الفعلية -->
+      <a href="#" target="_blank" rel="noopener">إنستجرام</a>
+      <a href="#" target="_blank" rel="noopener">يوتيوب</a>
+      <a href="https://wa.me/201556518897" target="_blank" rel="noopener">واتساب</a>
+    </div>
+    <p class="copyright">© مِداد — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+</body>
+</html>
