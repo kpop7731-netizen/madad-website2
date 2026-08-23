@@ -159,7 +159,7 @@
   .feature-card h3{ font-size:18px; margin-bottom:8px; color:var(--text-light); }
   .feature-card p{ font-size:14px; color:var(--text-muted); line-height:1.8; }
 
-  /* ===== Dynamic Gallery / Inside Pages (مع التأثيرات المتحركة) ===== */
+  /* ===== Dynamic Gallery / Inside Pages ===== */
   .gallery-section { background: var(--bg-card-1); }
   .gallery-grid {
     display: grid;
@@ -629,220 +629,164 @@
 <footer>
   <div class="wrap">
     <div class="brand">مِداد</div>
-    <p class="tagline">وعي … عبادة … إنتاج</p>
+    <div class="tagline">وعي … عبادة … إنتاج</div>
     <div class="social-row">
-      <a href="https://wa.me/201556518997" target="_blank" rel="noopener">واتساب</a>
-      <a href="https://www.youtube.com/watch?v=Zzc_FN3J3d0" target="_blank" rel="noopener">يوتيوب</a>
+      <a href="https://youtube.com" target="_blank">يوتيوب</a>
+      <a href="https://facebook.com" target="_blank">فيسبوك</a>
+      <a href="https://instagram.com" target="_blank">إنستغرام</a>
+      <a href="https://tiktok.com" target="_blank">تيك توك</a>
     </div>
-    <p class="copyright">© مِداد — جميع الحقوق محفوظة</p>
+    <div class="copyright">جميع الحقوق محفوظة © مِداد 2026</div>
   </div>
 </footer>
 
 <script>
-// ==========================================
-// قائمة صور دفتر مِداد وتبيان محتواها
-// ==========================================
-const notebookImages = [
-  {
-    url: "images/daily-planning.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("تخطيط اليوم بمواقيت الصلاة"),
-    title: "تخطيط اليوم بمواقيت الصلاة"
-  },
-  {
-    url: "images/niyyah-bank.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("بنك النيات وعقود العبادة"),
-    title: "بنك النيات وعقود العبادة"
-  },
-  {
-    url: "images/weekly-review.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("المراجعة الأسبوعية والوقفات"),
-    title: "المراجعة الأسبوعية والوقفات"
-  },
-  {
-    url: "images/habits-tracker.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("جدول متابعة العادات اليومية"),
-    title: "جدول متابعة العادات اليومية"
-  },
-  {
-    url: "images/covenant.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("صفحة ميثاقي مع نفسي"),
-    title: "صفحة ميثاقي مع نفسي"
-  },
-  {
-    url: "images/future-letter.jpg",
-    placeholder: "https://via.placeholder.com/600x600/16130F/C9A24B?text=" + encodeURIComponent("رسالة لنفسك بعد ٦٠ يومًا"),
-    title: "رسالة لنفسك بعد ٦٠ يومًا"
-  }
-];
+  // قائمة الصور المضافة من القائمة الخاصة بك
+  const notebookImages = [
+    { url: "images/IMG_3495.JPG", title: "مِداد - نظرة عامة" },
+    { url: "images/IMG_3496.JPG", title: "مِداد - التفاصيل الخارجية" },
+    { url: "images/IMG_3498.JPG", title: "مِداد - التصميم الداخلي" },
+    { url: "images/IMG_3508.JPG", title: "مِداد - صفحة التخطيط" },
+    { url: "images/IMG_3529.JPG", title: "مِداد - بنك النيات" },
+    { url: "images/IMG_3530.JPG", title: "مِداد - متابعة العادات" },
+    { url: "images/IMG_3531.JPG", title: "مِداد - التخطيط بمواقيت الصلاة" },
+    { url: "images/IMG_3533.JPG", title: "مِداد - المراجعة الأسبوعية" },
+    { url: "images/IMG_3534.JPG", title: "مِداد - المراجعة الشهرية" },
+    { url: "images/IMG_3536.JPG", title: "مِداد - ميثاقي مع نفسي" },
+    { url: "images/IMG_3537.JPG", title: "مِداد - رسالة لنفسي" },
+    { url: "images/IMG_3538.JPG", title: "مِداد - جودة الورق والتجليد" },
+    { url: "images/IMG_3540.JPG", title: "مِداد - تقسيم الأيام" },
+    { url: "images/IMG_3541.JPG", title: "مِداد - تفاصيل الصفحة اليومية" },
+    { url: "images/IMG_3542.JPG", title: "مِداد - الرؤية الإيمانية" },
+    { url: "images/IMG_3543.JPG", title: "مِداد - الهوية البصرية" },
+    { url: "images/IMG_3545.JPG", title: "مِداد - نظرة قريبة" },
+    { url: "images/IMG_3546.JPG", title: "مِداد - الخاتمة" }
+  ];
 
-// دالة عرض معرض الصور وتوليد الحركات عند الظهور
-function renderGallery() {
-  const galleryContainer = document.getElementById('dynamicGallery');
-  galleryContainer.innerHTML = '';
-
-  notebookImages.forEach((imgData, index) => {
+  // بناء المعرض الديناميكي
+  const galleryGrid = document.getElementById('dynamicGallery');
+  notebookImages.forEach((img, index) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    // حركة متتالية لظهور العناصر (Staggered animation)
-    item.style.animationDelay = `${index * 0.12}s`;
+    item.style.animationDelay = `${index * 0.1}s`;
     
-    item.onclick = () => openModal(imgData.url, imgData.placeholder, imgData.title);
-
     item.innerHTML = `
       <div class="gallery-img-box">
-        <img src="${imgData.url}" alt="${imgData.title}" loading="lazy" onerror="this.src='${imgData.placeholder}'">
+        <img src="${img.url}" alt="${img.title}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=${encodeURIComponent(img.title)}';">
       </div>
-      <div class="gallery-caption">${imgData.title}</div>
+      <div class="gallery-caption">${img.title}</div>
     `;
-    galleryContainer.appendChild(item);
-  });
-}
 
-// التحكم بالنوافذ المكبرة للصور (Lightbox Modal) مع الانميشن
-function openModal(url, placeholder, title) {
+    item.addEventListener('click', () => openModal(img.url, img.title));
+    galleryGrid.appendChild(item);
+  });
+
+  // Modal / Lightbox System
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
   const modalCaption = document.getElementById('modalCaption');
-  
-  modalImg.src = url;
-  modalImg.onerror = function() { this.src = placeholder; };
-  modalCaption.textContent = title;
-  
-  modal.classList.add('show');
-}
 
-function closeModal() {
-  const modal = document.getElementById('imageModal');
-  modal.classList.remove('show');
-  setTimeout(() => {
-    modal.style.display = "none";
-  }, 300);
-}
-
-// إغلاق النافذة عند النقر خارج الصورة
-window.onclick = function(event) {
-  const modal = document.getElementById('imageModal');
-  if (event.target === modal) {
-    closeModal();
+  function openModal(src, title) {
+    modal.classList.add('show');
+    modalImg.src = src;
+    modalCaption.innerText = title;
   }
-}
 
-// تشغيل المعرض عند فتح الصفحة
-document.addEventListener('DOMContentLoaded', renderGallery);
-
-// ==========================================
-// نموذج الحجز والحسابات
-// ==========================================
-const OWNER_WHATSAPP = "201556518997"; 
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdNahrkkdRIs0PqiaiL1uAfmML8s3uqE35MVlGakPGU1dHutA/formResponse";
-
-const ENTRY_NAME = "entry.1250543120";
-const ENTRY_PHONE = "entry.2075273833";
-const ENTRY_QTY = "entry.1807369720";
-const ENTRY_NOTES = "entry.418540168";
-
-const PRICE_EGYPT = 150; 
-const PRICE_OUTSIDE = 10; 
-
-function getSelectedQty() {
-  const qtySelect = document.getElementById('qty').value;
-  if (qtySelect === 'more') {
-    const customVal = parseInt(document.getElementById('customQty').value, 10);
-    return isNaN(customVal) || customVal < 1 ? 1 : customVal;
+  function closeModal() {
+    modal.classList.remove('show');
   }
-  return parseInt(qtySelect, 10);
-}
 
-function updateTotalPrice() {
-  const location = document.getElementById('location').value;
+  // إغلاق النافذة عند الضغط خارج الصورة أو زر ESC
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // نموذج الحجز والحساب الديناميكي
+  const locationSelect = document.getElementById('location');
+  const qtySelect = document.getElementById('qty');
+  const customQtyBox = document.getElementById('customQtyBox');
+  const customQtyInput = document.getElementById('customQty');
   const priceContainer = document.getElementById('priceContainer');
-  
-  if (!location) {
-    priceContainer.style.display = 'none';
-    return;
+  const totalPriceEl = document.getElementById('totalPrice');
+
+  function updatePrice() {
+    const loc = locationSelect.value;
+    let quantity = 1;
+
+    if (qtySelect.value === 'more') {
+      customQtyBox.style.display = 'block';
+      quantity = parseInt(customQtyInput.value) || 1;
+    } else {
+      customQtyBox.style.display = 'none';
+      quantity = parseInt(qtySelect.value);
+    }
+
+    if (!loc) {
+      priceContainer.style.display = 'none';
+      return;
+    }
+
+    priceContainer.style.display = 'block';
+
+    if (loc === 'egypt') {
+      const pricePerUnit = 250; // افتراضي سعر النسخة داخل مصر
+      totalPriceEl.innerText = (pricePerUnit * quantity) + ' ج.م';
+    } else {
+      totalPriceEl.innerText = 'سيتم التحديد عبر الواتساب حسب الدولة';
+    }
   }
-  
-  priceContainer.style.display = 'block';
-  const qty = getSelectedQty();
-  
-  if (location === 'egypt') {
-    const total = qty * PRICE_EGYPT;
-    document.getElementById('totalPrice').textContent = total + " ج.م";
-  } else if (location === 'outside') {
-    const total = qty * PRICE_OUTSIDE;
-    document.getElementById('totalPrice').textContent = total + " $";
-  }
-}
 
-document.getElementById('location').addEventListener('change', updateTotalPrice);
+  locationSelect.addEventListener('change', updatePrice);
+  qtySelect.addEventListener('change', updatePrice);
+  customQtyInput.addEventListener('input', updatePrice);
 
-document.getElementById('qty').addEventListener('change', function() {
-  const customBox = document.getElementById('customQtyBox');
-  if (this.value === 'more') {
-    customBox.style.display = 'block';
-  } else {
-    customBox.style.display = 'none';
-  }
-  updateTotalPrice();
-});
+  // إرسال الطلب عبر الواتساب
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-document.getElementById('customQty').addEventListener('input', updateTotalPrice);
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const loc = locationSelect.value;
+    let qty = qtySelect.value === 'more' ? customQtyInput.value : qtySelect.value;
+    const notes = document.getElementById('notes').value.trim();
 
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+    let valid = true;
 
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const location = document.getElementById('location').value;
-  const qty = getSelectedQty();
-  const notes = document.getElementById('notes').value.trim();
+    if (!name) {
+      document.getElementById('nameErr').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('nameErr').style.display = 'none';
+    }
 
-  const nameErr = document.getElementById('nameErr');
-  const phoneErr = document.getElementById('phoneErr');
-  const locationErr = document.getElementById('locationErr');
-  
-  nameErr.style.display = 'none';
-  phoneErr.style.display = 'none';
-  locationErr.style.display = 'none';
+    if (!phone) {
+      document.getElementById('phoneErr').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('phoneErr').style.display = 'none';
+    }
 
-  let valid = true;
-  if (!name) { nameErr.style.display = 'block'; valid = false; }
-  if (!phone || phone.length < 8) { phoneErr.style.display = 'block'; valid = false; }
-  if (!location) { locationErr.style.display = 'block'; valid = false; }
-  if (!valid) return;
+    if (!loc) {
+      document.getElementById('locationErr').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('locationErr').style.display = 'none';
+    }
 
-  const formBody = new URLSearchParams();
-  formBody.append(ENTRY_NAME, name);
-  formBody.append(ENTRY_PHONE, phone);
-  formBody.append(ENTRY_QTY, qty + " (" + (location === 'egypt' ? 'داخل مصر' : 'خارج مصر') + ")");
-  formBody.append(ENTRY_NOTES, notes);
+    if (!valid) return;
 
-  fetch(GOOGLE_FORM_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: formBody
-  }).catch(err => console.log(err));
+    const locText = loc === 'egypt' ? 'داخل مصر' : 'خارج مصر';
+    const message = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locText}\n- *عدد النسخ:* ${qty}\n- *ملاحظات/العنوان:* ${notes || 'لا يوجد'}`;
 
-  let locationText = location === 'egypt' ? 'داخل مصر' : 'خارج مصر';
-  let totalPriceText = location === 'egypt' ? (qty * PRICE_EGYPT) + " جنيه مصري" : (qty * PRICE_OUTSIDE) + " دولار أمريكي";
+    const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
 
-  let message = "السلام عليكم، أرغب في حجز نسخة من مشروع (مداد | الشاب المسلم)\n\n";
-  message += "👤 الاسم: " + name + "\n";
-  message += "📞 رقم التواصل: " + phone + "\n";
-  message += "📍 مكان التوصيل: " + locationText + "\n";
-  message += "📚 عدد النسخ: " + qty + "\n";
-  message += "💰 الإجمالي: " + totalPriceText + " (غير شامل الشحن)\n";
-  if (notes) message += "📝 ملاحظات/العنوان: " + notes + "\n";
-
-  const waLink = "https://wa.me/" + OWNER_WHATSAPP + "?text=" + encodeURIComponent(message);
-  window.open(waLink, '_blank');
-
-  document.getElementById('confirmMsg').style.display = 'block';
-  document.getElementById('bookingForm').reset();
-  document.getElementById('customQtyBox').style.display = 'none';
-  document.getElementById('priceContainer').style.display = 'none';
-});
+    document.getElementById('confirmMsg').style.display = 'block';
+  });
 </script>
+
 </body>
 </html>
