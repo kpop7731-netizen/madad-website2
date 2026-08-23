@@ -159,62 +159,59 @@
   .feature-card h3{ font-size:18px; margin-bottom:8px; color:var(--text-light); }
   .feature-card p{ font-size:14px; color:var(--text-muted); line-height:1.8; }
 
-  /* ===== Dynamic Gallery / Inside Pages ===== */
-  .gallery-section { background: var(--bg-card-1); }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /* ===== Dynamic Slider Gallery ===== */
+  .gallery-section { background: var(--bg-card-1); overflow: hidden; }
+  .slider-container {
+    position: relative;
+    max-width: 100%;
+    margin: 30px auto 0;
+    overflow: hidden;
+    padding: 10px 0;
+  }
+  .slider-track {
+    display: flex;
     gap: 20px;
-    margin-top: 30px;
+    transition: transform 0.6s ease-in-out;
   }
   .gallery-item {
+    flex: 0 0 calc((100% - 40px) / 3);
     background: var(--bg-dark);
     border: 0.5px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    text-align: center;
     cursor: pointer;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   }
   .gallery-item:hover { 
-    transform: translateY(-8px) scale(1.02); 
+    transform: translateY(-5px); 
     border-color: var(--gold);
-    box-shadow: 0 12px 30px rgba(201, 162, 75, 0.15);
+    box-shadow: 0 8px 25px rgba(201, 162, 75, 0.15);
   }
   .gallery-img-box {
     width: 100%;
-    height: 280px;
+    height: 320px;
     background: #1a1612;
-    overflow: hidden;
-    position: relative;
   }
   .gallery-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    transition: transform 0.6s ease, filter 0.6s ease;
     filter: brightness(0.95);
   }
   .gallery-item:hover .gallery-img-box img {
-    transform: scale(1.1);
+    transform: scale(1.08);
     filter: brightness(1.05);
   }
-  .gallery-caption {
-    padding: 14px;
-    font-size: 15px;
-    color: var(--text-light);
-    background: var(--bg-card-2);
-    border-top: 0.5px solid var(--border);
-    transition: color 0.3s ease;
+
+  @media (max-width: 850px) {
+    .gallery-item { flex: 0 0 calc((100% - 20px) / 2); }
   }
-  .gallery-item:hover .gallery-caption {
-    color: var(--gold);
+  @media (max-width: 550px) {
+    .gallery-item { flex: 0 0 100%; }
   }
 
-  /* Modal (Lightbox) Animation */
+  /* Modal (Lightbox) */
   .modal {
     display: none;
     position: fixed;
@@ -235,7 +232,7 @@
     margin: auto;
     display: block;
     max-width: 90%;
-    max-height: 80vh;
+    max-height: 85vh;
     border-radius: 10px;
     border: 1px solid var(--gold);
     object-fit: contain;
@@ -244,15 +241,6 @@
   }
   .modal.show .modal-content {
     transform: scale(1);
-  }
-  .modal-caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    text-align: center;
-    color: var(--gold);
-    padding: 15px 0;
-    font-size: 18px;
   }
   .modal-close {
     position: absolute;
@@ -266,13 +254,6 @@
   }
   .modal-close:hover {
     color: var(--gold);
-  }
-
-  @keyframes fadeInUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 
   /* ===== Niyyah highlight ===== */
@@ -521,14 +502,15 @@
     <h2 class="section-title">نظرة من داخل مِداد</h2>
     <p class="section-lead">تصميم هادئ، منظم، ومصمم خصيصاً ليرافق تفاصيل يومك المسلم بكل سلاسة. اضغط على أي صورة لتكبيرها.</p>
 
-    <div class="gallery-grid" id="dynamicGallery"></div>
+    <div class="slider-container" id="sliderContainer">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
   </div>
 </section>
 
 <div id="imageModal" class="modal">
   <span class="modal-close" onclick="closeModal()">&times;</span>
   <img class="modal-content" id="modalImg">
-  <div class="modal-caption" id="modalCaption"></div>
 </div>
 
 <section class="niyyah">
@@ -641,62 +623,101 @@
 </footer>
 
 <script>
-  // قائمة الصور المضافة من القائمة الخاصة بك
+  // قائمة الصور
   const notebookImages = [
-    { url: "images/IMG_3495.JPG", title: "مِداد - نظرة عامة" },
-    { url: "images/IMG_3496.JPG", title: "مِداد - التفاصيل الخارجية" },
-    { url: "images/IMG_3498.JPG", title: "مِداد - التصميم الداخلي" },
-    { url: "images/IMG_3508.JPG", title: "مِداد - صفحة التخطيط" },
-    { url: "images/IMG_3529.JPG", title: "مِداد - بنك النيات" },
-    { url: "images/IMG_3530.JPG", title: "مِداد - متابعة العادات" },
-    { url: "images/IMG_3531.JPG", title: "مِداد - التخطيط بمواقيت الصلاة" },
-    { url: "images/IMG_3533.JPG", title: "مِداد - المراجعة الأسبوعية" },
-    { url: "images/IMG_3534.JPG", title: "مِداد - المراجعة الشهرية" },
-    { url: "images/IMG_3536.JPG", title: "مِداد - ميثاقي مع نفسي" },
-    { url: "images/IMG_3537.JPG", title: "مِداد - رسالة لنفسي" },
-    { url: "images/IMG_3538.JPG", title: "مِداد - جودة الورق والتجليد" },
-    { url: "images/IMG_3540.JPG", title: "مِداد - تقسيم الأيام" },
-    { url: "images/IMG_3541.JPG", title: "مِداد - تفاصيل الصفحة اليومية" },
-    { url: "images/IMG_3542.JPG", title: "مِداد - الرؤية الإيمانية" },
-    { url: "images/IMG_3543.JPG", title: "مِداد - الهوية البصرية" },
-    { url: "images/IMG_3545.JPG", title: "مِداد - نظرة قريبة" },
-    { url: "images/IMG_3546.JPG", title: "مِداد - الخاتمة" }
+    { url: "images/IMG_3495.JPG" },
+    { url: "images/IMG_3496.JPG" },
+    { url: "images/IMG_3498.JPG" },
+    { url: "images/IMG_3508.JPG" },
+    { url: "images/IMG_3529.JPG" },
+    { url: "images/IMG_3530.JPG" },
+    { url: "images/IMG_3531.JPG" },
+    { url: "images/IMG_3533.JPG" },
+    { url: "images/IMG_3534.JPG" },
+    { url: "images/IMG_3536.JPG" },
+    { url: "images/IMG_3537.JPG" },
+    { url: "images/IMG_3538.JPG" },
+    { url: "images/IMG_3540.JPG" },
+    { url: "images/IMG_3541.JPG" },
+    { url: "images/IMG_3542.JPG" },
+    { url: "images/IMG_3543.JPG" },
+    { url: "images/IMG_3545.JPG" },
+    { url: "images/IMG_3546.JPG" }
   ];
 
-  // بناء المعرض الديناميكي
-  const galleryGrid = document.getElementById('dynamicGallery');
-  notebookImages.forEach((img, index) => {
+  const sliderTrack = document.getElementById('sliderTrack');
+  const sliderContainer = document.getElementById('sliderContainer');
+
+  // بناء عناصر الصور داخل المتحرك بدون عناوين
+  notebookImages.forEach((img) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    item.style.animationDelay = `${index * 0.1}s`;
     
     item.innerHTML = `
       <div class="gallery-img-box">
-        <img src="${img.url}" alt="${img.title}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=${encodeURIComponent(img.title)}';">
+        <img src="${img.url}" alt="مِداد" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=مِداد';">
       </div>
-      <div class="gallery-caption">${img.title}</div>
     `;
 
-    item.addEventListener('click', () => openModal(img.url, img.title));
-    galleryGrid.appendChild(item);
+    item.addEventListener('click', () => openModal(img.url));
+    sliderTrack.appendChild(item);
   });
+
+  // التحكم بالحركة التلقائية كل ٣ ثوانٍ
+  let currentIndex = 0;
+  let autoSlideInterval;
+
+  function getVisibleItemsCount() {
+    if (window.innerWidth <= 550) return 1;
+    if (window.innerWidth <= 850) return 2;
+    return 3;
+  }
+
+  function moveSlider() {
+    const visibleCount = getVisibleItemsCount();
+    const maxIndex = notebookImages.length - visibleCount;
+
+    currentIndex++;
+    if (currentIndex > maxIndex) {
+      currentIndex = 0;
+    }
+
+    const itemWidth = sliderTrack.children[0].getBoundingClientRect().width;
+    const gap = 20;
+    const moveAmount = (itemWidth + gap) * currentIndex;
+
+    // الحركة تحترم اتجاه RTL (اليمين إلى اليسار)
+    sliderTrack.style.transform = `translateX(${moveAmount}px)`;
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(moveSlider, 3000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+
+  // إيقاف الحركة عند تحريك الماوس فوق المعرض لإتاحة الفرصة للمعاينة
+  sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+  sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+  // بدء السلايدر عند التحميل
+  startAutoSlide();
 
   // Modal / Lightbox System
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
-  const modalCaption = document.getElementById('modalCaption');
 
-  function openModal(src, title) {
+  function openModal(src) {
     modal.classList.add('show');
     modalImg.src = src;
-    modalCaption.innerText = title;
   }
 
   function closeModal() {
     modal.classList.remove('show');
   }
 
-  // إغلاق النافذة عند الضغط خارج الصورة أو زر ESC
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
@@ -732,7 +753,7 @@
     priceContainer.style.display = 'block';
 
     if (loc === 'egypt') {
-      const pricePerUnit = 250; // افتراضي سعر النسخة داخل مصر
+      const pricePerUnit = 250;
       totalPriceEl.innerText = (pricePerUnit * quantity) + ' ج.م';
     } else {
       totalPriceEl.innerText = 'سيتم التحديد عبر الواتساب حسب الدولة';
