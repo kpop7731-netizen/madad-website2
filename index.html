@@ -373,10 +373,8 @@
     outline: none;
     border-color: var(--gold);
   }
-  .custom-qty-container { display: none; margin-top: 8px; }
 
   .price-container {
-    display: none;
     margin: 22px 0 10px;
     background: rgba(201,162,75,0.04);
     border: 0.5px dashed rgba(201,162,75,0.25);
@@ -395,16 +393,11 @@
     margin-bottom: 8px;
   }
   .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
   }
-  .price-row b { color: var(--gold); font-size: 22px; }
+  .price-row strong { color: var(--gold); font-size: 18px; }
   .shipping-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-  
-  .err { color: var(--err-color); font-size: 12px; margin-top: 4px; display: none; }
   
   .submit-btn {
     width: 100%;
@@ -421,19 +414,8 @@
     transition: background 0.2s;
   }
   .submit-btn:hover { background: #d8b056; }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .confirm-msg {
-    display: none;
-    text-align: center;
-    margin-top: 20px;
-    padding: 16px;
-    background: rgba(201, 162, 75, 0.1);
-    border: 1px solid var(--gold);
-    border-radius: 10px;
-    font-size: 15px;
-    color: var(--gold);
-    line-height: 1.8;
-  }
   .form-note {
     text-align: center;
     font-size: 12px;
@@ -494,7 +476,7 @@
       من هنا بدأت فكرة مِداد: رفيق يومي يساعدك أن تخطط، وتراجع، وتتعلم، وتتابع عاداتك،
       وتعتني بصلتك بالله، وفي الوقت نفسه تتحرك في حياتك إلى الأمام.
     </p>
-    <p class="quote">لأن المداد أثر… والكلمات التي نكتبها اليوم قد تصصبح أثرًا في حياتنا غدًا.</p>
+    <p class="quote">لأن المداد أثر… والكلمات التي نكتبها اليوم قد تصبح أثرًا في حياتنا غدًا.</p>
   </div>
 </section>
 
@@ -600,54 +582,40 @@
         ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
 
-      <form id="bookingForm">
+      <form id="madadOrderForm" onsubmit="submitToGoogleForm(event)">
         <div class="form-group">
-          <label for="name">الاسم بالكامل</label>
-          <input type="text" id="name" placeholder="اكتب اسمك هنا">
-          <div class="err" id="nameErr">من فضلك اكتب اسمك</div>
+          <label for="cust_name">الاسم بالكامل</label>
+          <input type="text" id="cust_name" required placeholder="اكتب اسمك هنا">
         </div>
 
         <div class="form-group">
-          <label for="phone">رقم الواتساب للتواصل والتأكيد</label>
-          <input type="tel" id="phone" placeholder="01xxxxxxxxx">
-          <div class="err" id="phoneErr">من فضلك اكتب رقم هاتف صحيح</div>
+          <label for="cust_phone">رقم الواتساب للتواصل والتأكيد</label>
+          <input type="tel" id="cust_phone" required placeholder="01xxxxxxxxx">
         </div>
 
         <div class="form-group">
-          <label for="location">مكان التوصيل</label>
-          <select id="location">
+          <label for="cust_location">مكان التوصيل</label>
+          <select id="cust_location" required onchange="calculateTotal()">
             <option value="" disabled selected>اختر مكان التوصيل...</option>
-            <option value="egypt">داخل مصر</option>
-            <option value="outside">خارج مصر</option>
-          </select>
-          <div class="err" id="locationErr">من فضلك اختر مكان التوصيل</div>
-        </div>
-
-        <div class="form-group">
-          <label for="qty">عدد النسخ المطلوبة</label>
-          <select id="qty">
-            <option value="1">نسخة واحدة</option>
-            <option value="2">نسختان</option>
-            <option value="3">٣ نسخ</option>
-            <option value="more">أكثر من ذلك (اكتب العدد)</option>
+            <option value="داخل مصر">داخل مصر</option>
+            <option value="خارج مصر">خارج مصر</option>
           </select>
         </div>
 
-        <div class="form-group custom-qty-container" id="customQtyBox">
-          <label for="customQty">حدد عدد النسخ المطلوبة:</label>
-          <input type="number" id="customQty" min="4" value="4" placeholder="أدخل العدد">
+        <div class="form-group">
+          <label for="cust_copies">عدد النسخ المطلوبة</label>
+          <input type="number" id="cust_copies" min="1" value="1" required oninput="calculateTotal()" onchange="calculateTotal()">
         </div>
 
         <div class="form-group">
-          <label for="notes">العنوان أو الملاحظات (اختياري)</label>
-          <textarea id="notes" rows="2" placeholder="المحافظة / الدولة / العنوان التفصيلي..."></textarea>
+          <label for="cust_notes">العنوان أو الملاحظات (اختياري)</label>
+          <textarea id="cust_notes" rows="2" placeholder="المحافظة / الدولة / العنوان التفصيلي..."></textarea>
         </div>
 
-        <div class="price-container" id="priceContainer">
-          <span class="launch-badge" id="launchBadge">عرض الإطلاق الحصري 🔥</span>
-          <div class="price-row">
-            <span>السعر الإجمالي:</span>
-            <b id="totalPrice">-</b>
+        <div class="price-container">
+          <span class="launch-badge">عرض الإطلاق الحصري 🔥</span>
+          <div class="price-row" id="priceSummary">
+            الإجمالي: اختر مكان التوصيل للحساب
           </div>
           <div class="shipping-note">* السعر لا يشمل مصاريف الشحن</div>
         </div>
@@ -655,14 +623,7 @@
         <button type="submit" class="submit-btn" id="submitBtn">احجز نسختك الآن</button>
       </form>
 
-      <div class="confirm-msg" id="confirmMsg">
-        ✅ <b>تم إرسال طلبك بنجاح!</b><br>
-        جاري فتح الواتساب لإكمال التأكيد...<br>
-        إذا لم يفتح تلقائياً، تواصل معنا مباشرة عبر الرقم:<br>
-        <b style="color:var(--text-light); direction:ltr; display:inline-block; margin-top:6px;">+201556518997</b>
-      </div>
-
-      <p class="form-note">بياناتك تُرسل مباشرة عبر حسابك على واتساب بخصوصية تامة.</p>
+      <p class="form-note">سيتم حفظ البيانات وفتح الواتساب مباشرة لإتمام تأكيد طلبك.</p>
     </div>
   </div>
 </section>
@@ -682,7 +643,7 @@
 </footer>
 
 <script>
-  // قائمة الصور مع المجلد المطلوب images/
+  // قائمة الصور
   const notebookImages = [
       { url: "images/IMG_3495.JPG" },
       { url: "images/IMG_3496.JPG" },
@@ -805,93 +766,73 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  // نموذج الحجز والحساب الديناميكي
-  const locationSelect = document.getElementById('location');
-  const qtySelect = document.getElementById('qty');
-  const customQtyBox = document.getElementById('customQtyBox');
-  const customQtyInput = document.getElementById('customQty');
-  const priceContainer = document.getElementById('priceContainer');
-  const totalPriceEl = document.getElementById('totalPrice');
+  // حساب المبلغ الإجمالي تلقائياً
+  function getCalculatedTotalText() {
+    const location = document.getElementById('cust_location').value;
+    const copies = parseInt(document.getElementById('cust_copies').value) || 1;
 
-  function updatePrice() {
-    const loc = locationSelect.value;
-    let quantity = 1;
+    if (!location) return "اختر مكان التوصيل للحساب";
 
-    if (qtySelect.value === 'more') {
-      customQtyBox.style.display = 'block';
-      quantity = parseInt(customQtyInput.value) || 1;
+    if (location === "داخل مصر") {
+      return `${copies * 150} جنيه مصري (${copies} نسخة)`;
     } else {
-      customQtyBox.style.display = 'none';
-      quantity = parseInt(qtySelect.value);
-    }
-
-    if (!loc) {
-      priceContainer.style.display = 'none';
-      return;
-    }
-
-    priceContainer.style.display = 'block';
-
-    if (loc === 'egypt') {
-      const pricePerUnit = 150;
-      totalPriceEl.innerText = (pricePerUnit * quantity) + ' ج.م';
-    } else if (loc === 'outside') {
-      const pricePerUnit = 10;
-      totalPriceEl.innerText = '$' + (pricePerUnit * quantity);
+      return `${copies * 10} دولار أمريكي (${copies} نسخة)`;
     }
   }
 
-  locationSelect.addEventListener('change', updatePrice);
-  qtySelect.addEventListener('change', updatePrice);
-  customQtyInput.addEventListener('input', updatePrice);
+  function calculateTotal() {
+    const summaryBox = document.getElementById('priceSummary');
+    const totalText = getCalculatedTotalText();
+    if (totalText === "اختر مكان التوصيل للحساب") {
+      summaryBox.innerHTML = `الإجمالي: ${totalText}`;
+    } else {
+      summaryBox.innerHTML = `الإجمالي: <strong>${totalText}</strong>`;
+    }
+  }
 
-  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  // إرسال البيانات لـ Google Form ثم فتح الواتساب مباشره للمستخدم
+  function submitToGoogleForm(e) {
     e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerText = "جاري الحجز وتجهيز الواتساب...";
 
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const loc = locationSelect.value;
-    let qty = qtySelect.value === 'more' ? customQtyInput.value : qtySelect.value;
-    const notes = document.getElementById('notes').value.trim();
+    const name = document.getElementById('cust_name').value;
+    const phone = document.getElementById('cust_phone').value;
+    const locationVal = document.getElementById('cust_location').value;
+    const copies = document.getElementById('cust_copies').value;
+    const notesVal = document.getElementById('cust_notes').value;
+    const totalText = getCalculatedTotalText();
 
-    let valid = true;
-
-    if (!name) {
-      document.getElementById('nameErr').style.display = 'block';
-      valid = false;
-    } else {
-      document.getElementById('nameErr').style.display = 'none';
-    }
-
-    if (!phone) {
-      document.getElementById('phoneErr').style.display = 'block';
-      valid = false;
-    } else {
-      document.getElementById('phoneErr').style.display = 'none';
-    }
-
-    if (!loc) {
-      document.getElementById('locationErr').style.display = 'block';
-      valid = false;
-    } else {
-      document.getElementById('locationErr').style.display = 'none';
-    }
-
-    if (!valid) return;
-
-    const locText = loc === 'egypt' ? 'داخل مصر' : 'خارج مصر';
-    const finalPriceText = totalPriceEl.innerText;
+    // 1. تجهيز وإرسال البيانات لـ Google Form
+    const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdNahrkkdRIs0PqiaiL1uAfmML8s3uqE35MVlGakPGU1dHutA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1250543120", name);
+    formData.append("entry.2075273833", phone);
+    formData.append("entry.1807369720", copies);
     
-    const message = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locText}\n- *عدد النسخ:* ${qty}\n- *الإجمالي:* ${finalPriceText}\n- *ملاحظات/العنوان:* ${notes || 'لا يوجد'}`;
+    const fullNotes = `[مكان التوصيل: ${locationVal}] - ${notesVal || 'لا يوجد ملاحظات إضافية'}`;
+    formData.append("entry.418540168", fullNotes);
 
-    const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(message)}`;
-    
-    window.open(whatsappUrl, '_blank');
+    fetch(googleFormURL, {
+      method: "POST",
+      mode: "no-cors",
+      body: formData
+    }).finally(() => {
+      // 2. فتح الواتساب برسالته المجهزة تلقائيًا بعد حفظ البيانات
+      const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}\n- *عدد النسخ:* ${copies}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
+      
+      const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
+      
+      window.open(whatsappUrl, '_blank');
 
-    const confirmMsg = document.getElementById('confirmMsg');
-    confirmMsg.style.display = 'block';
-    confirmMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
+      alert("تم تسجيل حجزك بنجاح! جاري فتح الواتساب للتأكيد.");
+      document.getElementById('madadOrderForm').reset();
+      calculateTotal();
+      btn.disabled = false;
+      btn.innerText = "احجز نسختك الآن";
+    });
+  }
 </script>
 
 </body>
