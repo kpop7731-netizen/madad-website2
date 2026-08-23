@@ -255,7 +255,7 @@
     .slider-arrow-prev { left: 5px; }
   }
 
-  /* Modal (Lightbox) */
+  /* Modal (Lightbox & Confirmation Alert) */
   .modal {
     display: none;
     position: fixed;
@@ -269,7 +269,9 @@
     transition: opacity 0.3s ease;
   }
   .modal.show {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 1;
   }
   .modal-content {
@@ -299,6 +301,47 @@
   .modal-close:hover {
     color: var(--gold);
   }
+
+  /* Modal Confirmation Box */
+  .confirm-box {
+    background: linear-gradient(160deg, var(--bg-card-1), var(--bg-card-2));
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 30px 24px;
+    max-width: 440px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+  .confirm-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  .confirm-title {
+    font-size: 22px;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .confirm-desc {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+  .confirm-btn {
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Amiri', serif;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .confirm-btn:hover { background: #d8b056; }
 
   /* ===== Niyyah highlight ===== */
   .niyyah{
@@ -548,9 +591,23 @@
   </div>
 </section>
 
+<!-- Lightbox Modal -->
 <div id="imageModal" class="modal">
   <span class="modal-close" onclick="closeModal()">&times;</span>
   <img class="modal-content" id="modalImg">
+</div>
+
+<!-- Confirmation Alert Modal -->
+<div id="confirmModal" class="modal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🎉</div>
+    <div class="confirm-title">تم تسجيل طلبك بنجاح!</div>
+    <div class="confirm-desc">
+      شكرًا لحجزك دفتر مِداد.<br>
+      جاري توجيهك الآن إلى الواتساب لإرسال بياناتك وإتمام التأكيد معك مباشرة.
+    </div>
+    <button class="confirm-btn" onclick="closeConfirmModal()">موافق، الانتقال للواتساب</button>
+  </div>
 </div>
 
 <section class="niyyah">
@@ -762,8 +819,29 @@
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
+
+  // Confirmation Modal Controls
+  const confirmModal = document.getElementById('confirmModal');
+  let pendingWhatsappUrl = "";
+
+  function openConfirmModal(whatsappUrl) {
+    pendingWhatsappUrl = whatsappUrl;
+    confirmModal.classList.add('show');
+  }
+
+  function closeConfirmModal() {
+    confirmModal.classList.remove('show');
+    if (pendingWhatsappUrl) {
+      window.open(pendingWhatsappUrl, '_blank');
+      pendingWhatsappUrl = "";
+    }
+  }
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') {
+      closeModal();
+      if (confirmModal.classList.contains('show')) closeConfirmModal();
+    }
   });
 
   // حساب المبلغ الإجمالي تلقائياً
@@ -795,7 +873,7 @@
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = "جاري الحجز وتجهيز الواتساب...";
+    btn.innerText = "جاري تسجيل الحجز...";
 
     const name = document.getElementById('cust_name').value;
     const phone = document.getElementById('cust_phone').value;
@@ -819,14 +897,14 @@
       mode: "no-cors",
       body: formData
     }).finally(() => {
-      // 2. فتح الواتساب برسالته المجهزة تلقائيًا بعد حفظ البيانات
+      // 2. إعداد رابط الواتساب وإظهار نافذة التأكيد للمستخدم
       const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}\n- *عدد النسخ:* ${copies}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
       
       const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
       
-      window.open(whatsappUrl, '_blank');
+      // فتح نافذة التأكيد الأنيقة
+      openConfirmModal(whatsappUrl);
 
-      alert("تم تسجيل حجزك بنجاح! جاري فتح الواتساب للتأكيد.");
       document.getElementById('madadOrderForm').reset();
       calculateTotal();
       btn.disabled = false;
