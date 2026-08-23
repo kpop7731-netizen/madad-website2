@@ -160,6 +160,47 @@
   .feature-card h3{ font-size:18px; margin-bottom:8px; color:var(--text-light); }
   .feature-card p{ font-size:14px; color:var(--text-muted); line-height:1.8; }
 
+  /* ===== Gallery / Inside Pages ===== */
+  .gallery-section { background: var(--bg-card-1); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  .gallery-item {
+    background: var(--bg-dark);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item:hover { transform: translateY(-4px); }
+  .gallery-img-box {
+    width: 100%;
+    height: 240px;
+    background: #1a1612;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    border-bottom: 0.5px solid var(--border);
+    position: relative;
+  }
+  /* استبدل الـ background أو استخدم tag الـ img الفعلي */
+  .gallery-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gallery-caption {
+    padding: 16px;
+    font-size: 16px;
+    color: var(--text-light);
+  }
+
   /* ===== Niyyah highlight ===== */
   .niyyah{
     text-align:center;
@@ -178,14 +219,14 @@
   }
 
   /* ===== Video ===== */
-  .video{ background:var(--bg-card-1); }
+  .video{ background:var(--bg-dark); }
   .video-frame{
     max-width:820px; margin:0 auto;
     aspect-ratio:16/9;
     border-radius:12px;
     overflow:hidden;
     border:0.5px solid var(--border);
-    background:var(--bg-dark);
+    background:var(--bg-card-1);
     box-shadow:0 10px 30px rgba(0,0,0,0.6);
   }
   .video-frame iframe{ width:100%; height:100%; border:0; }
@@ -199,17 +240,18 @@
     padding:36px 28px;
     box-shadow:0 10px 30px rgba(0,0,0,0.5);
   }
-  .counter-box {
+  .booking-banner {
     text-align: center;
     background: rgba(201,162,75,0.08);
     border: 0.5px solid rgba(201,162,75,0.3);
     border-radius: 10px;
-    padding: 10px;
+    padding: 14px;
     margin-bottom: 22px;
     font-size: 15px;
-    color: var(--text-light);
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1.6;
   }
-  .counter-box b { color: var(--gold); font-size: 17px; }
 
   .form-group { margin-bottom: 16px; text-align: right; }
   label {
@@ -261,7 +303,6 @@
   }
   .price-row b { color: var(--gold); font-size: 22px; }
   .shipping-note { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-  .price-warning { color: var(--err-color); font-size: 12px; margin-top: 6px; }
   
   .err { color: var(--err-color); font-size: 12px; margin-top: 4px; display: none; }
   
@@ -318,6 +359,7 @@
     <nav>
       <a href="#story">القصة</a>
       <a href="#content">المحتوى</a>
+      <a href="#gallery">من الداخل</a>
       <a href="#video">الفيديو</a>
       <a href="#booking">الحجز</a>
     </nav>
@@ -362,7 +404,6 @@
     <p class="section-lead">تعمّدنا ألا نجعل كل شيء مزدحمًا أمامك، لأن الهدف ليس أن تمتلئ الصفحة بالحقول، بل أن تستخدمها فعلًا.</p>
 
     <div class="features-grid">
-
       <div class="feature-card">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
         <h3>تخطيط بمواقيت الصلاة</h3>
@@ -398,7 +439,42 @@
         <h3>رسالة لنفسك بعد ٦٠ يومًا</h3>
         <p>تكتبها اليوم ولا تفتحها إلا في نهاية رحلتك — دائرة نفسية مكتملة.</p>
       </div>
+    </div>
+  </div>
+</section>
 
+<!-- ================= Gallery / Inside Notebook ================= -->
+<section class="gallery-section" id="gallery">
+  <div class="wrap">
+    <p class="section-kicker">جولة بصرية</p>
+    <h2 class="section-title">نظرة من داخل مِداد</h2>
+    <p class="section-lead">تصميم هادئ، منظم، ومصمم خصيصاً ليرافق تفاصيل يومك المسلم بكل سلاسة.</p>
+
+    <div class="gallery-grid">
+      <!-- الصورة الأولى -->
+      <div class="gallery-item">
+        <div class="gallery-img-box">
+          <!-- استبدل src برابط صورتك الحقيقية، مثلاً: <img src="assets/page1.jpg" alt="..."> -->
+          <span>صورة التخطيط اليومي (مواقيت الصلاة)</span>
+        </div>
+        <div class="gallery-caption">تخطيط اليوم بمواقيت الصلاة</div>
+      </div>
+
+      <!-- الصورة الثانية -->
+      <div class="gallery-item">
+        <div class="gallery-img-box">
+          <span>صورة بنك النيات وعقود العبادة</span>
+        </div>
+        <div class="gallery-caption">بنك النيات اليومية</div>
+      </div>
+
+      <!-- الصورة الثالثة -->
+      <div class="gallery-item">
+        <div class="gallery-img-box">
+          <span>صورة المراجعة الأسبوعية</span>
+        </div>
+        <div class="gallery-caption">المراجعات والوقفات الدورية</div>
+      </div>
     </div>
   </div>
 </section>
@@ -419,7 +495,7 @@
     <p class="section-kicker">شاهد القصة كاملة</p>
     <h2 class="section-title" style="margin-bottom:40px;">مِداد، من الفكرة إلى يدك</h2>
     <div class="video-frame">
-      <iframe src="https://www.youtube.com/embed/Zzc_FN3J3d0" title="قصة مِداد... الرفيق اليومي للشاب المسلم بعيدًا عن شاشة الهاتف" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/Zzc_FN3J3d0" title="قصة مِداد... الرفيق اليومي للشاب المسلم" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -431,8 +507,9 @@
     <h2 class="section-title" style="margin-bottom:40px;">احجز نسختك الآن</h2>
 
     <div class="booking-card">
-      <div class="counter-box" id="counterBox">
-        متبقي <b id="remaining">…</b> من ٥٠ نسخة من دفعة الإطلاق
+      <!-- بديل عداد النسخ: جملة تحفيزية للحجز -->
+      <div class="booking-banner">
+        ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
 
       <form id="bookingForm">
@@ -475,7 +552,6 @@
             <b id="totalPrice">١٠٠ ج.م</b>
           </div>
           <div class="shipping-note">* السعر لا يشمل مصاريف الشحن</div>
-          <div class="price-warning" id="priceWarning">⚠️ هذا السعر خاص بـ ٥٠ نسخة الأولى فقط، وسيرتفع السعر إلى ١٥٠ ج.م بعد انتهاء دفعة الإطلاق.</div>
         </div>
 
         <button type="submit" class="submit-btn" id="submitBtn">احجز نسختك بسعر الإطلاق الآن</button>
@@ -509,7 +585,6 @@
 // ==========================================
 const OWNER_WHATSAPP = "201556518997"; 
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdNahrkkdRIs0PqiaiL1uAfmML8s3uqE35MVlGakPGU1dHutA/formResponse";
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaoJcSkUTzUPztp7nPEHWHzj970Zypwi7bwy5TshmTKAlRBBcreuRdR7B0GLvA8ZUthQ/exec";
 
 const ENTRY_NAME = "entry.1250543120";
 const ENTRY_PHONE = "entry.2075273833";
@@ -517,44 +592,7 @@ const ENTRY_QTY = "entry.1807369720";
 const ENTRY_NOTES = "entry.418540168";
 // ==========================================
 
-const LAUNCH_PRICE = 100;
-const REGULAR_PRICE = 150;
-const TOTAL_COPIES = 50;
-
-let currentUnitPrice = LAUNCH_PRICE;
-let isLaunchEnded = false;
-
-// جلب العدد المباع وتحديث الحالة آلياً
-async function fetchRemainingFromSheet() {
-  try {
-    const res = await fetch(APPS_SCRIPT_URL);
-    const data = await res.json();
-    const sold = data.totalSold || 0;
-    const remaining = Math.max(TOTAL_COPIES - sold, 0);
-
-    if (sold >= TOTAL_COPIES) {
-      isLaunchEnded = true;
-      currentUnitPrice = REGULAR_PRICE;
-      
-      document.getElementById('counterBox').innerHTML = "تم بيع <b>" + sold + "</b> نسخة حتى الآن";
-      document.getElementById('launchBadge').textContent = "السعر الرسمي";
-      document.getElementById('priceWarning').style.display = 'none';
-      document.getElementById('submitBtn').textContent = "احجز نسختك الآن";
-    } else {
-      isLaunchEnded = false;
-      currentUnitPrice = LAUNCH_PRICE;
-      
-      document.getElementById('counterBox').innerHTML = 'متبقي <b id="remaining">' + remaining + '</b> من ٥٠ نسخة من دفعة الإطلاق';
-      document.getElementById('launchBadge').textContent = "عرض الإطلاق الحصري 🔥";
-      document.getElementById('priceWarning').style.display = 'block';
-      document.getElementById('submitBtn').textContent = "احجز نسختك بسعر الإطلاق الآن";
-    }
-    
-    updateTotalPrice();
-  } catch (err) {
-    console.error("خطأ في جلب العداد:", err);
-  }
-}
+const UNIT_PRICE = 100;
 
 function getSelectedQty() {
   const qtySelect = document.getElementById('qty').value;
@@ -567,7 +605,7 @@ function getSelectedQty() {
 
 function updateTotalPrice() {
   const qty = getSelectedQty();
-  const total = qty * currentUnitPrice;
+  const total = qty * UNIT_PRICE;
   document.getElementById('totalPrice').textContent = total + " ج.م";
 }
 
@@ -582,8 +620,6 @@ document.getElementById('qty').addEventListener('change', function() {
 });
 
 document.getElementById('customQty').addEventListener('input', updateTotalPrice);
-
-fetchRemainingFromSheet();
 
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
   e.preventDefault();
@@ -614,15 +650,10 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: formBody
-  }).then(() => {
-    setTimeout(fetchRemainingFromSheet, 3000);
   }).catch(err => console.log(err));
 
-  const total = qty * currentUnitPrice;
-  let message = isLaunchEnded 
-    ? "السلام عليكم، أرغب في حجز نسخة من مشروع (مداد | الشاب المسلم)\n\n"
-    : "السلام عليكم، أرغب في حجز نسخة بسعر الإطلاق من مشروع (مداد | الشاب المسلم)\n\n";
-
+  const total = qty * UNIT_PRICE;
+  let message = "السلام عليكم، أرغب في حجز نسخة بسعر الإطلاق من مشروع (مداد | الشاب المسلم)\n\n";
   message += "👤 الاسم: " + name + "\n";
   message += "📞 رقم التواصل: " + phone + "\n";
   message += "📚 عدد النسخ: " + qty + "\n";
