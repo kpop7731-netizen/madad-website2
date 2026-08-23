@@ -682,7 +682,7 @@
 </footer>
 
 <script>
-  // قائمة الصور
+  // قائمة الصور كاملة
   const notebookImages = [
     { url: "images/IMG_3495.JPG" },
     { url: "images/IMG_3496.JPG" },
@@ -701,12 +701,13 @@
     { url: "images/IMG_3542.JPG" },
     { url: "images/IMG_3543.JPG" },
     { url: "images/IMG_3545.JPG" },
-    { url: "images/IMG_3549.JPG" },
-    { url: "images/IMG_3550.JPG" },
+    { url: "images/IMG_3546.JPG" },
     { url: "images/IMG_3548.JPG" },
+    { url: "images/IMG_3549.JPG" },
+    { url: "images/IMG_3549.png" },
+    { url: "images/IMG_3550.JPG" },
     { url: "images/IMG_3552.JPG" },
-    { url: "images/IMG_3553.JPG" },
-    { url: "images/IMG_3546.JPG" }
+    { url: "images/IMG_3553.JPG" }
   ];
 
   const sliderTrack = document.getElementById('sliderTrack');
@@ -825,7 +826,6 @@
       quantity = parseInt(qtySelect.value);
     }
 
-    // إخفاء السعر حتى يختار المستخدم مكان التوصيل
     if (!loc) {
       priceContainer.style.display = 'none';
       return;
@@ -834,10 +834,10 @@
     priceContainer.style.display = 'block';
 
     if (loc === 'egypt') {
-      const pricePerUnit = 150; // داخل مصر 150 جنيه
+      const pricePerUnit = 150;
       totalPriceEl.innerText = (pricePerUnit * quantity) + ' ج.م';
     } else if (loc === 'outside') {
-      const pricePerUnit = 10; // خارج مصر 10 دولار
+      const pricePerUnit = 10;
       totalPriceEl.innerText = '$' + (pricePerUnit * quantity);
     }
   }
@@ -887,10 +887,8 @@
 
     const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(message)}`;
     
-    // فتح الواتساب في نافذة جديدة
     window.open(whatsappUrl, '_blank');
 
-    // إظهار رسالة التأكيد
     const confirmMsg = document.getElementById('confirmMsg');
     confirmMsg.style.display = 'block';
     confirmMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
