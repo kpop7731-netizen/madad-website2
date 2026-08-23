@@ -654,33 +654,69 @@
 // ==========================================
 // قائمة صور دفتر مِداد من مجلد images
 // ==========================================
+// ==========================================
+// قائمة الصور والتحويل المباشر
+// ==========================================
 const imageFiles = [
-  IMG_3495.JPG
-IMG_3496.JPG
-IMG_3498.JPG
-IMG_3508.JPG
-IMG_3529.JPG
-IMG_3530.JPG
-IMG_3531.JPG
-IMG_3533.JPG
-IMG_3534.JPG
-IMG_3536.JPG
-IMG_3537.JPG
-IMG_3538.JPG
-IMG_3540.JPG
-IMG_3541.JPG
-IMG_3542.JPG
-IMG_3543.JPG
-IMG_3545.JPG
-IMG_3546.JPG
-IMG_3548.JPG
-IMG_3549.JPG
-IMG_3549.png
-IMG_3550.JPG
-IMG_3552.JPG
-IMG_3553.JPG
-  // يمكنك إضافة باقي أسماء الصور هنا مع مراعاة صيغة .JPG
+  "IMG_3495.JPG",
+  "IMG_3496.JPG",
+  "IMG_3498.JPG",
+  "IMG_3508.JPG",
+  "IMG_3529.JPG",
+  "IMG_3530.JPG",
+  "IMG_3531.JPG",
+  "IMG_3533.JPG",
+  "IMG_3534.JPG",
+  "IMG_3536.JPG",
+  "IMG_3537.JPG",
+  "IMG_3538.JPG",
+  "IMG_3540.JPG",
+  "IMG_3541.JPG",
+  "IMG_3542.JPG",
+  "IMG_3543.JPG",
+  "IMG_3545.JPG",
+  "IMG_3546.JPG",
+  "IMG_3548.JPG",
+  "IMG_3549.png",
+  "IMG_3550.JPG",
+  "IMG_3552.JPG",
+  "IMG_3553.JPG"
 ];
+
+// تحويل الأسماء إلى كائنات تفهمها دالة العرض
+const notebookImages = imageFiles.map((filename, index) => ({
+  url: `images/${filename}`,
+  title: `صفحة من مِداد (${index + 1})`
+}));
+
+// دالة توليد شبكة الصور في الموقع
+function renderGallery() {
+  const galleryContainer = document.getElementById('dynamicGallery') || document.querySelector('.gallery-grid');
+  if (!galleryContainer) return;
+  
+  galleryContainer.innerHTML = '';
+
+  notebookImages.forEach((imgData) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.onclick = () => openModal(imgData.url);
+
+    const encodedUrl = encodeURI(imgData.url);
+
+    item.innerHTML = `
+      <div class="gallery-img-box">
+        <img src="${encodedUrl}" alt="${imgData.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=خطأ+في+تحميل+الصورة'">
+      </div>
+      <div class="gallery-caption">${imgData.title}</div>
+    `;
+    galleryContainer.appendChild(item);
+  });
+}
+
+// تشغيل الدالة فور تحميل الصفحة
+document.addEventListener('DOMContentLoaded', renderGallery);
+renderGallery(); // تشغيل احتياطي مباشر
+  
 
 const notebookImages = imageFiles.map((fileName, index) => ({
   url: `images/${fileName}`,
