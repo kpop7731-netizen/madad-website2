@@ -512,8 +512,27 @@
     margin-top: 16px;
   }
 
-  /* ===== Reviews Section (local, instant) ===== */
+  /* ===== Reviews / Comments Section ===== */
   .reviews-section{ background:var(--bg-card-1); }
+
+  .review-banner{
+    display:none;
+    max-width:600px; margin:0 auto 30px;
+    background:rgba(201,162,75,0.1);
+    border:0.5px solid var(--gold);
+    border-radius:10px;
+    padding:14px 18px;
+    text-align:center;
+    font-size:14px;
+    color:var(--gold);
+    font-weight:700;
+    position:relative;
+  }
+  .review-banner.show{ display:block; }
+  .review-banner .banner-close{
+    position:absolute; top:6px; left:10px;
+    cursor:pointer; color:var(--text-muted); font-size:16px;
+  }
 
   .review-form-card{
     max-width:600px; margin:0 auto 50px;
@@ -553,6 +572,10 @@
   .review-error{
     font-size:12px; color:var(--err-color); margin-top:8px; display:none;
   }
+  .review-success{
+    font-size:13px; color:var(--gold); margin-top:14px; text-align:center; display:none;
+    line-height:1.7;
+  }
 
   .reviews-grid{
     display:grid;
@@ -565,11 +588,6 @@
     border:0.5px solid var(--border);
     border-radius:12px;
     padding:20px;
-    animation: reviewFadeIn .4s ease;
-  }
-  @keyframes reviewFadeIn{
-    from{ opacity:0; transform:translateY(10px); }
-    to{ opacity:1; transform:translateY(0); }
   }
   .review-card-head{
     display:flex; align-items:center; justify-content:space-between;
@@ -588,10 +606,22 @@
     margin-inline-start:6px;
   }
   .review-date{ font-size:11px; color:var(--text-muted); margin-bottom:10px; }
-  .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; }
+  .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:12px; }
+  .review-media-item{
+    width:72px; height:72px;
+    border-radius:8px; overflow:hidden;
+    border:0.5px solid var(--border);
+    cursor:pointer;
+    background:var(--bg-dark);
+  }
+  .review-media-item img{ width:100%; height:100%; object-fit:cover; }
   .reviews-empty{
     text-align:center; color:var(--text-muted); font-size:14px;
     grid-column:1/-1; padding:20px;
+  }
+  .reviews-loading{
+    text-align:center; color:var(--text-muted); font-size:13px;
+    grid-column:1/-1; padding:10px;
   }
 
   /* ===== Footer ===== */
@@ -772,8 +802,13 @@
 <section class="reviews-section" id="reviews">
   <div class="wrap">
     <p class="section-kicker">تجارب المشترين</p>
-    <h2 class="section-title" style="margin-bottom:14px;">آراء من استخدموا مِداد</h2>
-    <p class="section-lead">شارك تجربتك مع مِداد — رأيك يظهر فورًا للجميع!</p>
+    <h2 class="section-title" style="margin-bottom:14px;">آراء وصور من استخدموا مِداد</h2>
+    <p class="section-lead">شارك تجربتك وصور المنتج — تساعد الآخرين وتزيد من مصداقية المنتج!</p>
+
+    <div class="review-banner" id="reviewBanner">
+      <span class="banner-close" id="reviewBannerClose">&times;</span>
+      🎉 مراجعتك السابقة تم نشرها الآن على الموقع، شكرًا لمشاركتك!
+    </div>
 
     <div class="review-form-card">
       <p class="review-invite">أضف تقييمك وتجربتك مع مِداد</p>
@@ -799,13 +834,19 @@
           <textarea id="review_text" rows="3" required placeholder="شاركنا رأيك في المنتج..."></textarea>
         </div>
 
-        <button type="submit" class="submit-btn" id="reviewSubmitBtn">نشر رأيي الآن</button>
+        <div class="form-group">
+          <label for="review_image">رابط صورة لتجربتك (اختياري)</label>
+          <input type="url" id="review_image" placeholder="مثال: رابط صورة من جوجل درايف أو إنستغرام">
+        </div>
+
+        <button type="submit" class="submit-btn" id="reviewSubmitBtn">إرسال تجربتي</button>
         <div class="review-error" id="reviewError"></div>
+        <p class="review-success" id="reviewSuccess">تم استلام مراجعتك، شكرًا لك! ستظهر على الموقع بعد المراجعة من فريق مِداد.</p>
       </form>
     </div>
 
     <div class="reviews-grid" id="reviewsGrid">
-      <p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>
+      <p class="reviews-loading">جاري تحميل المراجعات...</p>
     </div>
   </div>
 </section>
@@ -1119,40 +1160,77 @@
   }
 
   /* ==========================================================
-     قسم آراء المشترين — محلي بالكامل داخل الموقع
+     قسم التعليقات والمراجعات — مربوط بـ Google Form + Google Sheet
      ==========================================================
-     لا يوجد فورم خارجي ولا شيت ولا خادم. كل مراجعة تُنشر فورًا
-     بمجرد الإرسال وتُحفظ في متصفح الجهاز (localStorage) بحيث
-     تبقى ظاهرة عند إعادة فتح الصفحة على نفس الجهاز.
-     ملاحظة: بما أنه لا يوجد خادم مركزي، كل زائر يرى المراجعات
-     التي أُرسلت من متصفحه هو تراكميًا مع نص افتراضي أولي إن
-     وُجد؛ لعرض نفس المراجعات لكل الزوار على كل الأجهزة لاحقًا
-     سيحتاج الأمر خدمة تخزين مركزية حقيقية.
+     - الإرسال: يذهب مباشرة لنفس Google Form الذي أنشأته.
+     - النشر: يقوم صاحب الموقع بكتابة "نعم" يدويًا في عمود
+       "الموافقة" داخل الشيت المرتبط بالفورم.
+     - العرض: الموقع يقرأ الشيت (المنشور كـ CSV عام) تلقائيًا
+       عند فتح الصفحة، ويعرض فقط الصفوف المكتوب أمامها "نعم".
+     - إشعار المُرسِل: كل متصفح يحصل على "رمز جهاز" عشوائي يُحفظ
+       محليًا ويُرسل مع كل مراجعة. لو لاحظ الموقع أن إحدى
+       المراجعات المنشورة تحمل نفس رمز جهازه، يظهر له بانر
+       "تم نشر مراجعتك" — تلقائيًا وبدون خادم أو بريد.
      ========================================================== */
-  const REVIEWS_STORAGE_KEY = 'madad_local_reviews_v1';
-  const MIN_SECONDS_BETWEEN_SUBMITS = 20;
 
-  function loadLocalReviews() {
+  const REVIEW_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeDG5K4-bMjZJmW_tgh3UZ0lcSqqvLiDDXGsidctWuTaYbSAA/formResponse";
+  const REVIEW_ENTRY_NAME = "entry.124551494";
+  const REVIEW_ENTRY_RATING = "entry.921610571";
+  const REVIEW_ENTRY_TEXT = "entry.890805164";
+  const REVIEW_ENTRY_IMAGE = "entry.906401354";
+  const REVIEW_ENTRY_DEVICE = "entry.179483544";
+
+  const REVIEWS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRrnTs-qyKhkHeZLnT6galy6wbRHY6LLr-BwnY5N3r5e-bs2YqeLfCLqEstkzIC5emaEaMqEgLL0OFS/pub?gid=1024262947&single=true&output=csv";
+
+  const MIN_SECONDS_BETWEEN_SUBMITS = 30;
+
+  // ---- رمز الجهاز المحلي (لا يُستخدم لأي غرض آخر) ----
+  function getDeviceCode() {
+    let code = localStorage.getItem('madad_device_code');
+    if (!code) {
+      code = 'd_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem('madad_device_code', code);
+    }
+    return code;
+  }
+
+  function getMyReviewTexts() {
     try {
-      const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
+      return JSON.parse(localStorage.getItem('madad_my_review_texts') || '[]');
     } catch (err) {
       return [];
     }
   }
 
-  function saveLocalReviews(reviews) {
+  function rememberMyReview(text) {
+    const list = getMyReviewTexts();
+    list.push(text.trim());
+    localStorage.setItem('madad_my_review_texts', JSON.stringify(list));
+  }
+
+  function getSeenPublishedTexts() {
     try {
-      localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
+      return JSON.parse(localStorage.getItem('madad_seen_published_texts') || '[]');
     } catch (err) {
-      console.warn('تعذر حفظ المراجعة محليًا.');
+      return [];
     }
   }
 
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str || '';
-    return div.innerHTML;
+  function markSeenPublished(text) {
+    const list = getSeenPublishedTexts();
+    list.push(text.trim());
+    localStorage.setItem('madad_seen_published_texts', JSON.stringify(list));
+  }
+
+  // ---- إرسال مراجعة جديدة ----
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewErrorBox = document.getElementById('reviewError');
+  const reviewSuccessBox = document.getElementById('reviewSuccess');
+
+  function showReviewError(msg) {
+    reviewErrorBox.textContent = msg;
+    reviewErrorBox.style.display = 'block';
+    reviewSuccessBox.style.display = 'none';
   }
 
   function canSubmitReviewNow() {
@@ -1160,49 +1238,15 @@
     return (Date.now() - last) >= MIN_SECONDS_BETWEEN_SUBMITS * 1000;
   }
 
-  function renderReviews() {
-    const grid = document.getElementById('reviewsGrid');
-    const reviews = loadLocalReviews();
-
-    if (!reviews.length) {
-      grid.innerHTML = '<p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>';
-      return;
-    }
-
-    grid.innerHTML = '';
-    reviews.forEach(r => {
-      const card = document.createElement('div');
-      card.className = 'review-card';
-      const starsStr = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      const featuredBadge = r.rating >= 5 ? '<span class="review-badge">مراجعة مميزة</span>' : '';
-
-      card.innerHTML = `
-        <div class="review-card-head">
-          <span class="review-name">${escapeHtml(r.name)}${featuredBadge}</span>
-          <span class="review-stars">${starsStr}</span>
-        </div>
-        <div class="review-date">${escapeHtml(r.date)}</div>
-        <div class="review-text">${escapeHtml(r.text)}</div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  const reviewForm = document.getElementById('reviewForm');
-  const reviewErrorBox = document.getElementById('reviewError');
-
-  function showReviewError(msg) {
-    reviewErrorBox.textContent = msg;
-    reviewErrorBox.style.display = 'block';
-  }
-
   reviewForm.addEventListener('submit', (e) => {
     e.preventDefault();
     reviewErrorBox.style.display = 'none';
+    reviewSuccessBox.style.display = 'none';
 
     const name = document.getElementById('review_name').value.trim();
     const ratingEl = document.querySelector('input[name="rating"]:checked');
     const text = document.getElementById('review_text').value.trim();
+    const imageUrl = document.getElementById('review_image').value.trim();
 
     if (!ratingEl) {
       showReviewError('من فضلك اختر تقييمًا بالنجوم.');
@@ -1213,23 +1257,165 @@
       return;
     }
 
-    const newReview = {
-      name: name,
-      rating: parseInt(ratingEl.value, 10),
-      text: text,
-      date: new Date().toLocaleDateString('ar-EG')
-    };
+    const btn = document.getElementById('reviewSubmitBtn');
+    btn.disabled = true;
+    btn.innerText = 'جاري الإرسال...';
 
-    const reviews = loadLocalReviews();
-    reviews.unshift(newReview);
-    saveLocalReviews(reviews);
-    localStorage.setItem('madad_last_review_ts', Date.now().toString());
+    const deviceCode = getDeviceCode();
 
-    renderReviews();
-    reviewForm.reset();
+    const formData = new FormData();
+    formData.append(REVIEW_ENTRY_NAME, name);
+    formData.append(REVIEW_ENTRY_RATING, ratingEl.value);
+    formData.append(REVIEW_ENTRY_TEXT, text);
+    formData.append(REVIEW_ENTRY_IMAGE, imageUrl);
+    formData.append(REVIEW_ENTRY_DEVICE, deviceCode);
+
+    fetch(REVIEW_FORM_ACTION, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    }).finally(() => {
+      localStorage.setItem('madad_last_review_ts', Date.now().toString());
+      rememberMyReview(text);
+
+      reviewForm.reset();
+      reviewSuccessBox.style.display = 'block';
+      btn.disabled = false;
+      btn.innerText = 'إرسال تجربتي';
+    });
   });
 
-  renderReviews();
+  // ---- قراءة وعرض المراجعات المعتمدة من الشيت ----
+  function parseCSV(csvText) {
+    const rows = [];
+    let row = [];
+    let field = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < csvText.length; i++) {
+      const c = csvText[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (csvText[i + 1] === '"') { field += '"'; i++; }
+          else { inQuotes = false; }
+        } else {
+          field += c;
+        }
+      } else {
+        if (c === '"') inQuotes = true;
+        else if (c === ',') { row.push(field); field = ''; }
+        else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+        else if (c === '\r') { /* ignore */ }
+        else field += c;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+
+    if (!rows.length) return [];
+    const headers = rows[0].map(h => h.trim());
+    return rows.slice(1).filter(r => r.length > 1 || r[0]).map(r => {
+      const obj = {};
+      headers.forEach((h, idx) => { obj[h] = (r[idx] || '').trim(); });
+      return obj;
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  function renderReviews(rows) {
+    const grid = document.getElementById('reviewsGrid');
+    const published = rows.filter(r => (r['الموافقة'] || '').trim() === 'نعم');
+
+    if (!published.length) {
+      grid.innerHTML = '<p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>';
+      return;
+    }
+
+    grid.innerHTML = '';
+    published.forEach(r => {
+      const name = r['الاسم'] || 'مشترٍ';
+      const rating = parseInt(r['التقييم'] || '5', 10) || 5;
+      const text = r['نص المراجعة'] || '';
+      const imageUrl = r['رابط صورة (اختياري)'] || r['رابط صورة'] || '';
+      const timestamp = r['طابع زمني'] || '';
+
+      const card = document.createElement('div');
+      card.className = 'review-card';
+
+      const starsStr = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+      const featuredBadge = rating >= 5 ? '<span class="review-badge">مراجعة مميزة</span>' : '';
+
+      let mediaHtml = '';
+      if (imageUrl) {
+        mediaHtml = `<div class="review-media-item" data-src="${escapeHtml(imageUrl)}"><img src="${escapeHtml(imageUrl)}" alt="صورة تجربة المستخدم" loading="lazy"></div>`;
+      }
+
+      card.innerHTML = `
+        <div class="review-card-head">
+          <span class="review-name">${escapeHtml(name)}${featuredBadge}</span>
+          <span class="review-stars">${starsStr}</span>
+        </div>
+        <div class="review-date">${escapeHtml(timestamp)}</div>
+        <div class="review-text">${escapeHtml(text)}</div>
+        ${mediaHtml}
+      `;
+
+      const mediaEl = card.querySelector('.review-media-item');
+      if (mediaEl) {
+        mediaEl.addEventListener('click', () => openModal(mediaEl.getAttribute('data-src')));
+      }
+
+      grid.appendChild(card);
+    });
+  }
+
+  function checkMyPublishedReviews(rows) {
+    const myTexts = getMyReviewTexts();
+    if (!myTexts.length) return;
+
+    const seen = getSeenPublishedTexts();
+    const deviceCode = getDeviceCode();
+
+    const newlyPublished = rows.some(r => {
+      const isApproved = (r['الموافقة'] || '').trim() === 'نعم';
+      const rowDevice = (r['رمز الجهاز (مخفي)'] || r['رمز الجهاز'] || '').trim();
+      const rowText = (r['نص المراجعة'] || '').trim();
+      return isApproved && rowDevice === deviceCode && !seen.includes(rowText);
+    });
+
+    if (newlyPublished) {
+      document.getElementById('reviewBanner').classList.add('show');
+      rows.forEach(r => {
+        const isApproved = (r['الموافقة'] || '').trim() === 'نعم';
+        const rowDevice = (r['رمز الجهاز (مخفي)'] || r['رمز الجهاز'] || '').trim();
+        const rowText = (r['نص المراجعة'] || '').trim();
+        if (isApproved && rowDevice === deviceCode) markSeenPublished(rowText);
+      });
+    }
+  }
+
+  document.getElementById('reviewBannerClose').addEventListener('click', () => {
+    document.getElementById('reviewBanner').classList.remove('show');
+  });
+
+  function loadReviews() {
+    fetch(REVIEWS_CSV_URL)
+      .then(res => res.text())
+      .then(csvText => {
+        const rows = parseCSV(csvText);
+        renderReviews(rows);
+        checkMyPublishedReviews(rows);
+      })
+      .catch(() => {
+        document.getElementById('reviewsGrid').innerHTML = '<p class="reviews-empty">تعذّر تحميل المراجعات حاليًا، حاول تحديث الصفحة.</p>';
+      });
+  }
+
+  loadReviews();
 </script>
 
 </body>
