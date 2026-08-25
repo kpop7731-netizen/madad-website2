@@ -512,8 +512,9 @@
     margin-top: 16px;
   }
 
-  /* ===== Reviews / Comments Section ===== */
+  /* ===== Reviews Section (local, instant) ===== */
   .reviews-section{ background:var(--bg-card-1); }
+
   .review-form-card{
     max-width:600px; margin:0 auto 50px;
     background:linear-gradient(160deg, var(--bg-card-2), var(--bg-card-1));
@@ -549,48 +550,8 @@
   .star-rating label:hover ~ label{
     color:var(--gold);
   }
-  .file-upload-zone{
-    border:1px dashed var(--border);
-    border-radius:10px;
-    padding:18px;
-    text-align:center;
-    cursor:pointer;
-    color:var(--text-muted);
-    font-size:13px;
-    transition:border-color .2s, color .2s;
-  }
-  .file-upload-zone:hover{ border-color:var(--gold); color:var(--gold); }
-  .file-upload-zone input{ display:none; }
-  .file-preview-row{
-    display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;
-  }
-  .file-preview-item{
-    position:relative;
-    width:72px; height:72px;
-    border-radius:8px;
-    overflow:hidden;
-    border:0.5px solid var(--border);
-    background:var(--bg-dark);
-    display:flex; align-items:center; justify-content:center;
-    font-size:11px; color:var(--text-muted); text-align:center;
-  }
-  .file-preview-item img, .file-preview-item video{
-    width:100%; height:100%; object-fit:cover;
-  }
-  .file-preview-remove{
-    position:absolute; top:2px; left:2px;
-    background:rgba(0,0,0,0.7);
-    color:#fff;
-    width:18px; height:18px;
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:12px; cursor:pointer;
-  }
   .review-error{
     font-size:12px; color:var(--err-color); margin-top:8px; display:none;
-  }
-  .review-mode-note{
-    font-size:11px; color:var(--text-muted); text-align:center; margin-top:10px;
   }
 
   .reviews-grid{
@@ -604,6 +565,11 @@
     border:0.5px solid var(--border);
     border-radius:12px;
     padding:20px;
+    animation: reviewFadeIn .4s ease;
+  }
+  @keyframes reviewFadeIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
   }
   .review-card-head{
     display:flex; align-items:center; justify-content:space-between;
@@ -622,23 +588,10 @@
     margin-inline-start:6px;
   }
   .review-date{ font-size:11px; color:var(--text-muted); margin-bottom:10px; }
-  .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:12px; }
-  .review-media-row{ display:flex; flex-wrap:wrap; gap:8px; }
-  .review-media-item{
-    width:64px; height:64px;
-    border-radius:8px; overflow:hidden;
-    border:0.5px solid var(--border);
-    cursor:pointer;
-    background:var(--bg-dark);
-  }
-  .review-media-item img, .review-media-item video{ width:100%; height:100%; object-fit:cover; }
+  .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; }
   .reviews-empty{
     text-align:center; color:var(--text-muted); font-size:14px;
     grid-column:1/-1; padding:20px;
-  }
-  .reviews-pending-note{
-    text-align:center; font-size:13px; color:var(--gold-deep);
-    margin-top:24px;
   }
 
   /* ===== Footer ===== */
@@ -770,8 +723,7 @@
 <!-- Lightbox Modal -->
 <div id="imageModal" class="modal">
   <span class="modal-close" onclick="closeModal()">&times;</span>
-  <img class="modal-content" id="modalImg" style="display:none;">
-  <video class="modal-content" id="modalVideo" style="display:none;" controls></video>
+  <img class="modal-content" id="modalImg">
 </div>
 
 <!-- Confirmation Alert Modal -->
@@ -820,8 +772,8 @@
 <section class="reviews-section" id="reviews">
   <div class="wrap">
     <p class="section-kicker">تجارب المشترين</p>
-    <h2 class="section-title" style="margin-bottom:14px;">آراء وصور من استخدموا مِداد</h2>
-    <p class="section-lead">شارك تجربتك وصور المنتج — تساعد الآخرين وتزيد من مصداقية المنتج!</p>
+    <h2 class="section-title" style="margin-bottom:14px;">آراء من استخدموا مِداد</h2>
+    <p class="section-lead">شارك تجربتك مع مِداد — رأيك يظهر فورًا للجميع!</p>
 
     <div class="review-form-card">
       <p class="review-invite">أضف تقييمك وتجربتك مع مِداد</p>
@@ -847,26 +799,14 @@
           <textarea id="review_text" rows="3" required placeholder="شاركنا رأيك في المنتج..."></textarea>
         </div>
 
-        <div class="form-group">
-          <label>أرفق صور أو فيديو (اختياري)</label>
-          <div class="file-upload-zone" id="fileUploadZone">
-            اضغط هنا لإرفاق صور / فيديو / PDF
-            <div style="margin-top:4px; font-size:11px;">jpg, png, webp, gif, pdf, mp4 — حتى 10 ميجا للصورة و50 ميجا للفيديو</div>
-            <input type="file" id="review_files" accept=".jpg,.jpeg,.png,.webp,.gif,.pdf,.mp4" multiple>
-          </div>
-          <div class="file-preview-row" id="filePreviewRow"></div>
-          <div class="review-error" id="reviewError"></div>
-        </div>
-
-        <button type="submit" class="submit-btn" id="reviewSubmitBtn">إرسال تجربتي</button>
-        <p class="review-mode-note" id="reviewModeNote"></p>
+        <button type="submit" class="submit-btn" id="reviewSubmitBtn">نشر رأيي الآن</button>
+        <div class="review-error" id="reviewError"></div>
       </form>
     </div>
 
     <div class="reviews-grid" id="reviewsGrid">
       <p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>
     </div>
-    <p class="reviews-pending-note" id="reviewsPendingNote" style="display:none;">بعض المراجعات قيد المراجعة قبل نشرها للعامة.</p>
   </div>
 </section>
 
@@ -1007,7 +947,7 @@
       </div>
     `;
 
-    item.addEventListener('click', () => openModal(img.url, 'image'));
+    item.addEventListener('click', () => openModal(img.url));
     sliderTrack.appendChild(item);
   });
 
@@ -1070,30 +1010,17 @@
 
   startAutoSlide();
 
-  // Modal / Lightbox System (يدعم صور وفيديو)
+  // Modal / Lightbox System
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
-  const modalVideo = document.getElementById('modalVideo');
 
-  function openModal(src, type) {
+  function openModal(src) {
     modal.classList.add('show');
-    if (type === 'video') {
-      modalVideo.src = src;
-      modalVideo.style.display = 'block';
-      modalImg.style.display = 'none';
-      modalVideo.play().catch(()=>{});
-    } else {
-      modalImg.src = src;
-      modalImg.style.display = 'block';
-      modalVideo.style.display = 'none';
-    }
+    modalImg.src = src;
   }
 
   function closeModal() {
     modal.classList.remove('show');
-    modalVideo.pause();
-    modalVideo.removeAttribute('src');
-    modalVideo.load();
   }
 
   modal.addEventListener('click', (e) => {
@@ -1164,17 +1091,11 @@
     const paymentMethodEl = document.querySelector('input[name="payment_method"]:checked');
     const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "غير محدد";
 
-    // 1. تجهيز وإرسال البيانات لـ Google Form
-    // ملاحظة: حقل "طريقة الدفع" لا يملك entry ID مخصص في الفورم الحالي،
-    // لذا يتم إلحاقه ضمن حقل الملاحظات حتى تضيف سؤالًا مخصصًا له في Google Form
-    // وتستبدل الاسم "entry.XXXXXXXXX" أدناه بمعرفه الحقيقي.
     const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdNahrkkdRIs0PqiaiL1uAfmML8s3uqE35MVlGakPGU1dHutA/formResponse";
     const formData = new FormData();
     formData.append("entry.1250543120", name);
     formData.append("entry.2075273833", phone);
     formData.append("entry.1807369720", copies);
-    // إذا أضفت سؤال "طريقة الدفع" في Google Form، استبدل السطر التالي بمعرف entry الحقيقي:
-    // formData.append("entry.XXXXXXXXX", paymentMethod);
 
     const fullNotes = `[مكان التوصيل: ${locationVal}] [طريقة الدفع: ${paymentMethod}] - ${notesVal || 'لا يوجد ملاحظات إضافية'}`;
     formData.append("entry.418540168", fullNotes);
@@ -1184,12 +1105,10 @@
       mode: "no-cors",
       body: formData
     }).finally(() => {
-      // 2. إعداد رابط الواتساب وإظهار نافذة التأكيد للمستخدم
       const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}\n- *عدد النسخ:* ${copies}\n- *طريقة الدفع:* ${paymentMethod}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
       
       const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
       
-      // فتح نافذة التأكيد الأنيقة
       openConfirmModal(whatsappUrl);
 
       document.getElementById('madadOrderForm').reset();
@@ -1200,26 +1119,20 @@
   }
 
   /* ==========================================================
-     قسم التعليقات والمراجعات + رفع الصور/الملفات
+     قسم آراء المشترين — محلي بالكامل داخل الموقع
      ==========================================================
-     - AUTO_PUBLISH = true  -> المراجعة تُنشر فورًا
-     - AUTO_PUBLISH = false -> المراجعة تبقى "قيد المراجعة" حتى
-       يوافق عليها مشرف (انظر دالة adminApproveReview بالأسفل)
-     - التخزين هنا محلي (localStorage) لكل متصفح كحل عرض/تجربة
-       سريع بدون خادم. للانتقال لخادم حقيقي: استبدل الدوال
-       saveReviewsToStorage / loadReviewsFromStorage بنداءات
-       fetch إلى نقطة API مثل: POST /api/reviews/upload
+     لا يوجد فورم خارجي ولا شيت ولا خادم. كل مراجعة تُنشر فورًا
+     بمجرد الإرسال وتُحفظ في متصفح الجهاز (localStorage) بحيث
+     تبقى ظاهرة عند إعادة فتح الصفحة على نفس الجهاز.
+     ملاحظة: بما أنه لا يوجد خادم مركزي، كل زائر يرى المراجعات
+     التي أُرسلت من متصفحه هو تراكميًا مع نص افتراضي أولي إن
+     وُجد؛ لعرض نفس المراجعات لكل الزوار على كل الأجهزة لاحقًا
+     سيحتاج الأمر خدمة تخزين مركزية حقيقية.
      ========================================================== */
-  const AUTO_PUBLISH = true;
-  const REVIEWS_STORAGE_KEY = 'madad_reviews_v1';
-  const MAX_IMAGE_MB = 10;
-  const MAX_VIDEO_MB = 50;
-  const MIN_SECONDS_BETWEEN_SUBMITS = 30;
-  const BANNED_WORDS = []; // أضف كلمات ممنوعة هنا عند الحاجة
+  const REVIEWS_STORAGE_KEY = 'madad_local_reviews_v1';
+  const MIN_SECONDS_BETWEEN_SUBMITS = 20;
 
-  let pendingFiles = []; // {file, dataUrl, type}
-
-  function loadReviewsFromStorage() {
+  function loadLocalReviews() {
     try {
       const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
       return raw ? JSON.parse(raw) : [];
@@ -1228,96 +1141,61 @@
     }
   }
 
-  function saveReviewsToStorage(reviews) {
+  function saveLocalReviews(reviews) {
     try {
       localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
     } catch (err) {
-      console.warn('تعذر حفظ المراجعات محليًا (قد تكون المساحة ممتلئة أو الملفات كبيرة).');
+      console.warn('تعذر حفظ المراجعة محليًا.');
     }
   }
 
-  function containsBannedWords(text) {
-    const lower = text.toLowerCase();
-    return BANNED_WORDS.some(w => w && lower.includes(w.toLowerCase()));
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
   }
 
-  // ---- واجهة رفع الملفات ومعاينتها ----
-  const fileUploadZone = document.getElementById('fileUploadZone');
-  const reviewFilesInput = document.getElementById('review_files');
-  const filePreviewRow = document.getElementById('filePreviewRow');
-  const reviewErrorBox = document.getElementById('reviewError');
+  function canSubmitReviewNow() {
+    const last = parseInt(localStorage.getItem('madad_last_review_ts') || '0', 10);
+    return (Date.now() - last) >= MIN_SECONDS_BETWEEN_SUBMITS * 1000;
+  }
 
-  fileUploadZone.addEventListener('click', () => reviewFilesInput.click());
+  function renderReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    const reviews = loadLocalReviews();
 
-  reviewFilesInput.addEventListener('change', () => {
-    reviewErrorBox.style.display = 'none';
-    const files = Array.from(reviewFilesInput.files || []);
-    const allowedTypes = ['image/jpeg','image/png','image/webp','image/gif','application/pdf','video/mp4'];
+    if (!reviews.length) {
+      grid.innerHTML = '<p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>';
+      return;
+    }
 
-    files.forEach(file => {
-      if (!allowedTypes.includes(file.type)) {
-        showReviewError(`نوع الملف غير مدعوم: ${file.name}`);
-        return;
-      }
-      const isVideo = file.type === 'video/mp4';
-      const maxMb = isVideo ? MAX_VIDEO_MB : MAX_IMAGE_MB;
-      if (file.size > maxMb * 1024 * 1024) {
-        showReviewError(`حجم الملف "${file.name}" أكبر من الحد المسموح (${maxMb} ميجا).`);
-        return;
-      }
+    grid.innerHTML = '';
+    reviews.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      const starsStr = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      const featuredBadge = r.rating >= 5 ? '<span class="review-badge">مراجعة مميزة</span>' : '';
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        const entry = { file, dataUrl: reader.result, type: file.type };
-        pendingFiles.push(entry);
-        renderFilePreview(entry, pendingFiles.length - 1);
-      };
-      reader.readAsDataURL(file);
+      card.innerHTML = `
+        <div class="review-card-head">
+          <span class="review-name">${escapeHtml(r.name)}${featuredBadge}</span>
+          <span class="review-stars">${starsStr}</span>
+        </div>
+        <div class="review-date">${escapeHtml(r.date)}</div>
+        <div class="review-text">${escapeHtml(r.text)}</div>
+      `;
+      grid.appendChild(card);
     });
+  }
 
-    reviewFilesInput.value = '';
-  });
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewErrorBox = document.getElementById('reviewError');
 
   function showReviewError(msg) {
     reviewErrorBox.textContent = msg;
     reviewErrorBox.style.display = 'block';
   }
 
-  function renderFilePreview(entry, index) {
-    const item = document.createElement('div');
-    item.className = 'file-preview-item';
-
-    let inner = '';
-    if (entry.type.startsWith('image/')) {
-      inner = `<img src="${entry.dataUrl}" alt="معاينة">`;
-    } else if (entry.type === 'video/mp4') {
-      inner = `<video src="${entry.dataUrl}" muted></video>`;
-    } else {
-      inner = `PDF`;
-    }
-
-    item.innerHTML = `${inner}<span class="file-preview-remove" data-index="${index}">&times;</span>`;
-    item.querySelector('.file-preview-remove').addEventListener('click', (e) => {
-      const i = parseInt(e.target.getAttribute('data-index'));
-      pendingFiles[i] = null;
-      item.remove();
-    });
-
-    filePreviewRow.appendChild(item);
-  }
-
-  // ---- منع السبام البسيط ----
-  function canSubmitReviewNow() {
-    const last = parseInt(localStorage.getItem('madad_last_review_ts') || '0', 10);
-    const now = Date.now();
-    if (now - last < MIN_SECONDS_BETWEEN_SUBMITS * 1000) {
-      return false;
-    }
-    return true;
-  }
-
-  // ---- إرسال المراجعة ----
-  const reviewForm = document.getElementById('reviewForm');
   reviewForm.addEventListener('submit', (e) => {
     e.preventDefault();
     reviewErrorBox.style.display = 'none';
@@ -1330,131 +1208,26 @@
       showReviewError('من فضلك اختر تقييمًا بالنجوم.');
       return;
     }
-    if (containsBannedWords(text) || containsBannedWords(name)) {
-      showReviewError('نص المراجعة يحتوي على كلمات غير مسموحة.');
-      return;
-    }
     if (!canSubmitReviewNow()) {
       showReviewError('من فضلك انتظر قليلًا قبل إرسال مراجعة أخرى.');
       return;
     }
 
-    const btn = document.getElementById('reviewSubmitBtn');
-    btn.disabled = true;
-    btn.innerText = 'جاري الإرسال...';
-
-    const media = pendingFiles.filter(Boolean).map(f => ({ dataUrl: f.dataUrl, type: f.type }));
-
     const newReview = {
-      id: 'r_' + Date.now(),
       name: name,
       rating: parseInt(ratingEl.value, 10),
       text: text,
-      media: media,
-      status: AUTO_PUBLISH ? 'published' : 'pending',
       date: new Date().toLocaleDateString('ar-EG')
     };
 
-    // نقطة الربط بخادم حقيقي مستقبلاً:
-    // fetch('/api/reviews/upload', { method:'POST', body: buildFormData(newReview) })
-    const reviews = loadReviewsFromStorage();
+    const reviews = loadLocalReviews();
     reviews.unshift(newReview);
-    saveReviewsToStorage(reviews);
+    saveLocalReviews(reviews);
     localStorage.setItem('madad_last_review_ts', Date.now().toString());
 
     renderReviews();
-
     reviewForm.reset();
-    pendingFiles = [];
-    filePreviewRow.innerHTML = '';
-    btn.disabled = false;
-    btn.innerText = 'إرسال تجربتي';
   });
-
-  // ---- عرض المراجعات ----
-  function renderReviews() {
-    const grid = document.getElementById('reviewsGrid');
-    const pendingNote = document.getElementById('reviewsPendingNote');
-    const all = loadReviewsFromStorage();
-    const published = all.filter(r => r.status === 'published');
-    const hasPending = all.some(r => r.status === 'pending');
-
-    pendingNote.style.display = hasPending ? 'block' : 'none';
-
-    if (published.length === 0) {
-      grid.innerHTML = '<p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>';
-      return;
-    }
-
-    grid.innerHTML = '';
-    published.forEach(r => {
-      const card = document.createElement('div');
-      card.className = 'review-card';
-
-      const starsStr = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      const featuredBadge = r.rating >= 5 ? '<span class="review-badge">مراجعة مميزة</span>' : '';
-
-      let mediaHtml = '';
-      if (r.media && r.media.length) {
-        mediaHtml = '<div class="review-media-row">' + r.media.map(m => {
-          if (m.type.startsWith('image/')) {
-            return `<div class="review-media-item" data-src="${m.dataUrl}" data-type="image"><img src="${m.dataUrl}" alt="صورة تجربة"></div>`;
-          } else if (m.type === 'video/mp4') {
-            return `<div class="review-media-item" data-src="${m.dataUrl}" data-type="video"><video src="${m.dataUrl}" muted></video></div>`;
-          } else {
-            return `<div class="review-media-item" data-src="${m.dataUrl}" data-type="pdf">PDF</div>`;
-          }
-        }).join('') + '</div>';
-      }
-
-      card.innerHTML = `
-        <div class="review-card-head">
-          <span class="review-name">${escapeHtml(r.name)}${featuredBadge}</span>
-          <span class="review-stars">${starsStr}</span>
-        </div>
-        <div class="review-date">${r.date}</div>
-        <div class="review-text">${escapeHtml(r.text)}</div>
-        ${mediaHtml}
-      `;
-
-      card.querySelectorAll('.review-media-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const src = el.getAttribute('data-src');
-          const type = el.getAttribute('data-type');
-          if (type === 'pdf') {
-            window.open(src, '_blank');
-          } else {
-            openModal(src, type);
-          }
-        });
-      });
-
-      grid.appendChild(card);
-    });
-  }
-
-  // تنظيف بسيط لمنع XSS عند عرض نصوص المستخدم
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str || '';
-    return div.innerHTML;
-  }
-
-  // دالة مساعدة لمشرف الموقع لاعتماد مراجعة معلّقة يدويًا من الكونسول:
-  // adminApproveReview('r_169...')
-  function adminApproveReview(reviewId) {
-    const reviews = loadReviewsFromStorage();
-    const target = reviews.find(r => r.id === reviewId);
-    if (target) {
-      target.status = 'published';
-      saveReviewsToStorage(reviews);
-      renderReviews();
-    }
-  }
-
-  document.getElementById('reviewModeNote').textContent = AUTO_PUBLISH
-    ? 'يتم نشر مراجعتك فور إرسالها.'
-    : 'سيتم مراجعة تجربتك من فريق مِداد قبل نشرها.';
 
   renderReviews();
 </script>
