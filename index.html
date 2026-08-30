@@ -11,6 +11,16 @@
 <meta property="og:description" content="ليس الإنجاز مجرد أن تخطط ليومك... بل كيف تحوّل كل سعيٍ وحركةٍ فيه إلى عبادة بالنية.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_EG">
+<!-- TODO: استبدل الرابطين التاليين بدومين الموقع الفعلي فور تجهيزه -->
+<meta property="og:url" content="https://your-domain-here.com/">
+<meta property="og:image" content="https://your-domain-here.com/images/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مِداد | الشاب المسلم">
+<meta name="twitter:description" content="نوت بوك إنتاجية إسلامي لمدة ٦٠ يومًا، يرتّب يومك على مواقيت الصلاة لا الساعة.">
+<meta name="twitter:image" content="https://your-domain-here.com/images/og-cover.jpg">
+<link rel="canonical" href="https://your-domain-here.com/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
@@ -48,7 +58,7 @@
     border-bottom:0.5px solid var(--border);
   }
   header .wrap{
-    display:flex; align-items:center; justify-space-between;
+    display:flex; align-items:center; justify-content:space-between;
     padding-top:14px; padding-bottom:14px;
   }
   .brand{ font-family:'Aref Ruqaa', serif; font-size:28px; font-weight:700; color:var(--gold); }
@@ -515,25 +525,6 @@
   /* ===== Reviews / Comments Section ===== */
   .reviews-section{ background:var(--bg-card-1); }
 
-  .review-banner{
-    display:none;
-    max-width:600px; margin:0 auto 30px;
-    background:rgba(201,162,75,0.1);
-    border:0.5px solid var(--gold);
-    border-radius:10px;
-    padding:14px 18px;
-    text-align:center;
-    font-size:14px;
-    color:var(--gold);
-    font-weight:700;
-    position:relative;
-  }
-  .review-banner.show{ display:block; }
-  .review-banner .banner-close{
-    position:absolute; top:6px; left:10px;
-    cursor:pointer; color:var(--text-muted); font-size:16px;
-  }
-
   .review-form-card{
     max-width:600px; margin:0 auto 50px;
     background:linear-gradient(160deg, var(--bg-card-2), var(--bg-card-1));
@@ -607,14 +598,6 @@
   }
   .review-date{ font-size:11px; color:var(--text-muted); margin-bottom:10px; }
   .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:12px; }
-  .review-media-item{
-    width:72px; height:72px;
-    border-radius:8px; overflow:hidden;
-    border:0.5px solid var(--border);
-    cursor:pointer;
-    background:var(--bg-dark);
-  }
-  .review-media-item img{ width:100%; height:100%; object-fit:cover; }
   .reviews-empty{
     text-align:center; color:var(--text-muted); font-size:14px;
     grid-column:1/-1; padding:20px;
@@ -636,26 +619,103 @@
   .social-row a{ font-size:14px; color:var(--text-muted); border-bottom:1px solid transparent; transition:.2s; }
   .social-row a:hover{ color:var(--gold); border-color:var(--gold); }
   .copyright{ font-size:12px; color:#5A5344; }
+
+  /* ===== Mobile nav (hamburger) ===== */
+  .nav-toggle{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    padding:6px; width:36px; height:36px;
+    align-items:center; justify-content:center;
+  }
+  .nav-toggle svg{ width:24px; height:24px; stroke:var(--gold); }
+  @media (max-width:640px){
+    .nav-toggle{ display:flex; }
+    nav{
+      display:none;
+      position:absolute; top:100%; right:0; left:0;
+      background:var(--bg-dark);
+      border-bottom:0.5px solid var(--border);
+      flex-direction:column; gap:0; padding:8px 0;
+    }
+    nav.open{ display:flex; }
+    nav a{ padding:14px 24px; border-top:0.5px solid var(--border); }
+    nav a:first-child{ border-top:none; }
+  }
+
+  /* ===== Video facade (click-to-load) ===== */
+  .video-facade{
+    position:relative; width:100%; height:100%;
+    cursor:pointer; background-size:cover; background-position:center;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .video-facade::after{
+    content:"";
+    position:absolute; inset:0;
+    background:rgba(13,11,8,0.35);
+  }
+  .video-facade .play-btn{
+    position:relative; z-index:2;
+    width:60px; height:60px; border-radius:50%;
+    background:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,0.5);
+    transition:transform .2s;
+  }
+  .video-facade:hover .play-btn{ transform:scale(1.08); }
+  .video-facade .play-btn svg{ width:22px; height:22px; fill:var(--bg-dark); margin-inline-start:3px; }
+
+  /* ===== Stock counter ===== */
+  .stock-note{
+    text-align:center; font-size:13px; color:var(--gold-deep);
+    margin-top:-8px; margin-bottom:20px; font-weight:700;
+  }
+
+  /* ===== FAQ ===== */
+  .faq{ background:var(--bg-card-1); }
+  .faq-list{ max-width:760px; margin:0 auto; }
+  .faq-item{
+    border-bottom:0.5px solid var(--border);
+  }
+  .faq-q{
+    width:100%; text-align:right; background:none; border:none; cursor:pointer;
+    padding:18px 4px; font-family:'Amiri', serif; font-size:16px; font-weight:700;
+    color:var(--text-light); display:flex; justify-content:space-between; align-items:center; gap:12px;
+  }
+  .faq-q svg{ width:18px; height:18px; stroke:var(--gold); flex-shrink:0; transition:transform .25s; }
+  .faq-item.open .faq-q svg{ transform:rotate(180deg); }
+  .faq-a{
+    max-height:0; overflow:hidden; transition:max-height .25s ease;
+    font-size:14px; color:var(--text-muted); line-height:1.9;
+  }
+  .faq-item.open .faq-a{ max-height:300px; }
+  .faq-a p{ padding:0 4px 18px; }
+
+  /* honeypot field - hidden from real users */
+  .hp-field{ position:absolute; left:-9999px; top:-9999px; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
+<header style="position:sticky;">
+  <div class="wrap" style="position:relative;">
     <div class="brand">مِداد</div>
-    <nav>
+    <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mainNav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </button>
+    <nav id="mainNav">
       <a href="#story">القصة</a>
       <a href="#content">المحتوى</a>
       <a href="#gallery">من الداخل</a>
       <a href="#video">الفيديو</a>
       <a href="#reviews">آراء المشترين</a>
+      <a href="#faq">الأسئلة الشائعة</a>
       <a href="#booking">الحجز</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
-  <div class="wordmark">مِداد</div>
+  <h1 class="wordmark">مِداد</h1>
   <div class="rule"></div>
   <p class="tagline">وعي … عبادة … إنتاج</p>
   <p class="subtitle">(الشاب المسلم)</p>
@@ -785,15 +845,11 @@
     <div class="video-grid">
       <div class="video-block">
         <p class="video-block-title">قصة مِداد... الرفيق اليومي للشاب المسلم</p>
-        <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/Zzc_FN3J3d0" title="قصة مِداد... الرفيق اليومي للشاب المسلم" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
+        <div class="video-frame" data-yt-id="Zzc_FN3J3d0" data-yt-title="قصة مِداد... الرفيق اليومي للشاب المسلم"></div>
       </div>
       <div class="video-block">
         <p class="video-block-title">القصة الكاملة — كيف تستخدم المنتج</p>
-        <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/EARvNAQOmPI" title="القصة الكاملة — كيف تستخدم المنتج" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
+        <div class="video-frame" data-yt-id="EARvNAQOmPI" data-yt-title="القصة الكاملة — كيف تستخدم المنتج"></div>
       </div>
     </div>
   </div>
@@ -805,14 +861,13 @@
     <h2 class="section-title" style="margin-bottom:14px;">آراء وصور من استخدموا مِداد</h2>
     <p class="section-lead">شارك تجربتك وصور المنتج — تساعد الآخرين وتزيد من مصداقية المنتج!</p>
 
-    <div class="review-banner" id="reviewBanner">
-      <span class="banner-close" id="reviewBannerClose">&times;</span>
-      🎉 مراجعتك السابقة تم نشرها الآن على الموقع، شكرًا لمشاركتك!
-    </div>
-
     <div class="review-form-card">
       <p class="review-invite">أضف تقييمك وتجربتك مع مِداد</p>
       <form id="reviewForm">
+        <div class="hp-field" aria-hidden="true">
+          <label for="review_website">اتركه فارغًا</label>
+          <input type="text" id="review_website" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="form-group">
           <label for="review_name">اسمك</label>
           <input type="text" id="review_name" required placeholder="اكتب اسمك أو لقبك">
@@ -834,19 +889,44 @@
           <textarea id="review_text" rows="3" required placeholder="شاركنا رأيك في المنتج..."></textarea>
         </div>
 
-        <div class="form-group">
-          <label for="review_image">رابط صورة لتجربتك (اختياري)</label>
-          <input type="url" id="review_image" placeholder="مثال: رابط صورة من جوجل درايف أو إنستغرام">
-        </div>
-
         <button type="submit" class="submit-btn" id="reviewSubmitBtn">إرسال تجربتي</button>
         <div class="review-error" id="reviewError"></div>
-        <p class="review-success" id="reviewSuccess">تم استلام مراجعتك، شكرًا لك! ستظهر على الموقع بعد المراجعة من فريق مِداد.</p>
       </form>
     </div>
 
-    <div class="reviews-grid" id="reviewsGrid">
-      <p class="reviews-loading">جاري تحميل المراجعات...</p>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <p class="section-kicker">أسئلة شائعة</p>
+    <h2 class="section-title" style="margin-bottom:34px;">قبل ما تحجز نسختك</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">هل السعر يشمل الشحن؟
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p><!-- عدّل النص التالي بالتفاصيل الفعلية لمصاريف الشحن --> السعر المعروض لا يشمل مصاريف الشحن، ويتم تحديدها حسب مكان التوصيل ويتم إبلاغك بها عند التأكيد على الواتساب.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">كم تستغرق مدة التوصيل؟
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p><!-- عدّل حسب المدة الفعلية --> يتم التواصل معك على الواتساب لتأكيد الطلب، ثم يتم شحن النسخة خلال المدة المتفق عليها حسب مكان التوصيل.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">ما طرق الدفع المتاحة؟
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>يمكنك الدفع عبر انستاباي، المحافظ الإلكترونية، بيبال (للطلبات خارج مصر)، أو الدفع عند الاستلام حسب المتاح في منطقتك.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">هل يمكنني الحجز من خارج مصر؟
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>نعم، اختر "خارج مصر" في نموذج الحجز وسيتم احتساب السعر بالدولار الأمريكي، مع تأكيد تفاصيل الشحن معك على الواتساب.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -860,8 +940,14 @@
       <div class="booking-banner">
         ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
+      <!-- عدّل الرقم التالي يدويًا حسب الكمية المتبقية فعليًا -->
+      <p class="stock-note">📦 الكمية المتاحة الآن محدودة — احجز نسختك قبل نفادها</p>
 
       <form id="madadOrderForm" onsubmit="submitToGoogleForm(event)">
+        <div class="hp-field" aria-hidden="true">
+          <label for="cust_website">اتركه فارغًا</label>
+          <input type="text" id="cust_website" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="form-group">
           <label for="cust_name">الاسم بالكامل</label>
           <input type="text" id="cust_name" required placeholder="اكتب اسمك هنا">
@@ -947,7 +1033,75 @@
   </div>
 </footer>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "مِداد | الشاب المسلم",
+  "description": "نوت بوك إنتاجية إسلامي لمدة ٦٠ يومًا يجمع العبادة والعلم والعمل والصحة، يرتّب يومك على مواقيت الصلاة لا الساعة.",
+  "brand": { "@type": "Brand", "name": "مِداد" },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EGP",
+    "price": "150",
+    "availability": "https://schema.org/InStock",
+    "url": "https://your-domain-here.com/#booking"
+  }
+}
+</script>
+
 <script>
+  // ---- قائمة الجوال (Hamburger) ----
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mainNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---- فيديوهات يوتيوب: تحميل عند الضغط فقط (facade) لتحسين الأداء والخصوصية ----
+  document.querySelectorAll('.video-frame[data-yt-id]').forEach(frameEl => {
+    const ytId = frameEl.getAttribute('data-yt-id');
+    const ytTitle = frameEl.getAttribute('data-yt-title') || 'فيديو';
+    const facade = document.createElement('div');
+    facade.className = 'video-facade';
+    facade.style.backgroundImage = `url(https://i.ytimg.com/vi/${ytId}/hqdefault.jpg)`;
+    facade.setAttribute('role', 'button');
+    facade.setAttribute('tabindex', '0');
+    facade.setAttribute('aria-label', 'تشغيل: ' + ytTitle);
+    facade.innerHTML = `<span class="play-btn"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg></span>`;
+    function loadVideo() {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
+      iframe.title = ytTitle;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = '0';
+      frameEl.innerHTML = '';
+      frameEl.appendChild(iframe);
+    }
+    facade.addEventListener('click', loadVideo);
+    facade.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadVideo(); } });
+    frameEl.appendChild(facade);
+  });
+
+  // ---- الأسئلة الشائعة (Accordion) ----
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
   // قائمة الصور
   const notebookImages = [
       { url: "images/IMG_3495.JPG" },
@@ -984,7 +1138,7 @@
     
     item.innerHTML = `
       <div class="gallery-img-box">
-        <img src="${img.url}" alt="مِداد" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=مِداد';">
+        <img src="${img.url}" alt="صفحة من داخل دفتر مِداد" loading="lazy" width="600" height="600" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=مِداد';">
       </div>
     `;
 
@@ -1119,6 +1273,11 @@
   // إرسال البيانات لـ Google Form ثم فتح الواتساب مباشره للمستخدم
   function submitToGoogleForm(e) {
     e.preventDefault();
+    // فخ السبام: لو تم ملء هذا الحقل المخفي، فهذا غالبًا بوت
+    if (document.getElementById('cust_website').value.trim() !== '') {
+      return;
+    }
+
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.innerText = "جاري تسجيل الحجز...";
@@ -1160,164 +1319,38 @@
   }
 
   /* ==========================================================
-     قسم التعليقات والمراجعات — مربوط بـ Google Form + Google Sheet
+     قسم التعليقات والمراجعات — عرض فوري محلي بدون خادم
      ==========================================================
-     - الإرسال: يذهب مباشرة لنفس Google Form الذي أنشأته.
-     - النشر: يقوم صاحب الموقع بكتابة "نعم" يدويًا في عمود
-       "الموافقة" داخل الشيت المرتبط بالفورم.
-     - العرض: الموقع يقرأ الشيت (المنشور كـ CSV عام) تلقائيًا
-       عند فتح الصفحة، ويعرض فقط الصفوف المكتوب أمامها "نعم".
-     - إشعار المُرسِل: كل متصفح يحصل على "رمز جهاز" عشوائي يُحفظ
-       محليًا ويُرسل مع كل مراجعة. لو لاحظ الموقع أن إحدى
-       المراجعات المنشورة تحمل نفس رمز جهازه، يظهر له بانر
-       "تم نشر مراجعتك" — تلقائيًا وبدون خادم أو بريد.
+     - لا يوجد Google Form ولا Google Sheet ولا موافقة يدوية.
+     - المراجعة تظهر فورًا في نفس المتصفح عند الإرسال، وتُحفظ
+       محليًا (localStorage) بحيث تبقى ظاهرة لهذا الزائر لاحقًا.
+     - ملاحظة مهمة: بما أن الموقع بلا Backend، هذه المراجعات
+       تظهر فقط لمن أرسلها ولزوار جهازه نفسه، وليست مشتركة بين
+       كل الزوار تلقائيًا. لعرض مراجعات كل الزوار للجميع، يلزم
+       ربط بسيط بخادم/قاعدة بيانات لاحقًا.
+     - قائمة seedReviews أدناه هي مراجعات افتراضية تظهر للجميع؛
+       عدّلها أو أفرغها كما تشاء.
      ========================================================== */
 
-  const REVIEW_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeDG5K4-bMjZJmW_tgh3UZ0lcSqqvLiDDXGsidctWuTaYbSAA/formResponse";
-  const REVIEW_ENTRY_NAME = "entry.124551494";
-  const REVIEW_ENTRY_RATING = "entry.921610571";
-  const REVIEW_ENTRY_TEXT = "entry.890805164";
-  const REVIEW_ENTRY_IMAGE = "entry.906401354";
-  const REVIEW_ENTRY_DEVICE = "entry.179483544";
+  const REVIEWS_STORAGE_KEY = 'madad_local_reviews';
 
-  const REVIEWS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRrnTs-qyKhkHeZLnT6galy6wbRHY6LLr-BwnY5N3r5e-bs2YqeLfCLqEstkzIC5emaEaMqEgLL0OFS/pub?gid=1024262947&single=true&output=csv";
+  // مراجعات تمهيدية تظهر للجميع (عدّل أو احذف كما تشاء)
+  const seedReviews = [
+    // { name: "أحمد", rating: 5, text: "دفتر بجودة عالية وساعدني ألتزم بخطتي اليومية.", date: "" }
+  ];
 
-  const MIN_SECONDS_BETWEEN_SUBMITS = 30;
-
-  // ---- رمز الجهاز المحلي (لا يُستخدم لأي غرض آخر) ----
-  function getDeviceCode() {
-    let code = localStorage.getItem('madad_device_code');
-    if (!code) {
-      code = 'd_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
-      localStorage.setItem('madad_device_code', code);
-    }
-    return code;
-  }
-
-  function getMyReviewTexts() {
+  function getLocalReviews() {
     try {
-      return JSON.parse(localStorage.getItem('madad_my_review_texts') || '[]');
+      return JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY) || '[]');
     } catch (err) {
       return [];
     }
   }
 
-  function rememberMyReview(text) {
-    const list = getMyReviewTexts();
-    list.push(text.trim());
-    localStorage.setItem('madad_my_review_texts', JSON.stringify(list));
-  }
-
-  function getSeenPublishedTexts() {
-    try {
-      return JSON.parse(localStorage.getItem('madad_seen_published_texts') || '[]');
-    } catch (err) {
-      return [];
-    }
-  }
-
-  function markSeenPublished(text) {
-    const list = getSeenPublishedTexts();
-    list.push(text.trim());
-    localStorage.setItem('madad_seen_published_texts', JSON.stringify(list));
-  }
-
-  // ---- إرسال مراجعة جديدة ----
-  const reviewForm = document.getElementById('reviewForm');
-  const reviewErrorBox = document.getElementById('reviewError');
-  const reviewSuccessBox = document.getElementById('reviewSuccess');
-
-  function showReviewError(msg) {
-    reviewErrorBox.textContent = msg;
-    reviewErrorBox.style.display = 'block';
-    reviewSuccessBox.style.display = 'none';
-  }
-
-  function canSubmitReviewNow() {
-    const last = parseInt(localStorage.getItem('madad_last_review_ts') || '0', 10);
-    return (Date.now() - last) >= MIN_SECONDS_BETWEEN_SUBMITS * 1000;
-  }
-
-  reviewForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    reviewErrorBox.style.display = 'none';
-    reviewSuccessBox.style.display = 'none';
-
-    const name = document.getElementById('review_name').value.trim();
-    const ratingEl = document.querySelector('input[name="rating"]:checked');
-    const text = document.getElementById('review_text').value.trim();
-    const imageUrl = document.getElementById('review_image').value.trim();
-
-    if (!ratingEl) {
-      showReviewError('من فضلك اختر تقييمًا بالنجوم.');
-      return;
-    }
-    if (!canSubmitReviewNow()) {
-      showReviewError('من فضلك انتظر قليلًا قبل إرسال مراجعة أخرى.');
-      return;
-    }
-
-    const btn = document.getElementById('reviewSubmitBtn');
-    btn.disabled = true;
-    btn.innerText = 'جاري الإرسال...';
-
-    const deviceCode = getDeviceCode();
-
-    const formData = new FormData();
-    formData.append(REVIEW_ENTRY_NAME, name);
-    formData.append(REVIEW_ENTRY_RATING, ratingEl.value);
-    formData.append(REVIEW_ENTRY_TEXT, text);
-    formData.append(REVIEW_ENTRY_IMAGE, imageUrl);
-    formData.append(REVIEW_ENTRY_DEVICE, deviceCode);
-
-    fetch(REVIEW_FORM_ACTION, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: formData
-    }).finally(() => {
-      localStorage.setItem('madad_last_review_ts', Date.now().toString());
-      rememberMyReview(text);
-
-      reviewForm.reset();
-      reviewSuccessBox.style.display = 'block';
-      btn.disabled = false;
-      btn.innerText = 'إرسال تجربتي';
-    });
-  });
-
-  // ---- قراءة وعرض المراجعات المعتمدة من الشيت ----
-  function parseCSV(csvText) {
-    const rows = [];
-    let row = [];
-    let field = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < csvText.length; i++) {
-      const c = csvText[i];
-      if (inQuotes) {
-        if (c === '"') {
-          if (csvText[i + 1] === '"') { field += '"'; i++; }
-          else { inQuotes = false; }
-        } else {
-          field += c;
-        }
-      } else {
-        if (c === '"') inQuotes = true;
-        else if (c === ',') { row.push(field); field = ''; }
-        else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
-        else if (c === '\r') { /* ignore */ }
-        else field += c;
-      }
-    }
-    if (field.length || row.length) { row.push(field); rows.push(row); }
-
-    if (!rows.length) return [];
-    const headers = rows[0].map(h => h.trim());
-    return rows.slice(1).filter(r => r.length > 1 || r[0]).map(r => {
-      const obj = {};
-      headers.forEach((h, idx) => { obj[h] = (r[idx] || '').trim(); });
-      return obj;
-    });
+  function saveLocalReview(review) {
+    const list = getLocalReviews();
+    list.unshift(review);
+    localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(list));
   }
 
   function escapeHtml(str) {
@@ -1326,96 +1359,74 @@
     return div.innerHTML;
   }
 
-  function renderReviews(rows) {
+  function renderReviews() {
     const grid = document.getElementById('reviewsGrid');
-    const published = rows.filter(r => (r['الموافقة'] || '').trim() === 'نعم');
+    const all = [...getLocalReviews(), ...seedReviews];
 
-    if (!published.length) {
+    if (!all.length) {
       grid.innerHTML = '<p class="reviews-empty">كن أول من يشارك تجربته مع مِداد!</p>';
       return;
     }
 
     grid.innerHTML = '';
-    published.forEach(r => {
-      const name = r['الاسم'] || 'مشترٍ';
-      const rating = parseInt(r['التقييم'] || '5', 10) || 5;
-      const text = r['نص المراجعة'] || '';
-      const imageUrl = r['رابط صورة (اختياري)'] || r['رابط صورة'] || '';
-      const timestamp = r['طابع زمني'] || '';
-
-      const card = document.createElement('div');
-      card.className = 'review-card';
-
+    all.forEach(r => {
+      const rating = parseInt(r.rating, 10) || 5;
       const starsStr = '★'.repeat(rating) + '☆'.repeat(5 - rating);
       const featuredBadge = rating >= 5 ? '<span class="review-badge">مراجعة مميزة</span>' : '';
 
-      let mediaHtml = '';
-      if (imageUrl) {
-        mediaHtml = `<div class="review-media-item" data-src="${escapeHtml(imageUrl)}"><img src="${escapeHtml(imageUrl)}" alt="صورة تجربة المستخدم" loading="lazy"></div>`;
-      }
-
+      const card = document.createElement('div');
+      card.className = 'review-card';
       card.innerHTML = `
         <div class="review-card-head">
-          <span class="review-name">${escapeHtml(name)}${featuredBadge}</span>
+          <span class="review-name">${escapeHtml(r.name)}${featuredBadge}</span>
           <span class="review-stars">${starsStr}</span>
         </div>
-        <div class="review-date">${escapeHtml(timestamp)}</div>
-        <div class="review-text">${escapeHtml(text)}</div>
-        ${mediaHtml}
+        <div class="review-date">${escapeHtml(r.date || '')}</div>
+        <div class="review-text">${escapeHtml(r.text)}</div>
       `;
-
-      const mediaEl = card.querySelector('.review-media-item');
-      if (mediaEl) {
-        mediaEl.addEventListener('click', () => openModal(mediaEl.getAttribute('data-src')));
-      }
-
       grid.appendChild(card);
     });
   }
 
-  function checkMyPublishedReviews(rows) {
-    const myTexts = getMyReviewTexts();
-    if (!myTexts.length) return;
+  // ---- إرسال مراجعة جديدة (تظهر فورًا، بلا خادم) ----
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewErrorBox = document.getElementById('reviewError');
 
-    const seen = getSeenPublishedTexts();
-    const deviceCode = getDeviceCode();
+  function showReviewError(msg) {
+    reviewErrorBox.textContent = msg;
+    reviewErrorBox.style.display = 'block';
+  }
 
-    const newlyPublished = rows.some(r => {
-      const isApproved = (r['الموافقة'] || '').trim() === 'نعم';
-      const rowDevice = (r['رمز الجهاز (مخفي)'] || r['رمز الجهاز'] || '').trim();
-      const rowText = (r['نص المراجعة'] || '').trim();
-      return isApproved && rowDevice === deviceCode && !seen.includes(rowText);
+  reviewForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    reviewErrorBox.style.display = 'none';
+
+    // فخ السبام
+    if (document.getElementById('review_website').value.trim() !== '') {
+      return;
+    }
+
+    const name = document.getElementById('review_name').value.trim();
+    const ratingEl = document.querySelector('input[name="rating"]:checked');
+    const text = document.getElementById('review_text').value.trim();
+
+    if (!ratingEl) {
+      showReviewError('من فضلك اختر تقييمًا بالنجوم.');
+      return;
+    }
+
+    saveLocalReview({
+      name: name,
+      rating: ratingEl.value,
+      text: text,
+      date: new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })
     });
 
-    if (newlyPublished) {
-      document.getElementById('reviewBanner').classList.add('show');
-      rows.forEach(r => {
-        const isApproved = (r['الموافقة'] || '').trim() === 'نعم';
-        const rowDevice = (r['رمز الجهاز (مخفي)'] || r['رمز الجهاز'] || '').trim();
-        const rowText = (r['نص المراجعة'] || '').trim();
-        if (isApproved && rowDevice === deviceCode) markSeenPublished(rowText);
-      });
-    }
-  }
-
-  document.getElementById('reviewBannerClose').addEventListener('click', () => {
-    document.getElementById('reviewBanner').classList.remove('show');
+    reviewForm.reset();
+    renderReviews();
   });
 
-  function loadReviews() {
-    fetch(REVIEWS_CSV_URL)
-      .then(res => res.text())
-      .then(csvText => {
-        const rows = parseCSV(csvText);
-        renderReviews(rows);
-        checkMyPublishedReviews(rows);
-      })
-      .catch(() => {
-        document.getElementById('reviewsGrid').innerHTML = '<p class="reviews-empty">تعذّر تحميل المراجعات حاليًا، حاول تحديث الصفحة.</p>';
-      });
-  }
-
-  loadReviews();
+  renderReviews();
 </script>
 
 </body>
