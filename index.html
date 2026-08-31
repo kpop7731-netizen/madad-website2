@@ -946,7 +946,7 @@
       <!-- عدّل الرقم التالي يدويًا حسب الكمية المتبقية فعليًا -->
       <p class="stock-note">📦 الكمية المتاحة الآن محدودة — احجز نسختك قبل نفادها</p>
 
-      <form id="madadOrderForm" onsubmit="submitOrder(event)">
+      <form id="madadOrderForm" onsubmit="submitToGoogleForm(event)">
         <div class="hp-field" aria-hidden="true">
           <label for="cust_website">اتركه فارغًا</label>
           <input type="text" id="cust_website" name="website" tabindex="-1" autocomplete="off">
@@ -963,44 +963,10 @@
 
         <div class="form-group">
           <label for="cust_location">مكان التوصيل</label>
-          <select id="cust_location" required onchange="calculateTotal(); toggleGovernorateField(); togglePaymentOptions();">
+          <select id="cust_location" required onchange="calculateTotal()">
             <option value="" disabled selected>اختر مكان التوصيل...</option>
             <option value="داخل مصر">داخل مصر</option>
             <option value="خارج مصر">خارج مصر</option>
-          </select>
-        </div>
-
-        <div class="form-group" id="governorateGroup" style="display:none;">
-          <label for="cust_governorate">المحافظة</label>
-          <select id="cust_governorate">
-            <option value="" disabled selected>اختر المحافظة...</option>
-            <option value="القاهرة">القاهرة</option>
-            <option value="الجيزة">الجيزة</option>
-            <option value="الإسكندرية">الإسكندرية</option>
-            <option value="الدقهلية">الدقهلية</option>
-            <option value="الشرقية">الشرقية</option>
-            <option value="القليوبية">القليوبية</option>
-            <option value="كفر الشيخ">كفر الشيخ</option>
-            <option value="المنوفية">المنوفية</option>
-            <option value="الغربية">الغربية</option>
-            <option value="الفيوم">الفيوم</option>
-            <option value="بني سويف">بني سويف</option>
-            <option value="المنيا">المنيا</option>
-            <option value="أسيوط">أسيوط</option>
-            <option value="سوهاج">سوهاج</option>
-            <option value="قنا">قنا</option>
-            <option value="الأقصر">الأقصر</option>
-            <option value="أسوان">أسوان</option>
-            <option value="البحر الأحمر">البحر الأحمر</option>
-            <option value="الوادي الجديد">الوادي الجديد</option>
-            <option value="مطروح">مطروح</option>
-            <option value="جنوب سيناء">جنوب سيناء</option>
-            <option value="بورسعيد">بورسعيد</option>
-            <option value="الإسماعيلية">الإسماعيلية</option>
-            <option value="السويس">السويس</option>
-            <option value="دمياط">دمياط</option>
-            <option value="البحيرة">البحيرة</option>
-            <option value="أخرى">أخرى</option>
           </select>
         </div>
 
@@ -1012,35 +978,25 @@
         <div class="form-group">
           <label>طريقة الدفع</label>
           <div class="payment-options">
-            <label class="payment-option" id="payInstapayOption">
+            <label class="payment-option">
               <input type="radio" name="payment_method" value="انستاباي" required>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h3"/></svg>
               <span>انستاباي</span>
             </label>
-            <label class="payment-option" id="payWalletOption">
+            <label class="payment-option">
               <input type="radio" name="payment_method" value="محفظة إلكترونية" required>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2v-9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2H6a2 2 0 00-2 2v2"/><circle cx="16" cy="14" r="1.5"/></svg>
               <span>محفظة إلكترونية</span>
             </label>
-            <label class="payment-option" id="payPaypalOption" style="display:none;">
+            <label class="payment-option">
               <input type="radio" name="payment_method" value="بيبال" required>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h7a4 4 0 014 4c0 3-2 5-5 5H9l-1 6"/><path d="M9 13l-2 7"/></svg>
               <span>بيبال</span>
             </label>
-            <label class="payment-option" id="payBankOption" style="display:none;">
-              <input type="radio" name="payment_method" value="الحساب البنكي المباشر" required>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M4 10v9h16v-9"/><path d="M9 21v-6h6v6"/></svg>
-              <span>الحساب البنكي المباشر</span>
-            </label>
-            <label class="payment-option" id="payCodOption">
+            <label class="payment-option">
               <input type="radio" name="payment_method" value="الدفع عند الاستلام" required>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M3 12h18"/></svg>
               <span>الدفع عند الاستلام</span>
-            </label>
-            <label class="payment-option" id="payOtherOption" style="display:none;">
-              <input type="radio" name="payment_method" value="طريقة أخرى" required>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2 2-2 3.5"/><path d="M12 17h.01"/></svg>
-              <span>طريقة أخرى</span>
             </label>
           </div>
         </div>
@@ -1317,59 +1273,8 @@
     }
   }
 
-  function togglePaymentOptions() {
-    const location = document.getElementById('cust_location').value;
-    const isInternational = location === 'خارج مصر';
-
-    const domesticOptions = [
-      document.getElementById('payInstapayOption'),
-      document.getElementById('payWalletOption'),
-      document.getElementById('payCodOption')
-    ];
-    const internationalOptions = [
-      document.getElementById('payPaypalOption'),
-      document.getElementById('payBankOption'),
-      document.getElementById('payOtherOption')
-    ];
-
-    domesticOptions.forEach(opt => { opt.style.display = isInternational ? 'none' : 'flex'; });
-    internationalOptions.forEach(opt => { opt.style.display = isInternational ? 'flex' : 'none'; });
-
-    // لو الخيار المختار حاليًا اتخفى، نلغي اختياره عشان مايفضلش طلب بطريقة دفع غير ظاهرة
-    [...domesticOptions, ...internationalOptions].forEach(option => {
-      if (option.style.display === 'none') {
-        const input = option.querySelector('input[type="radio"]');
-        if (input) input.checked = false;
-      }
-    });
-  }
-
-  function toggleGovernorateField() {
-    const location = document.getElementById('cust_location').value;
-    const group = document.getElementById('governorateGroup');
-    const govSelect = document.getElementById('cust_governorate');
-
-    if (location === 'داخل مصر') {
-      group.style.display = 'block';
-      govSelect.required = true;
-    } else {
-      group.style.display = 'none';
-      govSelect.required = false;
-      govSelect.value = '';
-    }
-  }
-
-  /* ==========================================================
-     إرسال الحجز — يتصل مباشرة بنظام مِداد الآلي (Apps Script)
-     بدل جوجل فورم القديم المكسور، ويفتح الواتساب بعد التأكيد
-     ==========================================================
-     مهم: بدّل الرابط تحت برابط الـ Web App بتاعك بعد النشر
-     (Deploy → New deployment → Web app → Execute as: Me →
-     Access: Anyone) من ملف كود_نظام_مداد_الكامل.gs
-     ========================================================== */
-  const ORDERS_API_URL = "https://script.google.com/macros/s/AKfycbxWoSSwyPUy5eE3snzT2YLaU2zJ8SgrZyigauwO0emtuvB4f6RDb545DExqpakwQlmeoA/exec";
-
-  function submitOrder(e) {
+  // إرسال البيانات لـ Google Form ثم فتح الواتساب مباشره للمستخدم
+  function submitToGoogleForm(e) {
     e.preventDefault();
     // فخ السبام: لو تم ملء هذا الحقل المخفي، فهذا غالبًا بوت
     if (document.getElementById('cust_website').value.trim() !== '') {
@@ -1382,56 +1287,38 @@
 
     const name = document.getElementById('cust_name').value;
     const phone = document.getElementById('cust_phone').value;
-    const locationVal = document.getElementById('cust_location').value; // "داخل مصر" أو "خارج مصر"
-    const governorateVal = document.getElementById('cust_governorate').value; // فارغة تلقائيًا لو "خارج مصر"
+    const locationVal = document.getElementById('cust_location').value;
     const copies = document.getElementById('cust_copies').value;
-    const notesVal = document.getElementById('cust_notes').value; // عنوان تفصيلي أو اسم الدولة لو خارج مصر
+    const notesVal = document.getElementById('cust_notes').value;
+    const totalText = getCalculatedTotalText();
     const paymentMethodEl = document.querySelector('input[name="payment_method"]:checked');
-    const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "الدفع عند الاستلام";
+    const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "غير محدد";
 
-    // نرسل كنص عادي (text/plain) لتفادي مشاكل CORS الشهيرة مع Apps Script
-    fetch(ORDERS_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({
-        name: name,
-        phone: phone,
-        address: notesVal || 'لم يُذكر عنوان تفصيلي',
-        governorate: locationVal === 'داخل مصر' ? governorateVal : 'خارج مصر',
-        location: locationVal,
-        quantity: copies,
-        paymentMethod: paymentMethod
-      })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          alert(data.reason === 'نفاد المخزون'
-            ? 'عذرًا، النسخ المتاحة خلصت مؤقتًا. تواصل معنا على الواتساب للاستفسار.'
-            : 'حصل خطأ أثناء تسجيل الحجز، حاول مرة أخرى أو تواصل معنا مباشرة.');
-          btn.disabled = false;
-          btn.innerText = "احجز نسختك الآن";
-          return;
-        }
+    const googleFormURL = "https://docs.google.com/forms/d/e/1FAIpQLSdNahrkkdRIs0PqiaiL1uAfmML8s3uqE35MVlGakPGU1dHutA/formResponse";
+    const formData = new FormData();
+    formData.append("entry.1250543120", name);
+    formData.append("entry.2075273833", phone);
+    formData.append("entry.1807369720", copies);
 
-        const totalText = data.currency === 'دولار' ? `${data.price}$` : `${data.price} جنيه`;
-        const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n- *المحافظة:* ${governorateVal}` : '';
-        const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود تأكيد حجزي رقم ${data.orderId} لدفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}${govLine}\n- *عدد النسخ:* ${copies}\n- *طريقة الدفع:* ${paymentMethod}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
+    const fullNotes = `[مكان التوصيل: ${locationVal}] [طريقة الدفع: ${paymentMethod}] - ${notesVal || 'لا يوجد ملاحظات إضافية'}`;
+    formData.append("entry.418540168", fullNotes);
 
-        const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
+    fetch(googleFormURL, {
+      method: "POST",
+      mode: "no-cors",
+      body: formData
+    }).finally(() => {
+      const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود حجز دفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}\n- *عدد النسخ:* ${copies}\n- *طريقة الدفع:* ${paymentMethod}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
+      
+      const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
+      
+      openConfirmModal(whatsappUrl);
 
-        openConfirmModal(whatsappUrl);
-
-        document.getElementById('madadOrderForm').reset();
-        calculateTotal();
-      })
-      .catch(() => {
-        alert('تعذّر الاتصال بالنظام حاليًا، تأكد من اتصالك بالإنترنت وحاول مرة أخرى.');
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerText = "احجز نسختك الآن";
-      });
+      document.getElementById('madadOrderForm').reset();
+      calculateTotal();
+      btn.disabled = false;
+      btn.innerText = "احجز نسختك الآن";
+    });
   }
 
   /* ==========================================================
