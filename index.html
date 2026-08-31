@@ -11,7 +11,6 @@
 <meta property="og:description" content="ليس الإنجاز مجرد أن تخطط ليومك... بل كيف تحوّل كل سعيٍ وحركةٍ فيه إلى عبادة بالنية.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_EG">
-<!-- TODO: استبدل الرابطين التاليين بدومين الموقع الفعلي فور تجهيزه -->
 <meta property="og:url" content="https://your-domain-here.com/">
 <meta property="og:image" content="https://your-domain-here.com/images/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -365,10 +364,6 @@
     font-weight:700;
     line-height:2;
   }
-  .niyyah cite{
-    display:block; margin-top:20px; font-style:normal;
-    font-size:14px; color:var(--text-muted);
-  }
 
   /* ===== Video ===== */
   .video{ background:var(--bg-dark); }
@@ -445,7 +440,6 @@
     border-color: var(--gold);
   }
 
-  /* ===== Payment method field ===== */
   .payment-options{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
@@ -560,13 +554,8 @@
   .star-rating label:hover ~ label{
     color:var(--gold);
   }
-  .review-error{
-    font-size:12px; color:var(--err-color); margin-top:8px; display:none;
-  }
-  .review-success{
-    font-size:13px; color:var(--gold); margin-top:14px; text-align:center; display:none;
-    line-height:1.7;
-  }
+  .review-error{ font-size:12px; color:var(--err-color); margin-top:8px; display:none; }
+  .review-success{ font-size:13px; color:var(--gold); margin-top:14px; text-align:center; display:none; line-height:1.7; }
 
   .reviews-grid{
     display:grid;
@@ -598,14 +587,8 @@
   }
   .review-date{ font-size:11px; color:var(--text-muted); margin-bottom:10px; }
   .review-text{ font-size:14px; color:var(--text-light); line-height:1.8; margin-bottom:12px; }
-  .reviews-empty{
-    text-align:center; color:var(--text-muted); font-size:14px;
-    grid-column:1/-1; padding:20px;
-  }
-  .reviews-loading{
-    text-align:center; color:var(--text-muted); font-size:13px;
-    grid-column:1/-1; padding:10px;
-  }
+  .reviews-empty{ text-align:center; color:var(--text-muted); font-size:14px; grid-column:1/-1; padding:20px; }
+  .reviews-loading{ text-align:center; color:var(--text-muted); font-size:13px; grid-column:1/-1; padding:10px; }
 
   /* ===== Footer ===== */
   footer{
@@ -620,7 +603,7 @@
   .social-row a:hover{ color:var(--gold); border-color:var(--gold); }
   .copyright{ font-size:12px; color:#5A5344; }
 
-  /* ===== Mobile nav (hamburger) ===== */
+  /* Mobile Navigation */
   .nav-toggle{
     display:none;
     background:none; border:none; cursor:pointer;
@@ -642,7 +625,6 @@
     nav a:first-child{ border-top:none; }
   }
 
-  /* ===== Video facade (click-to-load) ===== */
   .video-facade{
     position:relative; width:100%; height:100%;
     cursor:pointer; background-size:cover; background-position:center;
@@ -664,18 +646,12 @@
   .video-facade:hover .play-btn{ transform:scale(1.08); }
   .video-facade .play-btn svg{ width:22px; height:22px; fill:var(--bg-dark); margin-inline-start:3px; }
 
-  /* ===== Stock counter ===== */
-  .stock-note{
-    text-align:center; font-size:13px; color:var(--gold-deep);
-    margin-top:-8px; margin-bottom:20px; font-weight:700;
-  }
+  .stock-note{ text-align:center; font-size:13px; color:var(--gold-deep); margin-top:-8px; margin-bottom:20px; font-weight:700; }
 
   /* ===== FAQ ===== */
   .faq{ background:var(--bg-card-1); }
   .faq-list{ max-width:760px; margin:0 auto; }
-  .faq-item{
-    border-bottom:0.5px solid var(--border);
-  }
+  .faq-item{ border-bottom:0.5px solid var(--border); }
   .faq-q{
     width:100%; text-align:right; background:none; border:none; cursor:pointer;
     padding:18px 4px; font-family:'Amiri', serif; font-size:16px; font-weight:700;
@@ -683,14 +659,10 @@
   }
   .faq-q svg{ width:18px; height:18px; stroke:var(--gold); flex-shrink:0; transition:transform .25s; }
   .faq-item.open .faq-q svg{ transform:rotate(180deg); }
-  .faq-a{
-    max-height:0; overflow:hidden; transition:max-height .25s ease;
-    font-size:14px; color:var(--text-muted); line-height:1.9;
-  }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .25s ease; font-size:14px; color:var(--text-muted); line-height:1.9; }
   .faq-item.open .faq-a{ max-height:300px; }
   .faq-a p{ padding:0 4px 18px; }
 
-  /* honeypot field - hidden from real users */
   .hp-field{ position:absolute; left:-9999px; top:-9999px; }
 </style>
 </head>
@@ -910,13 +882,13 @@
         <button class="faq-q">هل السعر يشمل الشحن؟
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq-a"><p><!-- عدّل النص التالي بالتفاصيل الفعلية لمصاريف الشحن --> السعر المعروض لا يشمل مصاريف الشحن، ويتم تحديدها حسب مكان التوصيل ويتم إبلاغك بها عند التأكيد على الواتساب.</p></div>
+        <div class="faq-a"><p>السعر المعروض لا يشمل مصاريف الشحن، ويتم تحديدها حسب مكان التوصيل ويتم إبلاغك بها عند التأكيد على الواتساب.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">كم تستغرق مدة التوصيل؟
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq-a"><p><!-- عدّل حسب المدة الفعلية --> يتم التواصل معك على الواتساب لتأكيد الطلب، ثم يتم شحن النسخة خلال المدة المتفق عليها حسب مكان التوصيل.</p></div>
+        <div class="faq-a"><p>يتم التواصل معك على الواتساب لتأكيد الطلب، ثم يتم شحن النسخة خلال المدة المتفق عليها حسب مكان التوصيل.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">ما طرق الدفع المتاحة؟
@@ -943,7 +915,6 @@
       <div class="booking-banner">
         ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
-      <!-- عدّل الرقم التالي يدويًا حسب الكمية المتبقية فعليًا -->
       <p class="stock-note">📦 الكمية المتاحة الآن محدودة — احجز نسختك قبل نفادها</p>
 
       <form id="madadOrderForm" onsubmit="submitOrder(event)">
@@ -1098,7 +1069,7 @@
 </script>
 
 <script>
-  // ---- قائمة الجوال (Hamburger) ----
+  // Navigation
   const navToggle = document.getElementById('navToggle');
   const mainNav = document.getElementById('mainNav');
   navToggle.addEventListener('click', () => {
@@ -1112,7 +1083,7 @@
     });
   });
 
-  // ---- فيديوهات يوتيوب: تحميل عند الضغط فقط (facade) لتحسين الأداء والخصوصية ----
+  // YouTube Facade
   document.querySelectorAll('.video-frame[data-yt-id]').forEach(frameEl => {
     const ytId = frameEl.getAttribute('data-yt-id');
     const ytTitle = frameEl.getAttribute('data-yt-title') || 'فيديو';
@@ -1140,7 +1111,7 @@
     frameEl.appendChild(facade);
   });
 
-  // ---- الأسئلة الشائعة (Accordion) ----
+  // FAQ Accordion
   document.querySelectorAll('.faq-item').forEach(item => {
     item.querySelector('.faq-q').addEventListener('click', () => {
       const wasOpen = item.classList.contains('open');
@@ -1149,7 +1120,7 @@
     });
   });
 
-  // قائمة الصور
+  // Gallery
   const notebookImages = [
       { url: "images/IMG_3495.JPG" },
       { url: "images/IMG_3496.JPG" },
@@ -1182,13 +1153,11 @@
   notebookImages.forEach((img) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    
     item.innerHTML = `
       <div class="gallery-img-box">
         <img src="${img.url}" alt="صفحة من داخل دفتر مِداد" loading="lazy" width="600" height="600" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x600/16130F/C9A24B?text=مِداد';">
       </div>
     `;
-
     item.addEventListener('click', () => openModal(img.url));
     sliderTrack.appendChild(item);
   });
@@ -1205,71 +1174,40 @@
   function updateSliderPosition() {
     const visibleCount = getVisibleItemsCount();
     const maxIndex = notebookImages.length - visibleCount;
-
     if (currentIndex > maxIndex) currentIndex = 0;
     if (currentIndex < 0) currentIndex = maxIndex;
-
     const itemWidth = sliderTrack.children[0].getBoundingClientRect().width;
     const gap = 20;
     const moveAmount = (itemWidth + gap) * currentIndex;
-
     sliderTrack.style.transform = `translateX(${moveAmount}px)`;
   }
 
-  function moveNext() {
-    currentIndex++;
-    updateSliderPosition();
-  }
-
-  function movePrev() {
-    currentIndex--;
-    updateSliderPosition();
-  }
+  function moveNext() { currentIndex++; updateSliderPosition(); }
+  function movePrev() { currentIndex--; updateSliderPosition(); }
 
   function startAutoSlide() {
     stopAutoSlide();
     autoSlideInterval = setInterval(moveNext, 3000);
   }
+  function stopAutoSlide() { if (autoSlideInterval) clearInterval(autoSlideInterval); }
 
-  function stopAutoSlide() {
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-  }
-
-  function manualNext() {
-    moveNext();
-    startAutoSlide();
-  }
-
-  function manualPrev() {
-    movePrev();
-    startAutoSlide();
-  }
+  function manualNext() { moveNext(); startAutoSlide(); }
+  function manualPrev() { movePrev(); startAutoSlide(); }
 
   sliderContainer.addEventListener('mouseenter', stopAutoSlide);
   sliderContainer.addEventListener('mouseleave', startAutoSlide);
-
   window.addEventListener('resize', updateSliderPosition);
-
   startAutoSlide();
 
   // Modal / Lightbox System
   const modal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
 
-  function openModal(src) {
-    modal.classList.add('show');
-    modalImg.src = src;
-  }
+  function openModal(src) { modal.classList.add('show'); modalImg.src = src; }
+  function closeModal() { modal.classList.remove('show'); }
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-  function closeModal() {
-    modal.classList.remove('show');
-  }
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  // Confirmation Modal Controls
+  // Confirmation Modal
   const confirmModal = document.getElementById('confirmModal');
   let pendingWhatsappUrl = "";
 
@@ -1293,28 +1231,18 @@
     }
   });
 
-  // حساب المبلغ الإجمالي تلقائياً (لم يتغيّر منطق السعر إطلاقاً)
+  // Calculate total
   function getCalculatedTotalText() {
     const location = document.getElementById('cust_location').value;
     const copies = parseInt(document.getElementById('cust_copies').value) || 1;
-
     if (!location) return "اختر مكان التوصيل للحساب";
-
-    if (location === "داخل مصر") {
-      return `${copies * 150} جنيه مصري (${copies} نسخة)`;
-    } else {
-      return `${copies * 20} دولار أمريكي (${copies} نسخة)`;
-    }
+    return location === "داخل مصر" ? `${copies * 150} جنيه مصري (${copies} نسخة)` : `${copies * 20} دولار أمريكي (${copies} نسخة)`;
   }
 
   function calculateTotal() {
     const summaryBox = document.getElementById('priceSummary');
     const totalText = getCalculatedTotalText();
-    if (totalText === "اختر مكان التوصيل للحساب") {
-      summaryBox.innerHTML = `الإجمالي: ${totalText}`;
-    } else {
-      summaryBox.innerHTML = `الإجمالي: <strong>${totalText}</strong>`;
-    }
+    summaryBox.innerHTML = totalText === "اختر مكان التوصيل للحساب" ? `الإجمالي: ${totalText}` : `الإجمالي: <strong>${totalText}</strong>`;
   }
 
   function togglePaymentOptions() {
@@ -1335,7 +1263,6 @@
     domesticOptions.forEach(opt => { opt.style.display = isInternational ? 'none' : 'flex'; });
     internationalOptions.forEach(opt => { opt.style.display = isInternational ? 'flex' : 'none'; });
 
-    // لو الخيار المختار حاليًا اتخفى، نلغي اختياره عشان مايفضلش طلب بطريقة دفع غير ظاهرة
     [...domesticOptions, ...internationalOptions].forEach(option => {
       if (option.style.display === 'none') {
         const input = option.querySelector('input[type="radio"]');
@@ -1360,21 +1287,14 @@
   }
 
   /* ==========================================================
-     إرسال الحجز — يتصل مباشرة بنظام مِداد الآلي (Apps Script)
-     بدل جوجل فورم القديم المكسور، ويفتح الواتساب بعد التأكيد
-     ==========================================================
-     مهم: بدّل الرابط تحت برابط الـ Web App بتاعك بعد النشر
-     (Deploy → New deployment → Web app → Execute as: Me →
-     Access: Anyone) من ملف كود_نظام_مداد_الكامل.gs
+     إرسال الحجز — يرسل البيانات للشيت ويفتح الواتساب مباشرة
+     رقم الواتساب المستهدف: 01556518997
      ========================================================== */
   const ORDERS_API_URL = "https://script.google.com/macros/s/AKfycbxWoSSwyPUy5eE3snzT2YLaU2zJ8SgrZyigauwO0emtuvB4f6RDb545DExqpakwQlmeoA/exec";
 
   function submitOrder(e) {
     e.preventDefault();
-    // فخ السبام: لو تم ملء هذا الحقل المخفي، فهذا غالبًا بوت
-    if (document.getElementById('cust_website').value.trim() !== '') {
-      return;
-    }
+    if (document.getElementById('cust_website').value.trim() !== '') return;
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -1382,14 +1302,15 @@
 
     const name = document.getElementById('cust_name').value;
     const phone = document.getElementById('cust_phone').value;
-    const locationVal = document.getElementById('cust_location').value; // "داخل مصر" أو "خارج مصر"
-    const governorateVal = document.getElementById('cust_governorate').value; // فارغة تلقائيًا لو "خارج مصر"
+    const locationVal = document.getElementById('cust_location').value;
+    const governorateVal = document.getElementById('cust_governorate').value;
     const copies = document.getElementById('cust_copies').value;
-    const notesVal = document.getElementById('cust_notes').value; // عنوان تفصيلي أو اسم الدولة لو خارج مصر
+    const notesVal = document.getElementById('cust_notes').value;
     const paymentMethodEl = document.querySelector('input[name="payment_method"]:checked');
     const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "الدفع عند الاستلام";
 
-    // نرسل كنص عادي (text/plain) لتفادي مشاكل CORS الشهيرة مع Apps Script
+    const targetWhatsAppNumber = "201556518997";
+
     fetch(ORDERS_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1415,10 +1336,12 @@
         }
 
         const totalText = data.currency === 'دولار' ? `${data.price}$` : `${data.price} جنيه`;
-        const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n- *المحافظة:* ${governorateVal}` : '';
-        const whatsappMsg = `السلام عليكم ورحمة الله وبركاته،\nأود تأكيد حجزي رقم ${data.orderId} لدفتر مِداد:\n\n- *الاسم:* ${name}\n- *الهاتف:* ${phone}\n- *مكان التوصيل:* ${locationVal}${govLine}\n- *عدد النسخ:* ${copies}\n- *طريقة الدفع:* ${paymentMethod}\n- *الإجمالي:* ${totalText}\n- *الملاحظات/العنوان:* ${notesVal || 'لا يوجد'}`;
+        const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n• *المحافظة:* ${governorateVal}` : '';
+        
+        // تجهيز نص رسالة الواتساب التلقائي للعميل 100%
+        const whatsappMsg = `السلام عليكم، أود تأكيد حجزي لدفتر مِداد 📚\n\n• *رقم الطلب:* ${data.orderId}\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *مكان التوصيل:* ${locationVal}${govLine}\n• *عدد النسخ:* ${copies}\n• *طريقة الدفع:* ${paymentMethod}\n• *الإجمالي:* ${totalText}\n• *ملاحظات/عنوان:* ${notesVal || 'لا يوجد'}`;
 
-        const whatsappUrl = `https://wa.me/201556518997?text=${encodeURIComponent(whatsappMsg)}`;
+        const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(whatsappMsg)}`;
 
         openConfirmModal(whatsappUrl);
 
@@ -1426,7 +1349,12 @@
         calculateTotal();
       })
       .catch(() => {
-        alert('تعذّر الاتصال بالنظام حاليًا، تأكد من اتصالك بالإنترنت وحاول مرة أخرى.');
+        // إذا حدث انقطاع في الشبكة، نفتح الواتساب بالرسالة تفادياً لضياع الطلب
+        const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n• *المحافظة:* ${governorateVal}` : '';
+        const fallbackMsg = `السلام عليكم، أود تأكيد حجزي لدفتر مِداد 📚\n\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *مكان التوصيل:* ${locationVal}${govLine}\n• *عدد النسخ:* ${copies}\n• *طريقة الدفع:* ${paymentMethod}\n• *ملاحظات/عنوان:* ${notesVal || 'لا يوجد'}`;
+        const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(fallbackMsg)}`;
+        
+        openConfirmModal(whatsappUrl);
       })
       .finally(() => {
         btn.disabled = false;
@@ -1434,22 +1362,8 @@
       });
   }
 
-  /* ==========================================================
-     قسم التعليقات والمراجعات — Google Apps Script (API خاص بك)
-     ==========================================================
-     - لا يوجد Google Form ولا CSV منشور بعد الآن.
-     - القراءة والإرسال يتمّان مباشرة عبر Apps Script اللي كتبته
-       بنفسك (doGet يقرأ / doPost يضيف صف جديد).
-     - التحكم بالحذف: أضف "نعم" في عمود "حذف" (العمود F) في
-       الشيت — أي مراجعة معلّم عليها كده تختفي فورًا من نتيجة
-       doGet، فتختفي من الموقع لكل الزوار مباشرة.
-     ⚠️ تنبيه هام: الرابط تحت لسه ما اتأكدش إنه شغال فعليًا
-        (رجّع 404 آخر مرة اتفحص). تأكد إنه شغال قبل الاعتماد
-        عليه، وإلا القسم هيعرض رسالة "تعذّر تحميل المراجعات".
-     ========================================================== */
-
+  // Reviews System
   const REVIEWS_API_URL = "https://script.google.com/macros/s/AKfycbyKiRBn5lWUuMwnq6z4yON_R-EkxPySK5J0oabt3ssJcFLq0a6oc8LBgp3NJwafsZbofQ/exec";
-
   const MIN_SECONDS_BETWEEN_SUBMITS = 30;
 
   function escapeHtml(str) {
@@ -1460,8 +1374,6 @@
 
   function renderReviews(reviews) {
     const grid = document.getElementById('reviewsGrid');
-
-    // فلترة إضافية من جهة المتصفح احتياطًا (الفلترة الأساسية تتم في doGet نفسه)
     const visible = (reviews || []).filter(r => (r.hidden || '').toString().trim() !== 'نعم');
 
     if (!visible.length) {
@@ -1502,7 +1414,6 @@
       });
   }
 
-  // ---- إرسال مراجعة جديدة ----
   const reviewForm = document.getElementById('reviewForm');
   const reviewErrorBox = document.getElementById('reviewError');
   const reviewSuccessBox = document.getElementById('reviewSuccess');
@@ -1523,10 +1434,7 @@
     reviewErrorBox.style.display = 'none';
     reviewSuccessBox.style.display = 'none';
 
-    // فخ السبام
-    if (document.getElementById('review_website').value.trim() !== '') {
-      return;
-    }
+    if (document.getElementById('review_website').value.trim() !== '') return;
 
     const name = document.getElementById('review_name').value.trim();
     const ratingEl = document.querySelector('input[name="rating"]:checked');
@@ -1545,7 +1453,6 @@
     btn.disabled = true;
     btn.innerText = 'جاري الإرسال...';
 
-    // نرسل كنص عادي (text/plain) لتفادي مشاكل CORS الشهيرة مع Apps Script
     fetch(REVIEWS_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
