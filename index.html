@@ -948,6 +948,17 @@
     .howto-step{ gap:14px; padding:20px 2px; }
     .howto-step .howto-num{ width:36px; height:36px; font-size:14px; }
   }
+
+  /* ===== Hero shipping note (under price sticker) ===== */
+  .hero-shipping-note{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin:-14px auto 26px;
+    letter-spacing:.2px;
+  }
+  .hero-shipping-note svg{ width:14px; height:14px; stroke:var(--gold); flex-shrink:0; }
+  @media (max-width:480px){ .hero-shipping-note{ font-size:11.5px; text-align:center; } }
 </style>
 </head>
 <body>
@@ -987,6 +998,10 @@
       <span class="new-price">150 ج.م</span>
       <span class="save-badge">خصم 40%</span>
     </div>
+    <p class="hero-shipping-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      شحن جوي خلال أسبوع تقريبًا للنسخ خارج مصر
+    </p>
     <div class="cta-row">
       <a href="#booking" class="btn btn-primary">احجز نسختك الآن</a>
       <a href="#story" class="btn btn-secondary">اعرف القصة</a>
@@ -1364,7 +1379,7 @@
         <button class="faq-q">هل يمكنني الحجز من خارج مصر؟
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq-a"><p>نعم، اختر "خارج مصر" في نموذج الحجز، وسنؤكد لك السعر كاملًا مع تفاصيل الشحن الجوي معك مباشرة على الواتساب.</p></div>
+        <div class="faq-a"><p>نعم، اختر "خارج مصر" في نموذج الحجز. السعر 20$ للنسخة + 30$ شحن جوي سريع يصلك خلال أسبوع تقريبًا، ويشمل التغليف الآمن ورسوم الشحن الدولي ومصاريف التحويل.</p></div>
       </div>
     </div>
   </div>
@@ -1503,7 +1518,7 @@
           <div class="shipping-note">* السعر لا يشمل مصاريف الشحن</div>
           <div class="intl-shipping-note" id="intlShippingNote" style="display:none;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            <span>يتوفر شحن جوي لكل الطلبات خارج مصر — سنؤكد لك التفاصيل والسعر كاملًا على الواتساب مباشرة.</span>
+            <span>سعر النسخة 20$ + 30$ شحن جوي سريع: يغطي تغليفًا آمنًا للطباعة والمظهر، رسوم الشحن الجوي الدولي، ومصاريف التحويل وتسليم الشحنة لباب بيتك خلال أسبوع تقريبًا.</span>
           </div>
         </div>
 
@@ -1891,7 +1906,9 @@
       return `${copies * 150} جنيه مصري (${copies} نسخة)`;
     }
     if (intlNote) intlNote.style.display = 'flex';
-    return `سيُحدَّد على الواتساب شاملًا الشحن الجوي (${copies} نسخة)`;
+    const copiesTotal = copies * 20;
+    const grandTotal = copiesTotal + 30;
+    return `${grandTotal}$ (${copiesTotal}$ ثمن ${copies} نسخة + 30$ شحن جوي)`;
   }
 
   function calculateTotal() {
