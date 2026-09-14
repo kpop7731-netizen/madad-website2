@@ -223,6 +223,7 @@
   .showcase-frame img{ width:100%; display:block; }
   .spec-chip{
     position:absolute;
+    z-index:5;
     display:flex; align-items:center; gap:8px;
     background:rgba(22,19,15,0.88);
     border:1px solid var(--gold-deep);
@@ -1091,6 +1092,18 @@
   @media (max-width:420px){
     .whatsapp-tooltip{ font-size:12px; white-space:normal; max-width:180px; }
   }
+
+  /* ===== Showcase — front & back cover stack ===== */
+  .showcase-frame--front{ position:relative; z-index:2; }
+  .showcase-frame--back{
+    position:absolute;
+    top:-4%; left:-6%;
+    width:94%;
+    z-index:1;
+    transform:rotate(-9deg);
+    opacity:.96;
+  }
+  .showcase-frame--back:hover{ transform:rotate(-9deg); }
 </style>
 </head>
 <body>
@@ -1149,8 +1162,11 @@
 <section class="showcase" id="showcase">
   <div class="wrap">
     <div class="showcase-inner reveal">
-      <div class="showcase-frame">
-        <img src="images/IMG_3536.webp" alt="دفتر مِداد مفتوح يظهر تصميم الصفحة الداخلية" loading="lazy" width="900" height="675" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/900x675/16130F/C9A24B?text=مِداد';">
+      <div class="showcase-frame showcase-frame--back">
+        <img src="images/madad-cover-back.webp" alt="ظهر دفتر مِداد" loading="lazy" width="1200" height="1699" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x1699/16130F/C9A24B?text=مِداد';">
+      </div>
+      <div class="showcase-frame showcase-frame--front">
+        <img src="images/madad-cover-front.webp" alt="وجه دفتر مِداد بغلاف مطفي فاخر" loading="lazy" width="1200" height="1700" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x1700/16130F/C9A24B?text=مِداد';">
       </div>
       <div class="spec-chip c1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
