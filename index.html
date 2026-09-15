@@ -36,7 +36,6 @@
     --text-muted:#A69B7E;
     --border:#3A311F;
     --err-color:#E27878;
-    --whatsapp:#25D366;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; overflow-x:hidden; width:100%; max-width:100%; }
@@ -111,6 +110,7 @@
     filter:saturate(0.95) brightness(0.8);
     transform:scale(1.08);
   }
+  .hero-bg::after{ content:""; }
   .hero-overlay{
     position:absolute; inset:0; z-index:-1;
     background:
@@ -494,7 +494,7 @@
   .video{ background:var(--bg-dark); }
   .video-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns:1fr 1fr;
     gap:28px;
     max-width:1000px;
     margin:0 auto;
@@ -517,42 +517,8 @@
     box-shadow:0 10px 30px rgba(0,0,0,0.6);
   }
   .video-frame iframe{ width:100%; height:100%; border:0; }
-  @media (max-width:650px){
+  @media (max-width:800px){
     .video-grid{ grid-template-columns:1fr; }
-  }
-
-  /* ===== World reach ===== */
-  #world{ background:var(--bg-card-1); }
-  .world-track{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:20px;
-    max-width:980px; margin:0 auto; position:relative;
-  }
-  .world-track::before{
-    content:"";
-    position:absolute; top:38px; left:6%; right:6%; height:1px;
-    background:repeating-linear-gradient(90deg, var(--gold-deep) 0 8px, transparent 8px 16px);
-    opacity:.5; z-index:0;
-  }
-  .world-card{
-    position:relative; z-index:1;
-    flex:1 1 200px; max-width:230px;
-    display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px;
-    background:linear-gradient(160deg, var(--bg-card-2), var(--bg-dark));
-    border:0.5px solid var(--border);
-    border-radius:16px;
-    padding:26px 18px 22px;
-    transition:transform .35s ease, border-color .35s ease;
-  }
-  .world-card:hover{ transform:translateY(-6px); border-color:var(--gold-deep); }
-  .world-flag{ font-size:38px; line-height:1; margin-bottom:4px; }
-  .world-flag--globe{ display:inline-block; animation:spin-globe 6s linear infinite; }
-  @keyframes spin-globe{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
-  .world-name{ font-size:16px; font-weight:700; color:var(--text-light); }
-  .world-note{ font-size:12.5px; color:var(--text-muted); line-height:1.7; }
-  .world-card--next{ border-style:dashed; border-color:var(--gold-deep); background:rgba(201,162,75,0.05); }
-  @media (max-width:700px){
-    .world-track::before{ display:none; }
-    .world-card{ flex:1 1 42%; }
   }
 
   /* ===== Booking / Form Section ===== */
@@ -835,13 +801,13 @@
   }
   .faq-q svg{ width:18px; height:18px; stroke:var(--gold); flex-shrink:0; transition:transform .25s; }
   .faq-item.open .faq-q svg{ transform:rotate(180deg); }
-  .faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; font-size:14px; color:var(--text-muted); line-height:1.9; }
-  .faq-item.open .faq-a{ max-height:460px; }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .25s ease; font-size:14px; color:var(--text-muted); line-height:1.9; }
+  .faq-item.open .faq-a{ max-height:400px; }
   .faq-a p{ padding:0 4px 18px; }
-  .shipping-list{ list-style:none; display:flex; flex-direction:column; gap:10px; padding:0 4px 18px; }
-  .shipping-list li{ position:relative; padding-inline-end:18px; font-size:14px; color:var(--text-muted); line-height:1.85; }
-  .shipping-list li::before{ content:"◆"; position:absolute; right:0; top:2px; color:var(--gold-deep); font-size:9px; }
-  .shipping-list li strong{ color:var(--text-light); }
+  .faq-a ul{ padding:0 4px 18px; list-style:none; display:flex; flex-direction:column; gap:6px; }
+  .faq-a li{ position:relative; padding-inline-end:16px; }
+  .faq-a li::before{ content:"◆"; position:absolute; right:0; top:2px; color:var(--gold-deep); font-size:8px; }
+  .faq-a li strong{ color:var(--text-light); }
 
   .hp-field{ position:absolute; left:-9999px; top:-9999px; }
 
@@ -884,6 +850,13 @@
     .price-sticker{ flex-wrap:wrap; justify-content:center; padding:10px 16px; gap:8px; }
   }
 
+  .price-container .old-price-inline{
+    text-decoration:line-through;
+    color:var(--text-muted);
+    font-size:13px;
+    margin-inline-start:8px;
+    opacity:.8;
+  }
   .intl-shipping-note{
     display:flex; align-items:center; gap:8px;
     background:rgba(201,162,75,0.06);
@@ -992,67 +965,125 @@
   @media (max-width:480px){ .hero-shipping-note{ font-size:11.5px; text-align:center; } }
 
   /* ===== Floating WhatsApp button ===== */
-  .whatsapp-float{
+  .wa-float{
     position:fixed;
-    left:20px; bottom:24px;
+    left:20px; bottom:20px;
     z-index:70;
-    width:58px; height:58px;
-    border-radius:50%;
-    background:var(--whatsapp);
-    border:none;
+    display:flex; align-items:center;
+  }
+  .wa-float-btn{
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366;
     display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(37,211,102,0.45);
     cursor:pointer;
-    box-shadow:0 10px 26px rgba(0,0,0,0.4);
+    border:none;
+    position:relative;
+    animation:wa-pulse 2.6s ease-in-out infinite;
   }
-  .whatsapp-float::before{
-    content:"";
-    position:absolute; inset:-6px;
-    border-radius:50%;
-    border:2px solid var(--whatsapp);
-    opacity:.55;
-    animation:wa-pulse 2.4s ease-out infinite;
-  }
+  .wa-float-btn svg{ width:30px; height:30px; fill:#fff; }
   @keyframes wa-pulse{
-    0%{ transform:scale(0.85); opacity:.55; }
-    100%{ transform:scale(1.35); opacity:0; }
+    0%, 100%{ box-shadow:0 8px 24px rgba(37,211,102,0.45); }
+    50%{ box-shadow:0 8px 24px rgba(37,211,102,0.75), 0 0 0 10px rgba(37,211,102,0.12); }
   }
-  .whatsapp-float svg{ width:30px; height:30px; fill:#fff; position:relative; z-index:1; }
-  .whatsapp-tooltip{
-    position:absolute; right:calc(100% + 12px); top:50%; transform:translate(8px,-50%);
-    background:rgba(22,19,15,0.95);
+  .wa-bubble{
+    position:absolute;
+    bottom:70px; left:0;
+    max-width:230px;
+    background:var(--bg-card-2);
     border:1px solid var(--gold-deep);
-    color:var(--text-light);
-    font-family:'Amiri', serif;
+    border-radius:14px 14px 14px 2px;
+    padding:12px 16px;
     font-size:13px;
-    line-height:1.6;
-    white-space:nowrap;
-    padding:10px 16px;
-    border-radius:10px;
-    opacity:0;
+    color:var(--text-light);
+    line-height:1.7;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    opacity:0; transform:translateY(8px) scale(0.95);
     pointer-events:none;
     transition:opacity .3s ease, transform .3s ease;
-    box-shadow:0 10px 24px rgba(0,0,0,0.4);
   }
-  .whatsapp-tooltip::after{
-    content:"";
-    position:absolute; right:-6px; top:50%; transform:translateY(-50%);
-    width:0; height:0;
-    border-top:6px solid transparent; border-bottom:6px solid transparent;
-    border-left:6px solid var(--gold-deep);
+  .wa-bubble.show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+  .wa-bubble-close{
+    position:absolute; top:6px; left:8px;
+    font-size:14px; color:var(--text-muted); cursor:pointer;
   }
-  .whatsapp-tooltip.show,
-  .whatsapp-float:hover .whatsapp-tooltip{
-    opacity:1;
-    transform:translate(0,-50%);
-  }
-  @media (max-width:899px){
-    .whatsapp-float{ bottom:96px; width:52px; height:52px; }
-    .whatsapp-float svg{ width:26px; height:26px; }
-  }
-  @media (max-width:420px){
-    .whatsapp-tooltip{ font-size:12px; white-space:normal; max-width:180px; }
+  @media (max-width:480px){
+    .wa-float{ left:14px; bottom:14px; }
+    .wa-float-btn{ width:52px; height:52px; }
+    .wa-float-btn svg{ width:26px; height:26px; }
   }
 
+  /* ===== Reach map section ===== */
+  .reach-section{ background:var(--bg-dark); text-align:center; }
+  .reach-map-wrap{
+    max-width:900px; margin:20px auto 0;
+    position:relative;
+  }
+  .reach-map-wrap svg{ width:100%; height:auto; }
+  .reach-country{
+    fill:#2A2418;
+    stroke:var(--border);
+    stroke-width:0.5;
+    transition:fill 1.2s ease;
+  }
+  .reach-country.reached{
+    fill:var(--gold);
+    filter:drop-shadow(0 0 6px rgba(201,162,75,0.55));
+  }
+  .reach-legend{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:14px;
+    margin-top:28px;
+  }
+  .reach-chip{
+    display:flex; align-items:center; gap:8px;
+    background:var(--bg-card-1);
+    border:0.5px solid var(--gold-deep);
+    border-radius:999px;
+    padding:8px 16px;
+    font-size:13px;
+    color:var(--text-light);
+  }
+  .reach-chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .reach-count{
+    font-size:15px; color:var(--gold-deep); margin-top:18px;
+  }
+
+  /* ===== Product showcase (mockup) ===== */
+  .showcase{ background:var(--bg-card-1); overflow:hidden; }
+  .showcase-wrap{
+    display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;
+    max-width:1050px; margin:0 auto;
+  }
+  .showcase-media{
+    position:relative; perspective:1200px;
+  }
+  .showcase-media img{
+    border-radius:14px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,162,75,0.15);
+    transform:rotateY(-10deg) rotateX(4deg);
+    transition:transform .5s ease;
+  }
+  .showcase-media:hover img{ transform:rotateY(0deg) rotateX(0deg); }
+  .showcase-media::after{
+    content:"";
+    position:absolute; inset:-30px -30px auto auto; width:180px; height:180px;
+    background:radial-gradient(circle, rgba(201,162,75,0.18), transparent 70%);
+    z-index:-1;
+  }
+  .showcase-text h3{ font-size:26px; color:var(--gold); margin-bottom:16px; }
+  .showcase-text p{ font-size:15px; color:var(--text-muted); line-height:1.9; margin-bottom:14px; }
+  .showcase-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .showcase-badges span{
+    display:flex; align-items:center; gap:6px;
+    background:var(--bg-dark); border:0.5px solid var(--border); border-radius:999px;
+    padding:8px 14px; font-size:12.5px; color:var(--text-light);
+  }
+  .showcase-badges svg{ width:15px; height:15px; stroke:var(--gold); }
+  @media (max-width:800px){
+    .showcase-wrap{ grid-template-columns:1fr; gap:30px; text-align:center; }
+    .showcase-text p{ text-align:right; }
+    .showcase-media img{ transform:none; }
+  }
 </style>
 </head>
 <body>
@@ -1071,7 +1102,7 @@
       <a href="#howto">طريقة الاستخدام</a>
       <a href="#gallery">من الداخل</a>
       <a href="#video">الفيديو</a>
-      <a href="#world">مِداد حول العالم</a>
+      <a href="#reach">وصل إلى</a>
       <a href="#reviews">آراء المشترين</a>
       <a href="#faq">الأسئلة الشائعة</a>
       <a href="#booking">الحجز</a>
@@ -1127,9 +1158,9 @@
 <section id="content">
   <div class="wrap">
     <div class="reveal">
-      <p class="section-kicker">لماذا مِداد يختلف؟</p>
-      <h2 class="section-title">ست ميزات تجعله رفيقك لا مجرد دفتر</h2>
-      <p class="section-lead">نظرة سريعة على الفكرة هنا، وتقدر بعدها تشوف محتوى الدفتر بالتفصيل صفحة بصفحة تحت مباشرة.</p>
+      <p class="section-kicker">ماذا يوجد داخل مِداد؟</p>
+      <h2 class="section-title">كل ما تحتاجه، ولا شيء زائد</h2>
+      <p class="section-lead">تعمّدنا ألا نجعل كل شيء مزدحمًا أمامك، لأن الهدف ليس أن تمتلئ الصفحة بالحقول، بل أن تستخدمها فعلًا.</p>
     </div>
 
     <div class="features-grid">
@@ -1167,6 +1198,26 @@
         <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></div>
         <h3>رسالة لنفسك بعد ٦٠ يومًا</h3>
         <p>تكتبها اليوم ولا تفتحها إلا في نهاية رحلتك — دائرة نفسية مكتملة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase">
+  <div class="wrap">
+    <div class="showcase-wrap">
+      <div class="showcase-media reveal">
+        <img src="images/IMG_3529.webp" alt="دفتر مِداد بين يديك" loading="lazy" width="600" height="450">
+      </div>
+      <div class="showcase-text reveal">
+        <p class="section-kicker" style="text-align:right;">بين يديك فعلًا</p>
+        <h3>ملموس، لا شاشة إضافية تشتت انتباهك</h3>
+        <p>مِداد دفتر ورقي حقيقي تمسكه بيدك؛ غلاف متين، وورق يتحمل الكتابة اليومية لستين يومًا متواصلة، مصمم ليكون الرفيق الوحيد اللي بتفتحه كل يوم بدل ما تضيف تطبيق جديد فوق زحمة شاشتك.</p>
+        <div class="showcase-badges">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg> مقاس A5 عملي</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg> غلاف فاخر مطفي</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg> 120 صفحة تدوم الرحلة</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1394,43 +1445,49 @@
         <div class="video-frame" data-yt-id="EARvNAQOmPI" data-yt-title="القصة الكاملة — كيف تستخدم المنتج"></div>
       </div>
       <div class="video-block reveal">
-        <p class="video-block-title">لماذا صُممت كل صفحة في مِداد؟ وكيف تستخدمه بالتفصيل</p>
-        <div class="video-frame" data-yt-id="m3Vcp4ZyRts" data-yt-title="لماذا صُممت كل صفحة في مِداد؟ وكيف تستخدمه بالتفصيل"></div>
+        <p class="video-block-title">لماذا صُممت كل صفحة هكذا؟ وكيف تستخدم مِداد بالتفصيل</p>
+        <div class="video-frame" data-yt-id="m3Vcp4ZyRts" data-yt-title="لماذا صُممت كل صفحة هكذا؟ وكيف تستخدم مِداد بالتفصيل"></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="world">
+<section class="reach-section" id="reach">
   <div class="wrap">
     <div class="reveal">
-      <p class="section-kicker">من القاهرة إلى العالم</p>
-      <h2 class="section-title" style="margin-bottom:14px;">مِداد وصل بالفعل إلى</h2>
-      <p class="section-lead">بدأت الرحلة من مصر، ووصلت نسخ من مِداد بالفعل لأيدي شباب مسلمين في دول أخرى — والرحلة لسه في أولها.</p>
+      <p class="section-kicker">رحلة تكبر يومًا بعد يوم</p>
+      <h2 class="section-title">إلى أين وصل مِداد؟</h2>
+      <p class="section-lead">كل طلب من بلد جديدة يضيف نقطة ذهبية جديدة على الخريطة. الهدف أن يصل مِداد إلى كل بيت مسلم في العالم.</p>
     </div>
 
-    <div class="world-track reveal">
-      <div class="world-card">
-        <span class="world-flag">🇪🇬</span>
-        <span class="world-name">مصر</span>
-        <span class="world-note">المقر الرئيسي، وأول نسخة مطبوعة</span>
-      </div>
-      <div class="world-card">
-        <span class="world-flag">🇩🇪</span>
-        <span class="world-name">ألمانيا</span>
-        <span class="world-note">أول شحنة دولية عبرت القارات</span>
-      </div>
-      <div class="world-card">
-        <span class="world-flag">🇺🇸</span>
-        <span class="world-name">أمريكا</span>
-        <span class="world-note">شباب مسلمون بدأوا رحلتهم مع مِداد</span>
-      </div>
-      <div class="world-card world-card--next">
-        <span class="world-flag world-flag--globe">🌍</span>
-        <span class="world-name">بلدك التالي؟</span>
-        <span class="world-note">اطلب نسختك، وكن جزءًا من الخريطة</span>
-      </div>
+    <div class="reach-map-wrap reveal">
+      <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="1000" height="500" fill="transparent"/>
+        <!-- مصر: نقطة الانطلاق -->
+        <g id="pin-egypt">
+          <circle cx="560" cy="255" r="10" class="reach-country reached"/>
+          <text x="560" y="290" text-anchor="middle" font-size="15" fill="#EDE6D6" font-family="Cairo, sans-serif" font-weight="700">مصر</text>
+        </g>
+        <!-- ألمانيا -->
+        <g id="pin-germany">
+          <circle cx="500" cy="140" r="10" class="reach-country reached"/>
+          <text x="500" y="122" text-anchor="middle" font-size="15" fill="#EDE6D6" font-family="Cairo, sans-serif" font-weight="700">ألمانيا</text>
+        </g>
+        <!-- أمريكا -->
+        <g id="pin-usa">
+          <circle cx="180" cy="180" r="10" class="reach-country reached"/>
+          <text x="180" y="162" text-anchor="middle" font-size="15" fill="#EDE6D6" font-family="Cairo, sans-serif" font-weight="700">أمريكا</text>
+        </g>
+        <!-- خطوط رابطة بمصر كمركز الانطلاق -->
+        <path d="M560,255 Q530,190 500,140" fill="none" stroke="#9C7A2E" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.55"/>
+        <path d="M560,255 Q370,200 180,180" fill="none" stroke="#9C7A2E" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.55"/>
+        <!-- إطار خفيف يوحي بالعالمية -->
+        <ellipse cx="500" cy="250" rx="430" ry="200" fill="none" stroke="#3A311F" stroke-width="1"/>
+      </svg>
     </div>
+
+    <div class="reach-legend" id="reachLegend"></div>
+    <p class="reach-count" id="reachCount"></p>
   </div>
 </section>
 
@@ -1490,23 +1547,15 @@
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q">هل السعر يشمل الشحن؟
+        <button class="faq-q">كام مصاريف الشحن بالظبط؟
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <div class="faq-a"><p>السعر المعروض لا يشمل مصاريف الشحن، ويتم تحديدها حسب مكان التوصيل ويتم إبلاغك بها عند التأكيد على الواتساب.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q">كام تفاصيل مصاريف الشحن بالظبط؟
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="faq-a">
-          <ul class="shipping-list">
-            <li><strong>القاهرة والجيزة:</strong> 70 جنيه</li>
-            <li><strong>باقي محافظات مصر:</strong> 80 جنيه</li>
-            <li><strong>محافظات خط الصعيد</strong> (الفيوم، بني سويف، المنيا، أسيوط، سوهاج، قنا، الأقصر، أسوان، الوادي الجديد): 95 جنيه</li>
-            <li><strong>خارج مصر (شحن جوي):</strong> 30 دولار</li>
-          </ul>
-        </div>
+        <div class="faq-a"><ul>
+          <li><strong>القاهرة والجيزة:</strong> 70 جنيه</li>
+          <li><strong>باقي المحافظات:</strong> 80 جنيه</li>
+          <li><strong>خط الصعيد:</strong> 95 جنيه</li>
+          <li><strong>خارج مصر (شحن جوي):</strong> 30 دولار</li>
+        </ul></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">كم تستغرق مدة التوصيل؟
@@ -1539,9 +1588,7 @@
 
     <div class="booking-card reveal">
       <div class="booking-banner">
-        ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!<br>
-        <span style="font-size:13px; color:var(--text-muted); text-decoration:line-through;">السعر الأصلي 250 ج.م</span>
-        <span style="color:var(--gold); font-weight:800;"> الآن بـ 150 ج.م فقط داخل مصر</span>
+        ✨ انضم للدفعة الأولى من مِداد وابدأ رحلة الوعي والإنجاز اليوم!
       </div>
       <p class="stock-note">📦 الكمية المتاحة الآن محدودة — احجز نسختك قبل نفادها</p>
 
@@ -1698,11 +1745,15 @@
   <a href="#booking" class="btn btn-primary">احجز الآن</a>
 </div>
 
-<!-- Floating WhatsApp button -->
-<button class="whatsapp-float" id="waFloat" onclick="openFloatingWhatsApp()" aria-label="تواصل معنا عبر واتساب">
-  <span class="whatsapp-tooltip" id="waTooltip">أهلاً 👋 اسألنا عن دفتر مِداد على الواتساب</span>
-  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.38 4 15c0 2.36.68 4.56 1.86 6.42L4 29l7.78-1.82A11.93 11.93 0 0016.02 27C22.64 27 28 21.62 28 15S22.64 3 16.02 3zm0 21.7c-2.02 0-3.9-.58-5.5-1.58l-.4-.24-4.6 1.08 1.1-4.48-.26-.42A9.63 9.63 0 016.3 15c0-5.36 4.36-9.7 9.72-9.7 5.36 0 9.7 4.34 9.7 9.7s-4.34 9.7-9.7 9.7zm5.32-7.26c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5-.17 0-.37-.02-.57-.02-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.5.71.3 1.26.49 1.69.62.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.4.25-.7.25-1.3.17-1.4-.07-.12-.27-.19-.57-.34z" fill="currentColor"/></svg>
-</button>
+<div class="wa-float" id="waFloat">
+  <div class="wa-bubble" id="waBubble">
+    <span class="wa-bubble-close" id="waBubbleClose">&times;</span>
+    عايز تحجز دفترك دلوقتي؟ كلمنا على الواتساب وهنأكد طلبك في دقايق 📚✨
+  </div>
+  <button class="wa-float-btn" id="waFloatBtn" aria-label="تواصل عبر واتساب">
+    <svg viewBox="0 0 32 32"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.5.7 4.8 1.9 6.8L3 29l6.8-2.1c1.9 1 4 1.6 6.2 1.6 7 0 12.7-5.6 12.7-12.6C28.7 8.6 23 3 16 3zm0 23c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.2 1.2-3.9-.3-.4C6 19.5 5.3 17.6 5.3 15.6 5.3 9.7 10.1 5 16 5s10.7 4.7 10.7 10.6S21.9 26 16 26zm5.9-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.4.5-.5.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5 0-.1-.3-.2-.6-.4z"/></svg>
+  </button>
+</div>
 
 <script type="application/ld+json">
 {
@@ -1812,17 +1863,46 @@
     });
   })();
 
-  // Floating WhatsApp button — auto-preview once, then available on hover/tap
-  function openFloatingWhatsApp() {
-    const msg = "السلام عليكم، حابب أستفسر عن دفتر مِداد 📚";
-    window.open(`https://wa.me/201556518997?text=${encodeURIComponent(msg)}`, '_blank');
+  // Floating WhatsApp button
+  (function enableWaFloat(){
+    const waFloatBtn = document.getElementById('waFloatBtn');
+    const waBubble = document.getElementById('waBubble');
+    const waBubbleClose = document.getElementById('waBubbleClose');
+    if (!waFloatBtn) return;
+    const waNumber = "201556518997";
+    const waMessage = "السلام عليكم، أريد حجز نسخة من دفتر مِداد الآن 📚";
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+
+    waFloatBtn.addEventListener('click', () => { window.open(waUrl, '_blank'); });
+
+    setTimeout(() => { if (waBubble) waBubble.classList.add('show'); }, 3500);
+    if (waBubbleClose) {
+      waBubbleClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        waBubble.classList.remove('show');
+      });
+    }
+  })();
+
+  // Reach map — countries مِداد وصل إليها (عدّل هذه القائمة يدويًا كل ما وصل طلب من دولة جديدة)
+  const reachedCountries = [
+    { name: "مصر", flag: "🇪🇬" },
+    { name: "ألمانيا", flag: "🇩🇪" },
+    { name: "أمريكا", flag: "🇺🇸" }
+  ];
+  const reachLegend = document.getElementById('reachLegend');
+  const reachCount = document.getElementById('reachCount');
+  if (reachLegend) {
+    reachedCountries.forEach(c => {
+      const chip = document.createElement('span');
+      chip.className = 'reach-chip';
+      chip.innerHTML = `<span class="dot"></span> ${c.flag} ${c.name}`;
+      reachLegend.appendChild(chip);
+    });
   }
-  window.addEventListener('load', () => {
-    const tip = document.getElementById('waTooltip');
-    if (!tip) return;
-    setTimeout(() => tip.classList.add('show'), 1200);
-    setTimeout(() => tip.classList.remove('show'), 6500);
-  });
+  if (reachCount) {
+    reachCount.textContent = `📍 وصل مِداد حتى الآن إلى ${reachedCountries.length} دول — والرحلة مستمرة`;
+  }
 
   // Gallery — real product photos from /images
   const notebookImages = [
@@ -1954,7 +2034,6 @@
     if (!sliderDotsBox) return;
     sliderDotsBox.innerHTML = '';
     const dotCount = getDotCount();
-    // Cap the number of rendered dots for very long galleries; step through in groups.
     const maxDots = 18;
     const step = Math.max(1, Math.ceil(dotCount / maxDots));
     for (let i = 0; i < dotCount; i += step) {
@@ -1969,7 +2048,6 @@
     if (!sliderDotsBox) return;
     const dots = sliderDotsBox.children;
     if (!dots.length) return;
-    // Mark active dot based on scroll proportion
     const dotCount = dots.length;
     const activeIdx = Math.min(dotCount - 1, Math.round((currentIndex / Math.max(1, getDotCount() - 1)) * (dotCount - 1)));
     for (let i = 0; i < dots.length; i++) {
@@ -2004,7 +2082,6 @@
   sliderContainer.addEventListener('mouseenter', stopAutoSlide);
   sliderContainer.addEventListener('mouseleave', startAutoSlide);
 
-  // Touch swipe support for mobile
   let touchStartX = 0;
   sliderContainer.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].clientX;
@@ -2013,7 +2090,6 @@
   sliderContainer.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     if (Math.abs(dx) > 40) {
-      // RTL layout: swipe right -> next, swipe left -> prev
       if (dx < 0) moveNext(); else movePrev();
     }
     startAutoSlide();
@@ -2173,7 +2249,6 @@
         const totalText = data.currency === 'دولار' ? `${data.price}$` : `${data.price} جنيه`;
         const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n• *المحافظة:* ${governorateVal}` : '';
         
-        // تجهيز نص رسالة الواتساب التلقائي للعميل 100%
         const whatsappMsg = `السلام عليكم، أود تأكيد حجزي لدفتر مِداد 📚\n\n• *رقم الطلب:* ${data.orderId}\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *مكان التوصيل:* ${locationVal}${govLine}\n• *عدد النسخ:* ${copies}\n• *طريقة الدفع:* ${paymentMethod}\n• *الإجمالي:* ${totalText}\n• *ملاحظات/عنوان:* ${notesVal || 'لا يوجد'}`;
 
         const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(whatsappMsg)}`;
@@ -2184,7 +2259,6 @@
         calculateTotal();
       })
       .catch(() => {
-        // إذا حدث انقطاع في الشبكة، نفتح الواتساب بالرسالة تفادياً لضياع الطلب
         const govLine = locationVal === 'داخل مصر' && governorateVal ? `\n• *المحافظة:* ${governorateVal}` : '';
         const fallbackMsg = `السلام عليكم، أود تأكيد حجزي لدفتر مِداد 📚\n\n• *الاسم:* ${name}\n• *الهاتف:* ${phone}\n• *مكان التوصيل:* ${locationVal}${govLine}\n• *عدد النسخ:* ${copies}\n• *طريقة الدفع:* ${paymentMethod}\n• *ملاحظات/عنوان:* ${notesVal || 'لا يوجد'}`;
         const whatsappUrl = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(fallbackMsg)}`;
