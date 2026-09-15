@@ -208,46 +208,6 @@
     color:var(--text-muted); font-size:17px;
   }
 
-  /* ===== Product Showcase (right after hero) ===== */
-  .showcase{ padding-top:50px; padding-bottom:56px; background:var(--bg-dark); }
-  .showcase-inner{ position:relative; max-width:460px; margin:0 auto; }
-  .showcase-frame{
-    border-radius:20px;
-    overflow:hidden;
-    border:1px solid var(--border);
-    box-shadow:0 30px 70px rgba(0,0,0,0.55);
-    transform:rotate(-2deg);
-    transition:transform .5s ease;
-  }
-  .showcase-frame:hover{ transform:rotate(0deg) scale(1.02); }
-  .showcase-frame img{ width:100%; display:block; }
-  .spec-chip{
-    position:absolute;
-    z-index:5;
-    display:flex; align-items:center; gap:8px;
-    background:rgba(22,19,15,0.88);
-    border:1px solid var(--gold-deep);
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
-    border-radius:999px;
-    padding:8px 16px;
-    font-size:12.5px;
-    color:var(--gold);
-    box-shadow:0 10px 24px rgba(0,0,0,0.4);
-    white-space:nowrap;
-  }
-  .spec-chip svg{ width:16px; height:16px; stroke:var(--gold); flex-shrink:0; }
-  .spec-chip.c1{ top:6%; right:4%; }
-  .spec-chip.c2{ bottom:22%; left:2%; }
-  .spec-chip.c3{ bottom:5%; right:6%; }
-  @media (max-width:480px){
-    .spec-chip{ font-size:10.5px; padding:6px 11px; gap:6px; }
-    .spec-chip svg{ width:13px; height:13px; }
-    .spec-chip.c1{ top:4%; right:2%; }
-    .spec-chip.c2{ bottom:34%; left:0; }
-    .spec-chip.c3{ bottom:4%; right:2%; }
-  }
-
   /* ===== Story ===== */
   .story{ background:var(--bg-card-1); }
   .story .wrap{ max-width:760px; }
@@ -1093,17 +1053,6 @@
     .whatsapp-tooltip{ font-size:12px; white-space:normal; max-width:180px; }
   }
 
-  /* ===== Showcase — front & back cover stack ===== */
-  .showcase-frame--front{ position:relative; z-index:2; }
-  .showcase-frame--back{
-    position:absolute;
-    top:-4%; left:-6%;
-    width:94%;
-    z-index:1;
-    transform:rotate(-9deg);
-    opacity:.96;
-  }
-  .showcase-frame--back:hover{ transform:rotate(-9deg); }
 </style>
 </head>
 <body>
@@ -1156,31 +1105,6 @@
   <div class="scroll-cue">
     <span>مرر لأسفل</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-  </div>
-</section>
-
-<section class="showcase" id="showcase">
-  <div class="wrap">
-    <div class="showcase-inner reveal">
-      <div class="showcase-frame showcase-frame--back">
-        <img src="images/madad-cover-back.webp" alt="ظهر دفتر مِداد" loading="lazy" width="1200" height="1699" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x1699/16130F/C9A24B?text=مِداد';">
-      </div>
-      <div class="showcase-frame showcase-frame--front">
-        <img src="images/madad-cover-front.webp" alt="وجه دفتر مِداد بغلاف مطفي فاخر" loading="lazy" width="1200" height="1700" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x1700/16130F/C9A24B?text=مِداد';">
-      </div>
-      <div class="spec-chip c1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
-        <span>مقاس A5 عملي</span>
-      </div>
-      <div class="spec-chip c2">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        <span>١٢٠ صفحة، رحلة ٦٠ يومًا</span>
-      </div>
-      <div class="spec-chip c3">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        <span>غلاف مطفي وطباعة عالية</span>
-      </div>
-    </div>
   </div>
 </section>
 
