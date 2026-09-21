@@ -494,7 +494,7 @@
   .video{ background:var(--bg-dark); }
   .video-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
     gap:28px;
     max-width:1000px;
     margin:0 auto;
@@ -850,13 +850,6 @@
     .price-sticker{ flex-wrap:wrap; justify-content:center; padding:10px 16px; gap:8px; }
   }
 
-  .price-container .old-price-inline{
-    text-decoration:line-through;
-    color:var(--text-muted);
-    font-size:13px;
-    margin-inline-start:8px;
-    opacity:.8;
-  }
   .intl-shipping-note{
     display:flex; align-items:center; gap:8px;
     background:rgba(201,162,75,0.06);
@@ -970,7 +963,9 @@
     left:20px; bottom:20px;
     z-index:70;
     display:flex; align-items:center;
+    transition:bottom .35s ease;
   }
+  .wa-float.lifted{ bottom:92px; }
   .wa-float-btn{
     width:58px; height:58px; border-radius:50%;
     background:#25D366;
@@ -1009,6 +1004,7 @@
   }
   @media (max-width:480px){
     .wa-float{ left:14px; bottom:14px; }
+    .wa-float.lifted{ bottom:86px; }
     .wa-float-btn{ width:52px; height:52px; }
     .wa-float-btn svg{ width:26px; height:26px; }
   }
@@ -1853,6 +1849,7 @@
   (function enableStickyCta(){
     const stickyCta = document.getElementById('stickyCta');
     const bookingSection = document.getElementById('booking');
+    const waFloat = document.getElementById('waFloat');
     if (!stickyCta || !bookingSection) return;
     window.addEventListener('scroll', () => {
       const heroHeight = document.querySelector('.hero').offsetHeight;
@@ -1860,6 +1857,8 @@
       const scrollY = window.scrollY;
       const show = scrollY > heroHeight && scrollY < (bookingTop - 200);
       stickyCta.classList.toggle('show', show);
+      // ارفع زر الواتساب لمّا شريط الحجز السفلي يكون ظاهر عشان ميتغطوش على بعض
+      if (waFloat) waFloat.classList.toggle('lifted', show);
     });
   })();
 
@@ -2004,12 +2003,13 @@
   const galleryCountEl = document.getElementById('galleryCount');
   if (galleryCountEl) galleryCountEl.textContent = `+${notebookImages.length} لقطة حقيقية من داخل التجربة`;
 
-  notebookImages.forEach((img) => {
+  notebookImages.forEach((img, idx) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
+    const lazyAttr = idx < 3 ? '' : 'loading="lazy"';
     item.innerHTML = `
       <div class="gallery-img-box">
-        <img src="${img.url}" alt="صفحة من داخل دفتر مِداد" loading="lazy" width="600" height="450" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x450/16130F/C9A24B?text=مِداد';">
+        <img src="${img.url}" alt="صفحة من داخل دفتر مِداد" ${lazyAttr} width="600" height="450" decoding="async" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x450/16130F/C9A24B?text=مِداد';">
       </div>
     `;
     item.addEventListener('click', () => openModal(img.url));
