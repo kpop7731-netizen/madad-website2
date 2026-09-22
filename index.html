@@ -1106,6 +1106,57 @@
   .qty-hint{
     font-size:12.5px; color:var(--gold-deep); margin-top:6px;
   }
+
+  /* ===== Quantity offers / bundles ===== */
+  .offers{ background:var(--bg-card-1); }
+  .offers-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:26px;
+    max-width:1000px; margin:0 auto;
+  }
+  .offer-card{
+    background:linear-gradient(160deg, var(--bg-card-1), var(--bg-card-2));
+    border:0.5px solid var(--border);
+    border-radius:16px;
+    padding:30px 24px 26px;
+    text-align:center;
+    position:relative;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .offer-card:hover{ transform:translateY(-6px); border-color:var(--gold-deep); box-shadow:0 16px 40px rgba(0,0,0,0.45); }
+  .offer-card.popular{ border-color:var(--gold); box-shadow:0 16px 40px rgba(201,162,75,0.15); }
+  .offer-popular-badge{
+    position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+    background:var(--gold); color:var(--bg-dark);
+    font-size:11px; font-weight:800; padding:4px 14px; border-radius:999px;
+    white-space:nowrap;
+  }
+  .offer-media{
+    height:170px; display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+  }
+  .offer-media img{
+    max-width:100%; max-height:100%; object-fit:contain;
+    filter:drop-shadow(0 12px 20px rgba(0,0,0,0.5));
+  }
+  .offer-title{ font-size:16px; color:var(--text-light); font-weight:700; margin-bottom:10px; }
+  .offer-price-row{ display:flex; align-items:baseline; justify-content:center; gap:8px; margin-bottom:6px; }
+  .offer-old{ font-size:14px; color:var(--text-muted); text-decoration:line-through; text-decoration-color:var(--err-color); }
+  .offer-new{ font-size:26px; font-weight:800; color:var(--gold); font-family:'Cairo', sans-serif; }
+  .offer-save{
+    display:inline-block; background:rgba(201,162,75,0.15); color:var(--gold);
+    border:0.5px solid var(--gold-deep); border-radius:999px;
+    font-size:11.5px; font-weight:700; padding:3px 12px; margin-bottom:18px;
+  }
+  .offer-btn{
+    display:block; width:100%; padding:11px; border-radius:8px;
+    background:var(--gold); color:var(--bg-dark); border:none;
+    font-family:'Amiri', serif; font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .2s;
+  }
+  .offer-btn:hover{ background:#d8b056; }
+  .offer-card:not(.popular) .offer-btn{ background:transparent; border:1px solid var(--gold-deep); color:var(--gold); }
 </style>
 </head>
 <body>
@@ -1127,6 +1178,7 @@
       <a href="#reach">وصل إلى</a>
       <a href="#reviews">آراء المشترين</a>
       <a href="#faq">الأسئلة الشائعة</a>
+      <a href="#offers">عروض الكمية</a>
       <a href="#booking">الحجز</a>
     </nav>
   </div>
@@ -1623,6 +1675,57 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-a"><p>نستبدله لك فورًا بدون أي تكلفة إضافية عليك. تواصل معنا على الواتساب بصورة للدفتر وهنرتب الاستبدال مباشرة.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offers" id="offers">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="section-kicker">عرض خاص على الكميات</p>
+      <h2 class="section-title" style="margin-bottom:14px;">اطلب لنفسك أو لأصحابك ووفّر أكتر</h2>
+      <p class="section-lead">كل ما زوّدت الكمية، السعر للنسخة يقل — مثالي لو حابب تهدي صحابك أو أهلك معاك.</p>
+    </div>
+
+    <div class="offers-grid">
+      <div class="offer-card reveal">
+        <div class="offer-media">
+          <img src="images/bundle-1.webp" alt="نسخة واحدة من دفتر مِداد" loading="lazy">
+        </div>
+        <div class="offer-title">نسخة واحدة</div>
+        <div class="offer-price-row">
+          <span class="offer-new">150 ج.م</span>
+        </div>
+        <span class="offer-save" style="visibility:hidden;">.</span>
+        <button class="offer-btn" onclick="orderBundle(1)">اطلب نسخة</button>
+      </div>
+
+      <div class="offer-card popular reveal">
+        <span class="offer-popular-badge">الأكثر طلبًا</span>
+        <div class="offer-media">
+          <img src="images/bundle-2.webp" alt="نسختين من دفتر مِداد" loading="lazy">
+        </div>
+        <div class="offer-title">نسختان</div>
+        <div class="offer-price-row">
+          <span class="offer-old">300 ج.م</span>
+          <span class="offer-new">290 ج.م</span>
+        </div>
+        <span class="offer-save">وفّر 10 جنيه</span>
+        <button class="offer-btn" onclick="orderBundle(2)">اطلب نسختين</button>
+      </div>
+
+      <div class="offer-card reveal">
+        <div class="offer-media">
+          <img src="images/bundle-3.webp" alt="3 نسخ من دفتر مِداد" loading="lazy">
+        </div>
+        <div class="offer-title">3 نسخ</div>
+        <div class="offer-price-row">
+          <span class="offer-old">450 ج.م</span>
+          <span class="offer-new">435 ج.م</span>
+        </div>
+        <span class="offer-save">وفّر 15 جنيه</span>
+        <button class="offer-btn" onclick="orderBundle(3)">اطلب 3 نسخ</button>
       </div>
     </div>
   </div>
@@ -2254,6 +2357,15 @@
       govSelect.required = false;
       govSelect.value = '';
     }
+  }
+
+  // زرار "اطلب X نسخ" في قسم عروض الكمية — يملأ الفورم وينزل له مباشرة
+  function orderBundle(copies) {
+    const copiesInput = document.getElementById('cust_copies');
+    copiesInput.value = copies;
+    calculateTotal();
+    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => { document.getElementById('cust_name').focus(); }, 500);
   }
 
   /* ==========================================================
